@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zimska liga Modesto 2025/2026</title>
+    <title>Zimska Liga Modesto 2025 / 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -16,6 +16,21 @@
             --grey:     #E8E8E8;
             --text:     #1A1A2E;
         }
+        [data-theme="dark"] {
+            --red:      #E8234A;
+            --red-dark: #C8102E;
+            --blue:     #5B8FE8;
+            --blue-dark:#3D6FCC;
+            --white:    #1E1E2E;
+            --off-white:#13131F;
+            --grey:     #2E2E48;
+            --text:     #E2E2F0;
+        }
+        [data-theme="dark"] tbody tr:hover { background: #1D2545 !important; }
+        [data-theme="dark"] tbody tr.top3 { background: linear-gradient(90deg, rgba(232,35,74,0.08), transparent); }
+        [data-theme="dark"] tbody tr.highlighted { background: rgba(91,143,232,0.25) !important; }
+        [data-theme="dark"] .table-wrap,
+        [data-theme="dark"] .calculator { box-shadow: 0 4px 24px rgba(0,0,0,0.5); }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Nunito', sans-serif; background: var(--off-white); color: var(--text); min-height: 100vh; }
 
@@ -35,7 +50,23 @@
         .stat { text-align: center; color: rgba(255,255,255,0.85); }
         .stat-number { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--white); line-height: 1; }
         .stat-label { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.8; }
+        .league-switch { margin-top: 0.9rem; display: flex; gap: 0.6rem; align-items: center; justify-content: center; animation: slideUp 0.6s ease 0.62s both; }
+        .league-switch label { color: rgba(255,255,255,0.88); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 800; }
+        .league-switch select {
+            min-width: 240px; max-width: 92vw; background: rgba(255,255,255,0.15); color: var(--white);
+            border: 1px solid rgba(255,255,255,0.42); border-radius: 999px; padding: 0.5rem 0.9rem;
+            font-family: 'Nunito', sans-serif; font-size: 0.95rem; font-weight: 800; cursor: pointer;
+        }
+        .league-switch select option { color: #1A1A2E; background: #FFFFFF; }
         .wave { display: block; width: 100%; margin-top: -2px; color: var(--off-white); }
+        .theme-toggle {
+            position: absolute; top: 1rem; right: 1rem; z-index: 10;
+            background: rgba(255,255,255,0.15); border: none; border-radius: 50%;
+            width: 42px; height: 42px; font-size: 1.2rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s;
+        }
+        .theme-toggle:hover { background: rgba(255,255,255,0.28); }
 
         main { max-width: 900px; margin: 0 auto; padding: 2rem 1rem 4rem; display: flex; flex-direction: column; gap: 2rem; }
 
@@ -113,15 +144,17 @@
 <body>
 
 <header>
+    <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle dark mode">🌙</button>
     <div class="header-inner">
         <img src="modesto_logo.png" alt="Modesto logo" class="logo" onerror="this.style.display='none'">
-        <h1>Zimska liga Modesto</h1>
+        <h1>Zimska Liga Modesto</h1>
         <span class="season-badge">Sezona 2025 / 2026</span>
         <div class="stats-bar">
             <div class="stat"><div class="stat-number">106</div><div class="stat-label">Igrači</div></div>
             <div class="stat"><div class="stat-number">3</div><div class="stat-label">Kola</div></div>
             <div class="stat"><div class="stat-number">600</div><div class="stat-label">Max bodova</div></div>
         </div>
+        <div class="league-switch"><label for="leagueSwitcher">Liga</label><select id="leagueSwitcher" onchange="switchLeague(this)"><option value="./Zimska%20Liga%20Modesto/index.html" selected>Zimska Liga Modesto</option><option value="./%C5%BDenska%20Liga%20Zima/index.html">Ženska Liga Zima</option></select></div>
     </div>
 </header>
 
@@ -270,9 +303,29 @@
     </div>
 </main>
 
-<footer>Modesto Padel Club &mdash; Zimska liga 2025/2026</footer>
+<footer>Modesto Padel Club &mdash; Zimska Liga Modesto 2025 / 2026</footer>
 
 <script>
+    // Theme
+    (function () {
+        const t = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', t);
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('themeBtn').textContent = t === 'dark' ? '☀️' : '🌙';
+        });
+    })();
+    function toggleTheme() {
+        const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        document.getElementById('themeBtn').textContent = next === 'dark' ? '☀️' : '🌙';
+    }
+
+    function switchLeague(selectEl) {
+        if (!selectEl || !selectEl.value) return;
+        window.location.href = selectEl.value;
+    }
+
     const PLAYERS = {"DP D": {"rang": 1, "total": 600, "kolo": [200, 200, 200]}, "Igor Marić": {"rang": 2, "total": 600, "kolo": [200, 200, 200]}, "Valentino Kukić": {"rang": 3, "total": 500, "kolo": [160, 180, 160]}, "Karlo Gradišar": {"rang": 4, "total": 480, "kolo": [180, 160, 140]}, "Mateo Baric": {"rang": 5, "total": 480, "kolo": [180, 160, 140]}, "Nikola Krčelić": {"rang": 6, "total": 460, "kolo": [120, 160, 180]}, "Borna Vučkić-Herkov": {"rang": 7, "total": 460, "kolo": [120, 160, 180]}, "Dražen Novaković": {"rang": 8, "total": 448, "kolo": [160, 128, 160]}, "Antonio Išek": {"rang": 9, "total": 444, "kolo": [160, 140, 144]}, "Livio Alić": {"rang": 10, "total": 444, "kolo": [160, 140, 144]}, "Jan Kasa": {"rang": 11, "total": 420, "kolo": [140, 160, 120]}, "Luka Brkašić": {"rang": 12, "total": 420, "kolo": [140, 160, 120]}, "Vladimir Šakić": {"rang": 13, "total": 416, "kolo": [144, 144, 128]}, "Dejan Rendulić": {"rang": 14, "total": 416, "kolo": [144, 144, 128]}, "Velimir Rođak": {"rang": 15, "total": 416, "kolo": [112, 144, 160]}, "Ivan Marović": {"rang": 16, "total": 416, "kolo": [112, 144, 160]}, "Ivan Heinelt": {"rang": 17, "total": 376, "kolo": [144, 112, 120]}, "Miran Ančić": {"rang": 18, "total": 376, "kolo": [144, 112, 120]}, "Danijel Kukić": {"rang": 19, "total": 368, "kolo": [128, 128, 112]}, "Marko Medarić": {"rang": 20, "total": 368, "kolo": [128, 128, 112]}, "Boris Vinčić": {"rang": 21, "total": 344, "kolo": [120, 96, 128]}, "Almir Halilović": {"rang": 22, "total": 344, "kolo": [120, 96, 128]}, "Drazenko Pranjic": {"rang": 23, "total": 340, "kolo": [0, 180, 160]}, "Zoran Umicevic": {"rang": 24, "total": 336, "kolo": [112, 112, 112]}, "Dražen Oršulić": {"rang": 25, "total": 312, "kolo": [120, 96, 96]}, "Danijel Milunić": {"rang": 26, "total": 312, "kolo": [96, 108, 108]}, "Danko Obradović": {"rang": 27, "total": 312, "kolo": [96, 120, 96]}, "Matej Galonja": {"rang": 28, "total": 312, "kolo": [96, 108, 108]}, "Toni Klindić": {"rang": 29, "total": 288, "kolo": [0, 128, 160]}, "Kristijan Vidović": {"rang": 30, "total": 288, "kolo": [84, 108, 96]}, "Eugen Turk": {"rang": 31, "total": 288, "kolo": [84, 108, 96]}, "Antonio Jurković": {"rang": 32, "total": 280, "kolo": [160, 120, 0]}, "Danijel Gnjatić": {"rang": 33, "total": 280, "kolo": [160, 120, 0]}, "Ivica Sušek": {"rang": 34, "total": 276, "kolo": [108, 96, 72]}, "Branimir Pupić Jovanović": {"rang": 35, "total": 276, "kolo": [108, 96, 72]}, "David Žirković": {"rang": 36, "total": 260, "kolo": [80, 96, 84]}, "Ivan Žirković": {"rang": 37, "total": 260, "kolo": [80, 96, 84]}, "Boris Šprišić": {"rang": 38, "total": 240, "kolo": [96, 0, 144]}, "Jurica B": {"rang": 39, "total": 240, "kolo": [96, 0, 144]}, "Marko Malović": {"rang": 40, "total": 236, "kolo": [56, 72, 108]}, "Robert Miani": {"rang": 41, "total": 236, "kolo": [72, 80, 84]}, "Antonio Tompić": {"rang": 42, "total": 236, "kolo": [56, 72, 108]}, "Ivan Mitić": {"rang": 43, "total": 236, "kolo": [72, 80, 84]}, "Dejan Ćopić": {"rang": 44, "total": 232, "kolo": [112, 40, 80]}, "Tomislav Lulić": {"rang": 45, "total": 232, "kolo": [96, 72, 64]}, "Vedran Marčelja": {"rang": 46, "total": 224, "kolo": [0, 112, 112]}, "Domagoj Kralj": {"rang": 47, "total": 224, "kolo": [96, 72, 56]}, "Peter Pernhaupt": {"rang": 48, "total": 216, "kolo": [120, 96, 0]}, "Tin Miljan": {"rang": 49, "total": 216, "kolo": [0, 120, 96]}, "Ivan Barlović": {"rang": 50, "total": 216, "kolo": [0, 120, 96]}, "Mibor Tarković": {"rang": 51, "total": 216, "kolo": [0, 120, 96]}, "Ivan Kvesić": {"rang": 52, "total": 200, "kolo": [80, 0, 120]}, "Hrvoje Brkašić": {"rang": 53, "total": 200, "kolo": [80, 0, 120]}, "Matija Šarić": {"rang": 54, "total": 168, "kolo": [108, 60, 0]}, "Luka Begedin": {"rang": 55, "total": 168, "kolo": [108, 60, 0]}, "Borna Lovreković": {"rang": 56, "total": 160, "kolo": [48, 48, 64]}, "Luka Kirin": {"rang": 57, "total": 160, "kolo": [64, 0, 96]}, "Vilim Gec": {"rang": 58, "total": 156, "kolo": [0, 84, 72]}, "Sven Dolovcak": {"rang": 59, "total": 156, "kolo": [72, 84, 0]}, "Dominik Paljuši": {"rang": 60, "total": 156, "kolo": [72, 84, 0]}, "Lukas Zubović": {"rang": 61, "total": 156, "kolo": [0, 84, 72]}, "Tomislav Šebalj": {"rang": 62, "total": 152, "kolo": [64, 40, 48]}, "Vladimir Kušanić": {"rang": 63, "total": 148, "kolo": [84, 24, 40]}, "Tomislav Dragaš": {"rang": 64, "total": 148, "kolo": [84, 24, 40]}, "Alen Ibrahimpašić": {"rang": 65, "total": 144, "kolo": [96, 48, 0]}, "Niko Sušek": {"rang": 66, "total": 136, "kolo": [0, 64, 72]}, "Marin Ostojić": {"rang": 67, "total": 136, "kolo": [0, 64, 72]}, "Ivano Abramović": {"rang": 68, "total": 128, "kolo": [128, 0, 0]}, "Dominik Pokas": {"rang": 69, "total": 128, "kolo": [0, 72, 56]}, "David Jurkovic": {"rang": 70, "total": 128, "kolo": [128, 0, 0]}, "Sonja Ćopić": {"rang": 71, "total": 120, "kolo": [0, 40, 80]}, "Rene Makar": {"rang": 72, "total": 104, "kolo": [72, 32, 0]}, "Dino Šporčić": {"rang": 73, "total": 104, "kolo": [72, 32, 0]}, "Sven Stapar": {"rang": 74, "total": 100, "kolo": [24, 36, 40]}, "Franko Kelava": {"rang": 75, "total": 100, "kolo": [24, 36, 40]}, "Fran Prpić": {"rang": 76, "total": 96, "kolo": [40, 56, 0]}, "Luka Peleš": {"rang": 77, "total": 96, "kolo": [40, 56, 0]}, "Mirko Ignjatić": {"rang": 78, "total": 88, "kolo": [0, 40, 48]}, "Robert Škrinjarić": {"rang": 79, "total": 72, "kolo": [0, 72, 0]}, "Marko Šeremet": {"rang": 80, "total": 64, "kolo": [64, 0, 0]}, "Aleksandar Cvitić": {"rang": 81, "total": 64, "kolo": [64, 0, 0]}, "Leon Pupić": {"rang": 82, "total": 56, "kolo": [56, 0, 0]}, "Zeljko Matagic": {"rang": 83, "total": 56, "kolo": [0, 28, 28]}, "Martin Vincelj": {"rang": 84, "total": 56, "kolo": [56, 0, 0]}, "Karlo Rapljan": {"rang": 85, "total": 52, "kolo": [36, 0, 16]}, "Matea Krčelić": {"rang": 86, "total": 48, "kolo": [48, 0, 0]}, "Matej Brkašić": {"rang": 87, "total": 36, "kolo": [36, 0, 0]}, "Tin Martinec": {"rang": 88, "total": 36, "kolo": [0, 0, 36]}, "Antonio Čerkez": {"rang": 89, "total": 36, "kolo": [0, 0, 36]}, "Barbara Medarić": {"rang": 90, "total": 32, "kolo": [0, 32, 0]}, "Bartol Begić": {"rang": 91, "total": 32, "kolo": [0, 0, 32]}, "Matej Budinski": {"rang": 92, "total": 32, "kolo": [0, 0, 32]}, "Katarina Denac": {"rang": 93, "total": 32, "kolo": [0, 32, 0]}, "Marko Filipovic": {"rang": 94, "total": 28, "kolo": [28, 0, 0]}, "Jurica Arthofer": {"rang": 95, "total": 28, "kolo": [28, 0, 0]}, "Marko Kežman": {"rang": 96, "total": 28, "kolo": [0, 28, 0]}, "Ivan Ciglar": {"rang": 97, "total": 28, "kolo": [0, 0, 28]}, "Antonio Pernar": {"rang": 98, "total": 24, "kolo": [0, 0, 24]}, "Mateo Marković": {"rang": 99, "total": 24, "kolo": [0, 24, 0]}, "Ivan Pernar": {"rang": 100, "total": 24, "kolo": [0, 0, 24]}, "Filip Bajza": {"rang": 101, "total": 24, "kolo": [0, 24, 0]}, "Tena Srpak": {"rang": 102, "total": 20, "kolo": [0, 0, 20]}, "Boris Lavrnja": {"rang": 103, "total": 20, "kolo": [0, 0, 20]}, "Antonio Berić": {"rang": 104, "total": 20, "kolo": [0, 20, 0]}, "Franjo Penić": {"rang": 105, "total": 20, "kolo": [0, 20, 0]}, "Luka Grgić": {"rang": 106, "total": 16, "kolo": [0, 0, 16]}};
     const KOLO_LABELS = ["Kolo 2025-11-30", "Kolo 2026-01-19", "Kolo 2026-03-08"];
     const ALL_NAMES = Object.keys(PLAYERS).sort();
