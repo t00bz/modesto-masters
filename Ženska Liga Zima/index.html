@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ženska Liga Zima 2025 / 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --red:      #C8102E;
+            --red-dark: #9B0B22;
+            --blue:     #003DA5;
+            --blue-dark:#002880;
+            --white:    #FFFFFF;
+            --off-white:#F5F5F7;
+            --grey:     #E8E8E8;
+            --text:     #1A1A2E;
+        }
+        [data-theme="dark"] {
+            --red:      #E8234A;
+            --red-dark: #C8102E;
+            --blue:     #5B8FE8;
+            --blue-dark:#3D6FCC;
+            --white:    #1E1E2E;
+            --off-white:#13131F;
+            --grey:     #2E2E48;
+            --text:     #E2E2F0;
+        }
+        [data-theme="dark"] tbody tr:hover { background: #1D2545 !important; }
+        [data-theme="dark"] tbody tr.top3 { background: linear-gradient(90deg, rgba(232,35,74,0.08), transparent); }
+        [data-theme="dark"] tbody tr.highlighted { background: rgba(91,143,232,0.25) !important; }
+        [data-theme="dark"] .table-wrap,
+        [data-theme="dark"] .calculator { box-shadow: 0 4px 24px rgba(0,0,0,0.5); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Nunito', sans-serif; background: var(--off-white); color: var(--text); min-height: 100vh; }
+
+        header {
+            background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 50%, var(--red) 100%);
+            padding: 2rem 1rem 3rem; text-align: center; position: relative; overflow: hidden;
+        }
+        header::before {
+            content: ''; position: absolute; inset: 0;
+            background: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,255,255,0.03) 20px, rgba(255,255,255,0.03) 40px);
+        }
+        .header-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+        .logo { width: 140px; height: 140px; object-fit: contain; filter: drop-shadow(0 4px 16px rgba(0,0,0,0.4)); animation: floatIn 0.8s ease both; }
+        h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.2rem, 6vw, 4rem); color: var(--white); letter-spacing: 0.05em; line-height: 1; text-shadow: 0 2px 8px rgba(0,0,0,0.3); animation: slideUp 0.6s ease 0.2s both; }
+        .season-badge { display: inline-block; background: var(--red); color: var(--white); font-size: 0.9rem; font-weight: 800; letter-spacing: 0.12em; padding: 0.3rem 1.2rem; border-radius: 2rem; text-transform: uppercase; animation: slideUp 0.6s ease 0.35s both; }
+        .stats-bar { display: flex; gap: 2rem; justify-content: center; margin-top: 0.5rem; animation: slideUp 0.6s ease 0.5s both; }
+        .stat { text-align: center; color: rgba(255,255,255,0.85); }
+        .stat-number { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--white); line-height: 1; }
+        .stat-label { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.8; }
+        .league-switch { margin-top: 0.9rem; display: flex; gap: 0.6rem; align-items: center; justify-content: center; animation: slideUp 0.6s ease 0.62s both; }
+        .league-switch label { color: rgba(255,255,255,0.88); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 800; }
+        .league-switch select {
+            min-width: 240px; max-width: 92vw; background: rgba(255,255,255,0.15); color: var(--white);
+            border: 1px solid rgba(255,255,255,0.42); border-radius: 999px; padding: 0.5rem 0.9rem;
+            font-family: 'Nunito', sans-serif; font-size: 0.95rem; font-weight: 800; cursor: pointer;
+        }
+        .league-switch select option { color: #1A1A2E; background: #FFFFFF; }
+        .wave { display: block; width: 100%; margin-top: -2px; color: var(--off-white); }
+        .theme-toggle {
+            position: absolute; top: 1rem; right: 1rem; z-index: 10;
+            background: rgba(255,255,255,0.15); border: none; border-radius: 50%;
+            width: 42px; height: 42px; font-size: 1.2rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s;
+        }
+        .theme-toggle:hover { background: rgba(255,255,255,0.28); }
+
+        main { max-width: 900px; margin: 0 auto; padding: 2rem 1rem 4rem; display: flex; flex-direction: column; gap: 2rem; }
+
+        .calculator { background: var(--white); border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); padding: 1.5rem 2rem; }
+        .calc-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: var(--blue); letter-spacing: 0.05em; margin-bottom: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: space-between; user-select: none; }
+        .calc-selects { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+        .calc-selects select { flex: 1; min-width: 180px; padding: 0.65rem 1rem; border: 2px solid var(--grey); border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--text); background: var(--off-white); cursor: pointer; transition: border-color 0.2s; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23003DA5' stroke-width='2' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.8rem center; padding-right: 2.2rem; }
+        .calc-selects select:focus { outline: none; border-color: var(--blue); }
+        .plus-sign { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--grey); }
+        .calc-result { margin-top: 1.25rem; display: none; background: linear-gradient(135deg, var(--blue) 0%, var(--red) 100%); border-radius: 12px; padding: 1.25rem 1.5rem; color: var(--white); animation: fadeIn 0.3s ease; }
+        .calc-result.visible { display: block; }
+        .result-names { font-weight: 800; font-size: 1rem; opacity: 0.9; margin-bottom: 0.5rem; }
+        .result-total { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; line-height: 1; letter-spacing: 0.02em; }
+        .result-total span { font-size: 1rem; font-family: 'Nunito', sans-serif; opacity: 0.8; margin-left: 0.5rem; vertical-align: middle; }
+        .result-breakdown { margin-top: 0.75rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+        .breakdown-item { background: rgba(255,255,255,0.15); border-radius: 8px; padding: 0.4rem 0.8rem; font-size: 0.82rem; font-weight: 700; }
+        .breakdown-item .bk-label { opacity: 0.75; font-weight: 600; }
+
+        .table-wrap { background: var(--white); border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); overflow: hidden; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+        thead tr { background: linear-gradient(90deg, var(--blue) 0%, var(--blue-dark) 100%); color: var(--white); }
+        thead th { padding: 1rem 0.75rem; font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.08em; text-align: center; font-weight: 400; }
+        thead th:nth-child(2) { text-align: left; padding-left: 1rem; }
+        tbody tr { border-bottom: 1px solid var(--grey); transition: background 0.15s; }
+        tbody tr:hover { background: #EEF3FF; }
+        tbody tr:last-child { border-bottom: none; }
+        tbody tr.top3 { background: linear-gradient(90deg, rgba(200,16,46,0.05), transparent); }
+        tbody tr.top3:hover { background: rgba(200,16,46,0.08); }
+        tbody tr.highlighted { background: rgba(0,61,165,0.12) !important; outline: 2px solid var(--blue); outline-offset: -2px; }
+        td { padding: 0.75rem; text-align: center; color: var(--text); }
+        td.rang { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; width: 52px; color: var(--blue); }
+        td.name { text-align: left; padding-left: 1rem; font-weight: 700; font-size: 0.95rem; }
+        td.total { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; color: var(--red); }
+        tbody tr:nth-child(even):not(.top3):not(.highlighted) { background: var(--off-white); }
+
+        footer { text-align: center; padding: 1.5rem; font-size: 0.78rem; color: #999; letter-spacing: 0.05em; }
+
+        @keyframes floatIn { from { opacity: 0; transform: translateY(-20px) scale(0.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 600px) {
+            thead th, td { padding: 0.6rem 0.4rem; font-size: 0.8rem; }
+            td.name { font-size: 0.82rem; }
+            .calc-selects { flex-direction: column; }
+            .plus-sign { display: none; }
+        }
+
+        /* ── Searchable dropdown ── */
+        .select-wrap { flex: 1; min-width: 180px; position: relative; }
+        .select-wrap input {
+            width: 100%; padding: 0.65rem 1rem; border: 2px solid var(--grey);
+            border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 0.95rem;
+            font-weight: 700; color: var(--text); background: var(--off-white);
+            cursor: text; transition: border-color 0.2s; outline: none;
+        }
+        .select-wrap input:focus { border-color: var(--blue); }
+        .select-wrap input.selected { color: var(--blue); }
+        .dropdown-list {
+            display: none; position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+            background: var(--white); border: 2px solid var(--blue); border-radius: 8px;
+            max-height: 220px; overflow-y: auto; z-index: 100;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        .dropdown-list.open { display: block; }
+        .dropdown-item {
+            padding: 0.6rem 1rem; cursor: pointer; font-size: 0.92rem;
+            font-weight: 600; transition: background 0.1s;
+        }
+        .dropdown-item:hover { background: var(--off-white); color: var(--blue); }
+        .dropdown-item.active { background: var(--blue); color: var(--white); }
+        .dropdown-item.no-results { color: #999; cursor: default; font-weight: 400; }
+    </style>
+</head>
+<body>
+
+<header>
+    <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle dark mode">🌙</button>
+    <div class="header-inner">
+        <img src="modesto_logo.png" alt="Modesto logo" class="logo" onerror="this.style.display='none'">
+        <h1>Ženska Liga Zima</h1>
+        <span class="season-badge">Sezona 2025 / 2026</span>
+        <div class="stats-bar">
+            <div class="stat"><div class="stat-number">15</div><div class="stat-label">Igrači</div></div>
+            <div class="stat"><div class="stat-number">3</div><div class="stat-label">Kola</div></div>
+            <div class="stat"><div class="stat-number">600</div><div class="stat-label">Max bodova</div></div>
+        </div>
+        <div class="league-switch"><label for="leagueSwitcher">Liga</label><select id="leagueSwitcher" onchange="switchLeague(this)"><option value="../Zimska%20Liga%20Modesto/index.html">Zimska Liga Modesto</option><option value="../%C5%BDenska%20Liga%20Zima/index.html" selected>Ženska Liga Zima</option></select></div>
+    </div>
+</header>
+
+<svg class="wave" viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M0,20 C360,40 1080,0 1440,20 L1440,40 L0,40 Z"/>
+</svg>
+
+<main>
+    <div class="calculator">
+        <div class="calc-title" onclick="toggleCalc()">
+            <span>🎾 Kalkulator parova</span>
+            <span id="calcToggleIcon">▲</span>
+        </div>
+        <div id="calcBody">
+            <div class="calc-selects">
+                <div class="select-wrap">
+                    <input type="text" id="search1" placeholder="Traži igrača 1..." autocomplete="off"
+                           oninput="filterList(1)" onfocus="openList(1)" onblur="closeList(1)">
+                    <div class="dropdown-list" id="list1"></div>
+                </div>
+                <span class="plus-sign">+</span>
+                <div class="select-wrap">
+                    <input type="text" id="search2" placeholder="Traži igrača 2..." autocomplete="off"
+                           oninput="filterList(2)" onfocus="openList(2)" onblur="closeList(2)">
+                    <div class="dropdown-list" id="list2"></div>
+                </div>
+            </div>
+            <div class="calc-result" id="calcResult">
+                <div class="result-names" id="resultNames"></div>
+                <div class="result-total" id="resultTotal"></div>
+                <div class="result-breakdown" id="resultBreakdown"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-wrap">
+        <table>
+            <thead><tr><th>#</th><th>Igrač</th><th>Kolo<br>2025-11-29</th><th>Kolo<br>2026-01-19</th><th>Kolo<br>2026-03-08</th><th>TOTAL</th></tr></thead>
+            <tbody id="tableBody"><tr class="top3" data-name="Matea Begić"><td class="rang">🥇</td><td class="name">Matea Begić</td><td>120</td><td>200</td><td>200</td><td class="total">520</td></tr>
+<tr class="top3" data-name="Lahorka Drčić"><td class="rang">🥈</td><td class="name">Lahorka Drčić</td><td>180</td><td>160</td><td>180</td><td class="total">520</td></tr>
+<tr class="top3" data-name="Magdalena Drčić"><td class="rang">🥉</td><td class="name">Magdalena Drčić</td><td>160</td><td>180</td><td>140</td><td class="total">480</td></tr>
+<tr class="" data-name="Inja Sušek"><td class="rang">4</td><td class="name">Inja Sušek</td><td>160</td><td>180</td><td>140</td><td class="total">480</td></tr>
+<tr class="" data-name="Sonja Ćopić"><td class="rang">5</td><td class="name">Sonja Ćopić</td><td>100</td><td>160</td><td>180</td><td class="total">440</td></tr>
+<tr class="" data-name="Danijela Marčelja"><td class="rang">6</td><td class="name">Danijela Marčelja</td><td>180</td><td>120</td><td>120</td><td class="total">420</td></tr>
+<tr class="" data-name="Tea Miletić"><td class="rang">7</td><td class="name">Tea Miletić</td><td>140</td><td>140</td><td>100</td><td class="total">380</td></tr>
+<tr class="" data-name="Ana Grgic"><td class="rang">8</td><td class="name">Ana Grgic</td><td>140</td><td>140</td><td>100</td><td class="total">380</td></tr>
+<tr class="" data-name="Katarina Denac"><td class="rang">9</td><td class="name">Katarina Denac</td><td>200</td><td>—</td><td>160</td><td class="total">360</td></tr>
+<tr class="" data-name="Barbara Medarić"><td class="rang">10</td><td class="name">Barbara Medarić</td><td>200</td><td>—</td><td>160</td><td class="total">360</td></tr>
+<tr class="" data-name="Iva Kramaric"><td class="rang">11</td><td class="name">Iva Kramaric</td><td>100</td><td>120</td><td>120</td><td class="total">340</td></tr>
+<tr class="" data-name="Maja Medarić"><td class="rang">12</td><td class="name">Maja Medarić</td><td>120</td><td>200</td><td>—</td><td class="total">320</td></tr>
+<tr class="" data-name="Melita Marčelja"><td class="rang">13</td><td class="name">Melita Marčelja</td><td>80</td><td>100</td><td>80</td><td class="total">260</td></tr>
+<tr class="" data-name="Roka Škugor Baiutti"><td class="rang">14</td><td class="name">Roka Škugor Baiutti</td><td>80</td><td>100</td><td>80</td><td class="total">260</td></tr>
+<tr class="" data-name="Klara Miletic"><td class="rang">15</td><td class="name">Klara Miletic</td><td>—</td><td>—</td><td>200</td><td class="total">200</td></tr></tbody>
+        </table>
+    </div>
+</main>
+
+<footer>Modesto Padel Club &mdash; Ženska Liga Zima 2025 / 2026</footer>
+
+<script>
+    // Theme
+    (function () {
+        const t = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', t);
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('themeBtn').textContent = t === 'dark' ? '☀️' : '🌙';
+        });
+    })();
+    function toggleTheme() {
+        const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        document.getElementById('themeBtn').textContent = next === 'dark' ? '☀️' : '🌙';
+    }
+
+    function switchLeague(selectEl) {
+        if (!selectEl || !selectEl.value) return;
+        window.location.href = selectEl.value;
+    }
+
+    const PLAYERS = {"Matea Begić": {"rang": 1, "total": 520, "kolo": [120, 200, 200]}, "Lahorka Drčić": {"rang": 2, "total": 520, "kolo": [180, 160, 180]}, "Magdalena Drčić": {"rang": 3, "total": 480, "kolo": [160, 180, 140]}, "Inja Sušek": {"rang": 4, "total": 480, "kolo": [160, 180, 140]}, "Sonja Ćopić": {"rang": 5, "total": 440, "kolo": [100, 160, 180]}, "Danijela Marčelja": {"rang": 6, "total": 420, "kolo": [180, 120, 120]}, "Tea Miletić": {"rang": 7, "total": 380, "kolo": [140, 140, 100]}, "Ana Grgic": {"rang": 8, "total": 380, "kolo": [140, 140, 100]}, "Katarina Denac": {"rang": 9, "total": 360, "kolo": [200, 0, 160]}, "Barbara Medarić": {"rang": 10, "total": 360, "kolo": [200, 0, 160]}, "Iva Kramaric": {"rang": 11, "total": 340, "kolo": [100, 120, 120]}, "Maja Medarić": {"rang": 12, "total": 320, "kolo": [120, 200, 0]}, "Melita Marčelja": {"rang": 13, "total": 260, "kolo": [80, 100, 80]}, "Roka Škugor Baiutti": {"rang": 14, "total": 260, "kolo": [80, 100, 80]}, "Klara Miletic": {"rang": 15, "total": 200, "kolo": [0, 0, 200]}};
+    const KOLO_LABELS = ["Kolo 2025-11-29", "Kolo 2026-01-19", "Kolo 2026-03-08"];
+    const ALL_NAMES = Object.keys(PLAYERS).sort();
+
+    // Selected values
+    let selected = { 1: null, 2: null };
+
+    // Build dropdown items
+    function buildList(n, filter) {
+        const list = document.getElementById('list' + n);
+        const q = filter.toLowerCase();
+        const matches = ALL_NAMES.filter(name => name.toLowerCase().includes(q));
+        if (matches.length === 0) {
+            list.innerHTML = '<div class="dropdown-item no-results">Nema rezultata</div>';
+        } else {
+            list.innerHTML = matches.map(name =>
+                '<div class="dropdown-item' + (name === selected[n] ? ' active' : '') + '" data-name="' + name + '">' + name + '</div>'
+            ).join('');
+            list.querySelectorAll('.dropdown-item:not(.no-results)').forEach(item => {
+                item.addEventListener('mousedown', function(e) {
+                    e.preventDefault();
+                    selectPlayer(n, this.dataset.name);
+                });
+            });
+        }
+    }
+
+    function openList(n) {
+        buildList(n, document.getElementById('search' + n).value);
+        document.getElementById('list' + n).classList.add('open');
+    }
+
+    function closeList(n) {
+        setTimeout(() => document.getElementById('list' + n).classList.remove('open'), 150);
+    }
+
+    function filterList(n) {
+        const val = document.getElementById('search' + n).value;
+        if (selected[n] && val !== selected[n]) {
+            selected[n] = null;
+            calculate();
+        }
+        buildList(n, val);
+        document.getElementById('list' + n).classList.add('open');
+    }
+
+    function selectPlayer(n, name) {
+        selected[n] = name;
+        document.getElementById('search' + n).value = name;
+        document.getElementById('search' + n).classList.add('selected');
+        document.getElementById('list' + n).classList.remove('open');
+        calculate();
+    }
+
+    let calcOpen = false;
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('calcBody').style.display = 'none';
+        document.getElementById('calcToggleIcon').textContent = '▼';
+    });
+    function toggleCalc() {
+        calcOpen = !calcOpen;
+        document.getElementById('calcBody').style.display = calcOpen ? 'block' : 'none';
+        document.getElementById('calcToggleIcon').textContent = calcOpen ? '▲' : '▼';
+    }
+
+    function calculate() {
+        const p1 = selected[1];
+        const p2 = selected[2];
+        const result = document.getElementById('calcResult');
+
+        document.querySelectorAll('tr.highlighted').forEach(r => r.classList.remove('highlighted'));
+
+        if (!p1 || !p2) { result.classList.remove('visible'); return; }
+
+        const d1 = PLAYERS[p1];
+        const d2 = PLAYERS[p2];
+        const combined = d1.total + d2.total;
+
+        document.getElementById('resultNames').textContent = p1 + ' + ' + p2;
+        document.getElementById('resultTotal').innerHTML = combined + '<span>bodova ukupno</span>';
+
+        const breakdown = document.getElementById('resultBreakdown');
+        breakdown.innerHTML = KOLO_LABELS.map((label, i) => {
+            const pts = (d1.kolo[i] || 0) + (d2.kolo[i] || 0);
+            return '<div class="breakdown-item"><div class="bk-label">' + label + '</div><div>' + pts + '</div></div>';
+        }).join('');
+
+        result.classList.add('visible');
+
+        document.querySelectorAll('#tableBody tr').forEach(row => {
+            if (row.dataset.name === p1 || row.dataset.name === p2) {
+                row.classList.add('highlighted');
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
