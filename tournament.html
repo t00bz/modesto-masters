@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masters Modesto Tournament Bracket</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --red: #C8102E;
+            --red-dark: #9B0B22;
+            --blue: #003DA5;
+            --blue-dark: #002880;
+            --white: #FFFFFF;
+            --off-white: #F5F5F7;
+            --grey: #E8E8E8;
+            --text: #1A1A2E;
+            --gold: #F7C948;
+            --line: rgba(0, 61, 165, 0.22);
+            --shadow: 0 14px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        [data-theme="dark"] {
+            --red: #E8234A;
+            --red-dark: #C8102E;
+            --blue: #5B8FE8;
+            --blue-dark: #3D6FCC;
+            --white: #1E1E2E;
+            --off-white: #13131F;
+            --grey: #2E2E48;
+            --text: #E2E2F0;
+            --gold: #FFD466;
+            --line: rgba(91, 143, 232, 0.32);
+            --shadow: 0 14px 40px rgba(0, 0, 0, 0.38);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(200, 16, 46, 0.10), transparent 30%),
+                radial-gradient(circle at top right, rgba(0, 61, 165, 0.14), transparent 35%),
+                var(--off-white);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 52%, var(--red) 100%);
+            padding: 2rem 1rem 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 20px,
+                    rgba(255, 255, 255, 0.03) 20px,
+                    rgba(255, 255, 255, 0.03) 40px
+                );
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.28);
+            transform: translateY(-1px);
+        }
+
+        .league-switch { margin-top: 0.9rem; display: flex; gap: 0.6rem; align-items: center; justify-content: center; animation: slideUp 0.6s ease 0.62s both; }
+        .league-switch label { color: rgba(255,255,255,0.88); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 800; }
+        .league-switch select {
+            min-width: 240px; max-width: 92vw; background: rgba(255,255,255,0.15); color: var(--white);
+            border: 1px solid rgba(255,255,255,0.42); border-radius: 999px; padding: 0.5rem 0.9rem;
+            font-family: 'Nunito', sans-serif; font-size: 0.95rem; font-weight: 800; cursor: pointer;
+        }
+        .league-switch select option { color: #1A1A2E; background: #FFFFFF; }
+
+        .header-inner {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.4));
+            animation: floatIn 0.8s ease both;
+        }
+
+        h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4.8rem);
+            color: var(--white);
+            letter-spacing: 0.05em;
+            line-height: 1;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.6s ease 0.2s both;
+        }
+
+        .season-badge {
+            display: inline-block;
+            background: var(--red);
+            color: var(--white);
+            font-size: 0.9rem;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            padding: 0.3rem 1.2rem;
+            border-radius: 2rem;
+            text-transform: uppercase;
+            animation: slideUp 0.6s ease 0.35s both;
+        }
+
+        .stats-bar {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+            animation: slideUp 0.6s ease 0.5s both;
+        }
+
+        .stat {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.86);
+        }
+
+        .stat-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            line-height: 1;
+            color: var(--white);
+        }
+
+        .stat-label {
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            opacity: 0.82;
+        }
+
+        .wave {
+            display: block;
+            width: 100%;
+            margin-top: -2px;
+            color: var(--off-white);
+        }
+
+        main {
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 2rem 1rem 4rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .bracket-shell {
+            background: var(--white);
+            border-radius: 22px;
+            box-shadow: var(--shadow);
+            padding: 1.75rem;
+            overflow-x: auto;
+        }
+
+        .round-label,
+        .champion-title {
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 0.05em;
+            font-weight: 400;
+        }
+
+        .bracket {
+            min-width: 1280px;
+            display: flex;
+            gap: 1rem;
+            align-items: stretch;
+        }
+
+        .side {
+            flex: 2;
+            display: flex;
+            gap: 1rem;
+            align-items: stretch;
+        }
+
+        .column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .round-column {
+            position: relative;
+        }
+
+        .round-label {
+            font-size: 1.2rem;
+            color: var(--blue);
+            margin-bottom: 0.65rem;
+            padding-left: 0.25rem;
+        }
+
+        .matches {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        .match {
+            background: linear-gradient(135deg, rgba(0, 61, 165, 0.06), rgba(200, 16, 46, 0.04));
+            border: 1px solid var(--grey);
+            border-radius: 16px;
+            padding: 0.65rem;
+            position: relative;
+        }
+
+        .match-meta {
+            font-size: 0.76rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: color-mix(in srgb, var(--text) 68%, transparent);
+            padding: 0.2rem 0.35rem 0.55rem;
+        }
+
+        .match-scoreline {
+            font-size: 0.76rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: color-mix(in srgb, var(--text) 68%, transparent);
+            padding: 0.55rem 0.35rem 0.2rem;
+        }
+
+        .match::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -1rem;
+            width: 1rem;
+            height: 2px;
+            background: var(--line);
+            transform: translateY(-50%);
+        }
+
+        .right-side .match::after {
+            right: auto;
+            left: -1rem;
+        }
+
+        .match.final-connector::after,
+        .match.no-connector::after {
+            display: none;
+        }
+
+        .team {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 0.6rem;
+            align-items: center;
+            background: var(--white);
+            border-radius: 12px;
+            padding: 0.7rem 0.8rem;
+        }
+
+        .team + .team {
+            margin-top: 0.45rem;
+        }
+
+        .seed {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--off-white);
+            border: 1px solid var(--grey);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: var(--blue);
+        }
+
+        .team-name {
+            font-size: 0.95rem;
+            font-weight: 700;
+            line-height: 1.2;
+            min-height: 1.15em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .seed-empty {
+            opacity: 0.35;
+            border-style: dashed;
+        }
+
+        .team-score-inline {
+            margin-left: 0.35rem;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.05rem;
+            letter-spacing: 0.04em;
+            color: var(--red);
+        }
+
+        .winner {
+            border: 2px solid rgba(200, 16, 46, 0.16);
+            background: linear-gradient(135deg, rgba(200, 16, 46, 0.07), rgba(0, 61, 165, 0.03));
+        }
+
+        .winner .seed {
+            background: var(--red);
+            color: var(--white);
+            border-color: var(--red);
+        }
+
+        .winner .team-name {
+            color: var(--red-dark);
+        }
+
+        .center-column {
+            width: 280px;
+            flex-shrink: 0;
+            display: grid;
+            grid-template-rows: 1fr auto 1fr;
+            align-items: center;
+            gap: 1.25rem;
+            padding: 0 0.5rem;
+        }
+
+        .final-card,
+        .champion-card {
+            width: 100%;
+            border-radius: 22px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .final-card {
+            background: linear-gradient(135deg, var(--blue-dark), var(--blue));
+            color: var(--white);
+            padding: 1rem;
+            position: relative;
+            grid-row: 2;
+            align-self: center;
+        }
+
+        .final-card::before,
+        .final-card::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 1.4rem;
+            height: 2px;
+            background: var(--line);
+            transform: translateY(-50%);
+        }
+
+        .final-card::before { left: -1.4rem; }
+        .final-card::after { right: -1.4rem; }
+
+        .final-label {
+            font-size: 1.15rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            opacity: 0.8;
+            margin-bottom: 0.65rem;
+        }
+
+        .final-card .team {
+            background: rgba(255, 255, 255, 0.14);
+            color: var(--white);
+        }
+
+        .final-card .team-name,
+        .final-card .winner .team-name,
+        .final-card .team-score-inline {
+            color: var(--white);
+        }
+
+        .final-card .seed {
+            background: rgba(255, 255, 255, 0.14);
+            border-color: rgba(255, 255, 255, 0.25);
+            color: var(--white);
+        }
+
+        .final-card .winner {
+            border-color: rgba(255, 255, 255, 0.28);
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        .final-card .winner .seed {
+            background: var(--white);
+            color: var(--blue-dark);
+            border-color: var(--white);
+        }
+
+        .final-card .match-meta,
+        .final-card .match-scoreline {
+            color: rgba(255, 255, 255, 0.84);
+        }
+
+        .champion-card {
+            background: linear-gradient(145deg, #fff2c9, #ffd86b);
+            color: #5C3900;
+            padding: 1.3rem 1rem;
+            border: 2px solid rgba(92, 57, 0, 0.08);
+            grid-row: 1;
+            align-self: end;
+            justify-self: center;
+            max-width: 210px;
+            width: 100%;
+        }
+
+        [data-theme="dark"] .champion-card {
+            background: linear-gradient(145deg, #5d4513, #8c6a1f);
+            color: #fff0c2;
+            border-color: rgba(255, 212, 102, 0.2);
+        }
+
+        .champion-title {
+            font-size: 1.45rem;
+            color: inherit;
+            margin-bottom: 0.35rem;
+        }
+
+        .champion-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.4rem;
+            line-height: 1;
+            letter-spacing: 0.04em;
+        }
+
+        .champion-meta {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.78rem;
+            color: #999;
+            letter-spacing: 0.05em;
+        }
+
+        @keyframes floatIn {
+            from { opacity: 0; transform: translateY(-20px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 1100px) {
+            .bracket-shell {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 720px) {
+            header {
+                padding: 4rem 1rem 2.4rem;
+            }
+
+            .logo {
+                width: 80px;
+                height: 80px;
+            }
+
+            .stats-bar {
+                gap: 1rem;
+            }
+
+            main {
+                padding: 1.25rem 0.75rem 3rem;
+            }
+
+            .bracket-shell {
+                padding: 1rem;
+                overflow-x: visible;
+                border-radius: 16px;
+            }
+
+            .bracket {
+                min-width: 0;
+                flex-direction: column;
+                gap: 1.25rem;
+            }
+
+            .side {
+                flex: none;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .center-column {
+                width: 100%;
+                grid-template-rows: auto auto;
+                gap: 1rem;
+                padding: 0;
+            }
+
+            .champion-card {
+                grid-row: 1;
+                align-self: stretch;
+                justify-self: stretch;
+                max-width: none;
+            }
+
+            .final-card {
+                grid-row: 2;
+            }
+
+            .match::after,
+            .right-side .match::after,
+            .final-card::before,
+            .final-card::after {
+                display: none;
+            }
+
+            .matches {
+                gap: 0.6rem;
+            }
+
+            .round-label {
+                font-size: 1.05rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle dark mode">&#9789;</button>
+    <div class="header-inner">
+        <img src="modesto_logo.png" alt="Modesto logo" class="logo" onerror="this.style.display='none'">
+        <h1>Masters - Zimska Liga</h1>
+        <span class="season-badge">Sezona 2025/2026</span>
+        <div class="league-switch"><label for="leagueSwitcher">Natjecanje</label><select id="leagueSwitcher" onchange="switchLeague(this)"><option value="tournament.html" selected>Masters</option><option value="zimska_liga_modesto/index.html">Zimska Liga Modesto</option><option value="zenska_liga_zima/index.html">Ženska Liga Zima</option></select></div>
+    </div>
+</header>
+
+<svg class="wave" viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M0,20 C360,40 1080,0 1440,20 L1440,40 L0,40 Z"></path>
+</svg>
+
+<main>
+    <section class="bracket-shell">
+        <div class="bracket" id="bracketRoot"></div>
+    </section>
+</main>
+
+<footer>Modesto Padel Club &middot; Masters Tournament Bracket</footer>
+
+<script>
+    const BRACKET_DATA = {
+        "left": {
+                "rounds": [
+                        {
+                                "label": "Osmina finala",
+                                "matches": [
+                                        {
+                                                "date": "",
+                                                "scoreline": "",
+                                                "teams": [
+                                                        {
+                                                                "seed": "1",
+                                                                "name": "Dač/Mara THE jugadores",
+                                                                "score": "",
+                                                                "winner": false
+                                                        },
+                                                        {
+                                                                "seed": "16",
+                                                                "name": "Zoka/Vec",
+                                                                "score": "",
+                                                                "winner": false
+                                                        }
+                                                ]
+                                        },
+                                        {
+                                                "date": "",
+                                                "scoreline": "",
+                                                "teams": [
+                                                        {
+                                                                "seed": "8",
+                                                                "name": "Draž/Toni",
+                                                                "score": "",
+                                                                "winner": false
+                                                        },
+                                                        {
+                                                                "seed": "9",
+                                                                "name": "Ančić/Heinelt",
+                                                                "score": "",
+                                                                "winner": false
+                                                        }
+                                                ]
+                                        },
+                                        {
+                                                "date": "",
+                                                "scoreline": "",
+                                                "teams": [
+                                                        {
+                                                                "seed": "5",
+                                                                "name": "Renta/Šajo",
+                                                                "score": "",
+                                                                "winner": false
+                                                        },
+                                                        {
+                                                                "seed": "12",
+                                                                "name": "Galonja/Milunić",
+                                                                "score": "",
+                                                                "winner": false
+                                                        }
+                                                ]
+                                        },
+                                        {
+                                                "date": "",
+                                                "scoreline": "",
+                                                "teams": [
+                                                        {
+                                                                "seed": "4",
+                                                                "name": "Draženko i Kuka",
+                                                                "score": "",
+                                                                "winner": false
+                                                        },
+                                                        {
+                                                                "seed": "13",
+                                                                "name": "Šoljo/Danko",
+                                                                "score": "",
+                                                                "winner": false
+                                                        }
+                                                ]
+                                        }
+                                ]
+                        },
+                        {
+                                "label": "Četvrtfinale",
+                                "stacked": true,
+                                "matches": [
+                                        {
+                                                "date": "",
+                                                "scoreline": "",
+                                                "teams": [
+                                                        {
+                                                                "seed": "",
+                                                                "name": "",
+                                                                "score": "",
+                                                                "winner": false
+                                                        },
+                                                        {
+                                                                "seed": "",
+                                                                "name": "",
+                                                                "score": "",
+                                                                "winner": false
+                                                        }
+                                                ]
+                                        },
+                                        {
+                                                "date": "",
+                                                "scoreline": "",
+                                                "teams": [
+                                                        {
+                                                                "seed": "",
+                                                                "name": "",
+                                                                "score": "",
+                                                                "winner": false
+                                                        },
+                                                        {
+                                                                "seed": "",
+                                                                "name": "",
+                                                                "score": "",
+                                                                "winner": false
+                                                        }
+                                                ],
+                                                "connector": "final-connector"
+                                        }
+                                ]
+                        }
+                ],
+                "semifinal": {
+                        "label": "Polufinale",
+                        "matches": [
+                                {
+                                        "date": "",
+                                        "scoreline": "",
+                                        "teams": [
+                                                {
+                                                        "seed": "",
+                                                        "name": "",
+                                                        "score": "",
+                                                        "winner": false
+                                                },
+                                                {
+                                                        "seed": "",
+                                                        "name": "",
+                                                        "score": "",
+                                                        "winner": false
+                                                }
+                                        ],
+                                        "connector": "no-connector"
+                                }
+                        ]
+                }
+        },
+        "center": {
+                "champion": {
+                        "title": "Pobjednici",
+                        "name": "",
+                        "meta": ""
+                },
+                "final": {
+                        "label": "Finale",
+                        "date": "",
+                        "scoreline": "",
+                        "teams": [
+                                {
+                                        "seed": "",
+                                        "name": "",
+                                        "score": "",
+                                        "winner": false
+                                },
+                                {
+                                        "seed": "",
+                                        "name": "",
+                                        "score": "",
+                                        "winner": false
+                                }
+                        ]
+                }
+        },
+        "right": {
+                "semifinal": {
+                        "label": "Polufinale",
+                        "matches": [
+                                {
+                                        "date": "",
+                                        "scoreline": "",
+                                        "teams": [
+                                                {
+                                                        "seed": "",
+                                                        "name": "",
+                                                        "score": "",
+                                                        "winner": false
+                                                },
+                                                {
+                                                        "seed": "",
+                                                        "name": "",
+                                                        "score": "",
+                                                        "winner": false
+                                                }
+                                        ],
+                                        "connector": "no-connector"
+                                }
+                        ]
+                },
+                "rounds": [
+                        {
+                                "label": "Četvrtfinale",
+                                "stacked": true,
+                                "matches": [
+                                        {
+                                                "date": "",
+                                                "scoreline": "",
+                                                "teams": [
+                                                        {
+                                                                "seed": "",
+                                                                "name": "",
+                                                                "score": "",
+                                                                "winner": false
+                                                        },
+                                                        {
+                                                                "seed": "",
+                                                                "name": "",
+                                                                "score": "",
+                                                                "winner": false
+                                                        }
+                                                ],
+                                                "connector": "final-connector"
+                                        },
+                                        {
+                                                "date": "",
+                                                "scoreline": "",
+                                                "teams": [
+                                                        {
+                                                                "seed": "",
+                                                                "name": "",
+                                                                "score": "",
+                                                                "winner": false
+                                                        },
+                                                        {
+                                                                "seed": "",
+                                                                "name": "",
+                                                                "score": "",
+                                                                "winner": false
+                                                        }
+                                                ]
+                                        }
+                                ]
+                        },
+                        {
+                                "label": "Osmina finala",
+                                "matches": [
+                                        {
+                                                "date": "",
+                                                "scoreline": "",
+                                                "teams": [
+                                                        {
+                                                                "seed": "3",
+                                                                "name": "Barić/Brka",
+                                                                "score": "",
+                                                                "winner": false
+                                                        },
+                                                        {
+                                                                "seed": "14",
+                                                                "name": "Bosch/Amki",
+                                                                "score": "",
+                                                                "winner": false
+                                                        }
+                                                ]
+                                        },
+                                        {
+                                                "date": "",
+                                                "scoreline": "",
+                                                "teams": [
+                                                        {
+                                                                "seed": "6",
+                                                                "name": "Alić/Išek",
+                                                                "score": "",
+                                                                "winner": false
+                                                        },
+                                                        {
+                                                                "seed": "11",
+                                                                "name": "Kasa/Gnjatić",
+                                                                "score": "",
+                                                                "winner": false
+                                                        }
+                                                ]
+                                        },
+                                        {
+                                                "date": "",
+                                                "scoreline": "",
+                                                "teams": [
+                                                        {
+                                                                "seed": "7",
+                                                                "name": "Marović/Rođak",
+                                                                "score": "",
+                                                                "winner": false
+                                                        },
+                                                        {
+                                                                "seed": "10",
+                                                                "name": "Medo/Kule",
+                                                                "score": "",
+                                                                "winner": false
+                                                        }
+                                                ]
+                                        },
+                                        {
+                                                "date": "",
+                                                "scoreline": "",
+                                                "teams": [
+                                                        {
+                                                                "seed": "2",
+                                                                "name": "Četvrt tone",
+                                                                "score": "",
+                                                                "winner": false
+                                                        },
+                                                        {
+                                                                "seed": "15",
+                                                                "name": "Vidović/Turk",
+                                                                "score": "",
+                                                                "winner": false
+                                                        }
+                                                ]
+                                        }
+                                ]
+                        }
+                ]
+        }
+};
+
+    function switchLeague(selectEl) {
+        if (!selectEl || !selectEl.value) return;
+        window.location.href = selectEl.value;
+    }
+
+    function toggleTheme() {
+        const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        document.getElementById('themeBtn').textContent = next === 'dark' ? '\u2600' : '\u263D';
+    }
+
+    function renderBracket() {
+        const root = document.getElementById('bracketRoot');
+        root.innerHTML = [
+            renderSide(BRACKET_DATA.left, 'left-side'),
+            renderRoundColumn(BRACKET_DATA.left.semifinal),
+            renderCenterColumn(BRACKET_DATA.center),
+            renderRoundColumn(BRACKET_DATA.right.semifinal),
+            renderSide(BRACKET_DATA.right, 'right-side')
+        ].join('');
+    }
+
+    function renderSide(sideData, sideClass) {
+        return '<div class="side ' + sideClass + '">' +
+            sideData.rounds.map(renderRoundColumn).join('') +
+            '</div>';
+    }
+
+    function renderRoundColumn(round) {
+        return '<div class="column round-column">' +
+            '<div class="round-label">' + escapeHtml(round.label) + '</div>' +
+            '<div class="matches">' +
+            round.matches.map(renderMatch).join('') +
+            '</div>' +
+            '</div>';
+    }
+
+    function hasText(v) {
+        return v !== undefined && v !== null && String(v).trim() !== '';
+    }
+
+    function renderCenterColumn(center) {
+        const champName = hasText(center.champion.name) ? escapeHtml(center.champion.name) : '&nbsp;';
+        const champMeta = hasText(center.champion.meta)
+            ? '<div class="champion-meta">' + escapeHtml(center.champion.meta) + '</div>'
+            : '';
+        return '<div class="center-column">' +
+            '<article class="champion-card">' +
+            '<div class="champion-title">' + escapeHtml(center.champion.title) + '</div>' +
+            '<div class="champion-name">' + champName + '</div>' +
+            champMeta +
+            '</article>' +
+            '<article class="final-card">' +
+            '<div class="final-label">' + escapeHtml(center.final.label) + '</div>' +
+            renderMatchBody(center.final) +
+            '</article>' +
+            '</div>';
+    }
+
+    function renderMatch(match) {
+        const connectorClass = match.connector ? ' ' + match.connector : '';
+        return '<article class="match' + connectorClass + '">' +
+            renderMatchBody(match) +
+            '</article>';
+    }
+
+    function renderMatchBody(match) {
+        const meta = hasText(match.date)
+            ? '<div class="match-meta">' + escapeHtml(match.date) + '</div>'
+            : '';
+        const scoreline = hasText(match.scoreline)
+            ? '<div class="match-scoreline">' + escapeHtml(match.scoreline) + '</div>'
+            : '';
+        return meta + match.teams.map(renderTeam).join('') + scoreline;
+    }
+
+    function renderTeam(team) {
+        const seed = hasText(team.seed)
+            ? '<span class="seed">' + escapeHtml(String(team.seed)) + '</span>'
+            : '<span class="seed seed-empty"></span>';
+        const name = hasText(team.name) ? escapeHtml(team.name) : '&nbsp;';
+        const score = hasText(team.score)
+            ? ' <span class="team-score-inline">' + escapeHtml(String(team.score)) + '</span>'
+            : '';
+        return '<div class="team' + (team.winner ? ' winner' : '') + '">' +
+            seed +
+            '<span class="team-name">' + name + score + '</span>' +
+            '</div>';
+    }
+
+    function escapeHtml(value) {
+        return String(value)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const theme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+        document.getElementById('themeBtn').textContent = theme === 'dark' ? '\u2600' : '\u263D';
+        renderBracket();
+    });
+</script>
+</body>
+</html>
