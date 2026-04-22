@@ -818,330 +818,146 @@
 <footer>Modesto Padel Club &middot; Masters Tournament Bracket</footer>
 
 <script>
-    const BRACKET_DATA = {
-        "left": {
-                "rounds": [
-                        {
-                                "label": "Left Side - Round of 16",
-                                "matches": [
-                                        {
-                                                "date": "",
-                                                "scoreline": "",
-                                                "teams": [
-                                                        {
-                                                                "seed": "1",
-                                                                "name": "Dač/Mara THE jugadores",
-                                                                "score": "",
-                                                                "winner": false
-                                                        },
-                                                        {
-                                                                "seed": "16",
-                                                                "name": "Zoka/Vec",
-                                                                "score": "",
-                                                                "winner": false
-                                                        }
-                                                ]
-                                        },
-                                        {
-                                                "date": "",
-                                                "scoreline": "",
-                                                "teams": [
-                                                        {
-                                                                "seed": "8",
-                                                                "name": "Draž/Toni",
-                                                                "score": "",
-                                                                "winner": false
-                                                        },
-                                                        {
-                                                                "seed": "9",
-                                                                "name": "Ančić/Heinelt",
-                                                                "score": "",
-                                                                "winner": false
-                                                        }
-                                                ]
-                                        },
-                                        {
-                                                "date": "",
-                                                "scoreline": "",
-                                                "teams": [
-                                                        {
-                                                                "seed": "5",
-                                                                "name": "Renta/Šajo",
-                                                                "score": "",
-                                                                "winner": false
-                                                        },
-                                                        {
-                                                                "seed": "12",
-                                                                "name": "Galonja/Milunić",
-                                                                "score": "",
-                                                                "winner": false
-                                                        }
-                                                ]
-                                        },
-                                        {
-                                                "date": "",
-                                                "scoreline": "",
-                                                "teams": [
-                                                        {
-                                                                "seed": "4",
-                                                                "name": "Draženko i Kuka",
-                                                                "score": "",
-                                                                "winner": false
-                                                        },
-                                                        {
-                                                                "seed": "13",
-                                                                "name": "Šoljo/Danko",
-                                                                "score": "",
-                                                                "winner": false
-                                                        }
-                                                ]
-                                        }
-                                ]
-                        },
-                        {
-                                "label": "Quarterfinals",
-                                "stacked": true,
-                                "matches": [
-                                        {
-                                                "date": "",
-                                                "scoreline": "",
-                                                "teams": [
-                                                        {
-                                                                "seed": "",
-                                                                "name": "",
-                                                                "score": "",
-                                                                "winner": false
-                                                        },
-                                                        {
-                                                                "seed": "",
-                                                                "name": "",
-                                                                "score": "",
-                                                                "winner": false
-                                                        }
-                                                ]
-                                        },
-                                        {
-                                                "date": "",
-                                                "scoreline": "",
-                                                "teams": [
-                                                        {
-                                                                "seed": "",
-                                                                "name": "",
-                                                                "score": "",
-                                                                "winner": false
-                                                        },
-                                                        {
-                                                                "seed": "",
-                                                                "name": "",
-                                                                "score": "",
-                                                                "winner": false
-                                                        }
-                                                ],
-                                                "connector": "final-connector"
-                                        }
-                                ]
-                        }
-                ],
-                "semifinal": {
-                        "label": "Semifinal",
-                        "matches": [
-                                {
-                                        "date": "",
-                                        "scoreline": "",
-                                        "teams": [
-                                                {
-                                                        "seed": "",
-                                                        "name": "",
-                                                        "score": "",
-                                                        "winner": false
-                                                },
-                                                {
-                                                        "seed": "",
-                                                        "name": "",
-                                                        "score": "",
-                                                        "winner": false
-                                                }
-                                        ],
-                                        "connector": "no-connector"
-                                }
-                        ]
-                }
-        },
-        "center": {
-                "champion": {
-                        "title": "Champion",
-                        "name": "",
-                        "meta": ""
-                },
-                "final": {
-                        "label": "Final",
-                        "date": "",
-                        "scoreline": "",
-                        "teams": [
-                                {
-                                        "seed": "",
-                                        "name": "",
-                                        "score": "",
-                                        "winner": false
-                                },
-                                {
-                                        "seed": "",
-                                        "name": "",
-                                        "score": "",
-                                        "winner": false
-                                }
-                        ]
-                }
-        },
-        "right": {
-                "semifinal": {
-                        "label": "Semifinal",
-                        "matches": [
-                                {
-                                        "date": "",
-                                        "scoreline": "",
-                                        "teams": [
-                                                {
-                                                        "seed": "",
-                                                        "name": "",
-                                                        "score": "",
-                                                        "winner": false
-                                                },
-                                                {
-                                                        "seed": "",
-                                                        "name": "",
-                                                        "score": "",
-                                                        "winner": false
-                                                }
-                                        ],
-                                        "connector": "no-connector"
-                                }
-                        ]
-                },
-                "rounds": [
-                        {
-                                "label": "Quarterfinals",
-                                "stacked": true,
-                                "matches": [
-                                        {
-                                                "date": "",
-                                                "scoreline": "",
-                                                "teams": [
-                                                        {
-                                                                "seed": "",
-                                                                "name": "",
-                                                                "score": "",
-                                                                "winner": false
-                                                        },
-                                                        {
-                                                                "seed": "",
-                                                                "name": "",
-                                                                "score": "",
-                                                                "winner": false
-                                                        }
-                                                ],
-                                                "connector": "final-connector"
-                                        },
-                                        {
-                                                "date": "",
-                                                "scoreline": "",
-                                                "teams": [
-                                                        {
-                                                                "seed": "",
-                                                                "name": "",
-                                                                "score": "",
-                                                                "winner": false
-                                                        },
-                                                        {
-                                                                "seed": "",
-                                                                "name": "",
-                                                                "score": "",
-                                                                "winner": false
-                                                        }
-                                                ]
-                                        }
-                                ]
-                        },
-                        {
-                                "label": "Right Side - Round of 16",
-                                "matches": [
-                                        {
-                                                "date": "",
-                                                "scoreline": "",
-                                                "teams": [
-                                                        {
-                                                                "seed": "3",
-                                                                "name": "Barić/Brka",
-                                                                "score": "",
-                                                                "winner": false
-                                                        },
-                                                        {
-                                                                "seed": "14",
-                                                                "name": "Bosch/Amki",
-                                                                "score": "",
-                                                                "winner": false
-                                                        }
-                                                ]
-                                        },
-                                        {
-                                                "date": "",
-                                                "scoreline": "",
-                                                "teams": [
-                                                        {
-                                                                "seed": "6",
-                                                                "name": "Alić/Išek",
-                                                                "score": "",
-                                                                "winner": false
-                                                        },
-                                                        {
-                                                                "seed": "11",
-                                                                "name": "Kasa/Gnjatić",
-                                                                "score": "",
-                                                                "winner": false
-                                                        }
-                                                ]
-                                        },
-                                        {
-                                                "date": "",
-                                                "scoreline": "",
-                                                "teams": [
-                                                        {
-                                                                "seed": "7",
-                                                                "name": "Marović/Rođak",
-                                                                "score": "",
-                                                                "winner": false
-                                                        },
-                                                        {
-                                                                "seed": "10",
-                                                                "name": "Medo/Kule",
-                                                                "score": "",
-                                                                "winner": false
-                                                        }
-                                                ]
-                                        },
-                                        {
-                                                "date": "",
-                                                "scoreline": "",
-                                                "teams": [
-                                                        {
-                                                                "seed": "2",
-                                                                "name": "Četvrt tone",
-                                                                "score": "",
-                                                                "winner": false
-                                                        },
-                                                        {
-                                                                "seed": "15",
-                                                                "name": "Vidović/Turk",
-                                                                "score": "",
-                                                                "winner": false
-                                                        }
-                                                ]
-                                        }
-                                ]
-                        }
-                ]
+    const SHEET_ID = '1teu2BU7oFytEwIXJ00UULUNCUrGbkPv8g7cQ1sq7pZw';
+    const L_QF_CONNECTORS = [null, 'final-connector'];
+    const R_QF_CONNECTORS = ['final-connector', null];
+    const SF_CONNECTORS = ['no-connector'];
+
+    let BRACKET_DATA = null;
+
+    function gvizUrl(headers) {
+        const params = new URLSearchParams({
+            tqx: 'out:json',
+            headers: String(headers),
+        });
+        return 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?' + params.toString();
+    }
+
+    async function fetchSheet(headers) {
+        const res = await fetch(gvizUrl(headers));
+        if (!res.ok) throw new Error('Fetch failed: ' + res.status);
+        const text = await res.text();
+        const start = text.indexOf('{');
+        const end = text.lastIndexOf('}');
+        if (start < 0 || end < 0) throw new Error('Unexpected gviz payload');
+        const json = JSON.parse(text.substring(start, end + 1));
+        if (json.status === 'error') {
+            const msg = (json.errors || []).map(e => e.detailed_message || e.message).join('; ');
+            throw new Error('gviz error: ' + (msg || 'unknown'));
         }
-};
+        return json.table;
+    }
+
+    function rowsAsObjects(table) {
+        const labels = (table.cols || []).map(c => String(c.label || '').trim());
+        return (table.rows || []).map(r => {
+            const obj = {};
+            (r.c || []).forEach((gcell, i) => {
+                obj[labels[i]] = gcell;
+            });
+            return obj;
+        });
+    }
+
+    function cellText(gcell, def) {
+        if (!gcell) return def;
+        const v = gcell.f != null ? gcell.f : gcell.v;
+        if (v === null || v === undefined) return def;
+        const s = String(v).trim();
+        if (!s || s.toUpperCase() === 'TBD') return def;
+        return s;
+    }
+
+    function cellField(row, key, def) {
+        return cellText(row ? row[key] : null, def != null ? def : '');
+    }
+
+    function cellBool(row, key) {
+        const gcell = row ? row[key] : null;
+        if (!gcell) return false;
+        const v = gcell.v;
+        if (typeof v === 'boolean') return v;
+        if (typeof v === 'number') return !!v;
+        if (typeof v === 'string') return ['1', 'true', 'yes'].includes(v.trim().toLowerCase());
+        return false;
+    }
+
+    function toMatch(row, connector) {
+        const m = {
+            date: cellField(row, 'date'),
+            scoreline: cellField(row, 'scoreline'),
+            teams: [
+                { seed: cellField(row, 'team1_seed'), name: cellField(row, 'team1_name'), score: cellField(row, 'team1_score'), winner: cellBool(row, 'team1_winner') },
+                { seed: cellField(row, 'team2_seed'), name: cellField(row, 'team2_name'), score: cellField(row, 'team2_score'), winner: cellBool(row, 'team2_winner') },
+            ],
+        };
+        if (connector) m.connector = connector;
+        return m;
+    }
+
+    function matchesFor(rows, roundCode, connectors) {
+        const filtered = rows
+            .filter(r => r['round'] && r['round'].v === roundCode)
+            .sort((a, b) => {
+                const pa = a['position'] && a['position'].v;
+                const pb = b['position'] && b['position'].v;
+                return (pa == null ? 0 : pa) - (pb == null ? 0 : pb);
+            });
+        return filtered.map((row, i) => toMatch(row, (connectors && connectors[i]) || null));
+    }
+
+    function championCell(champTable, rowIdx) {
+        const r = (champTable.rows || [])[rowIdx];
+        if (!r || !r.c) return '';
+        return cellText(r.c[1], '');
+    }
+
+    function finalWinnerName(finalRow) {
+        if (!finalRow) return '';
+        if (cellBool(finalRow, 'team1_winner')) return cellField(finalRow, 'team1_name');
+        if (cellBool(finalRow, 'team2_winner')) return cellField(finalRow, 'team2_name');
+        return '';
+    }
+
+    function buildBracket(matchesTable, champTable) {
+        const rows = rowsAsObjects(matchesTable);
+        const finalRow = rows.find(r => r['round'] && r['round'].v === 'FINAL') || null;
+        const autoChampName = finalWinnerName(finalRow);
+
+        return {
+            left: {
+                rounds: [
+                    { label: 'Osmina finala', matches: matchesFor(rows, 'L_R16') },
+                    { label: 'Četvrtfinale', stacked: true, matches: matchesFor(rows, 'L_QF', L_QF_CONNECTORS) },
+                ],
+                semifinal: { label: 'Polufinale', matches: matchesFor(rows, 'L_SF', SF_CONNECTORS) },
+            },
+            center: {
+                champion: {
+                    title: 'Pobjednik',
+                    name: autoChampName || championCell(champTable, 30),
+                    meta: championCell(champTable, 31),
+                },
+                final: {
+                    label: 'Finale',
+                    date: cellField(finalRow, 'date'),
+                    scoreline: cellField(finalRow, 'scoreline'),
+                    teams: [
+                        { seed: cellField(finalRow, 'team1_seed'), name: cellField(finalRow, 'team1_name'), score: cellField(finalRow, 'team1_score'), winner: cellBool(finalRow, 'team1_winner') },
+                        { seed: cellField(finalRow, 'team2_seed'), name: cellField(finalRow, 'team2_name'), score: cellField(finalRow, 'team2_score'), winner: cellBool(finalRow, 'team2_winner') },
+                    ],
+                },
+            },
+            right: {
+                semifinal: { label: 'Polufinale', matches: matchesFor(rows, 'R_SF', SF_CONNECTORS) },
+                rounds: [
+                    { label: 'Četvrtfinale', stacked: true, matches: matchesFor(rows, 'R_QF', R_QF_CONNECTORS) },
+                    { label: 'Osmina finala', matches: matchesFor(rows, 'R_R16') },
+                ],
+            },
+        };
+    }
+
 
     function switchLeague(selectEl) {
         if (!selectEl || !selectEl.value) return;
@@ -1364,9 +1180,32 @@
         const theme = localStorage.getItem('theme') || 'light';
         document.documentElement.setAttribute('data-theme', theme);
         document.getElementById('themeBtn').textContent = theme === 'dark' ? '\u2600' : '\u263D';
-        renderBracket();
-        renderMobileBracket();
+        loadAndRender();
     });
+
+    function renderStatus(message, isError) {
+        const color = isError ? 'var(--red)' : 'var(--text)';
+        const html = '<div style="padding:2rem;text-align:center;color:' + color + ';width:100%;">' + escapeHtml(message) + '</div>';
+        const desktop = document.getElementById('bracketRoot');
+        const mobile = document.getElementById('mobileBracketRoot');
+        if (desktop) desktop.innerHTML = html;
+        if (mobile) mobile.innerHTML = html;
+    }
+
+    async function loadAndRender() {
+        renderStatus('Loading bracket...', false);
+        try {
+            const [matchesTable, champTable] = await Promise.all([
+                fetchSheet('Matches', 1),
+                fetchSheet('Champion', 0),
+            ]);
+            BRACKET_DATA = buildBracket(matchesTable, champTable);
+            renderBracket();
+            renderMobileBracket();
+        } catch (err) {
+            renderStatus('Failed to load bracket: ' + (err && err.message ? err.message : err), true);
+        }
+    }
 </script>
 </body>
 </html>
