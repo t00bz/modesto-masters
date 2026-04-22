@@ -512,63 +512,284 @@
             main {
                 padding: 1.25rem 0.75rem 3rem;
             }
+        }
 
-            .bracket-shell {
-                padding: 1rem;
-                overflow-x: visible;
-                border-radius: 16px;
-            }
+        /* ==================== Mobile bracket (<= 1024px) ==================== */
+        .mobile-bracket { display: none; }
 
-            .bracket {
-                min-width: 0;
-                flex-direction: column;
-                gap: 1.25rem;
-            }
+        .mobile-bracket .m-champ {
+            background: linear-gradient(145deg, #fff2c9, #ffd86b);
+            color: #5C3900;
+            border-radius: 18px;
+            padding: 1rem 1rem 0.95rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 2px solid rgba(92, 57, 0, 0.08);
+            margin-bottom: 1rem;
+        }
 
-            .side {
-                display: contents;
-            }
+        [data-theme="dark"] .mobile-bracket .m-champ {
+            background: linear-gradient(145deg, #5d4513, #8c6a1f);
+            color: #fff0c2;
+            border-color: rgba(255, 212, 102, 0.2);
+        }
 
-            .left-side  > .round-column:nth-child(1) { order: 1; } /* L R16 */
-            .right-side > .round-column:nth-child(2) { order: 2; } /* R R16 */
-            .left-side  > .round-column:nth-child(2) { order: 3; } /* L QF */
-            .right-side > .round-column:nth-child(1) { order: 4; } /* R QF */
-            .bracket > .round-column:nth-child(2)    { order: 5; } /* L SF */
-            .bracket > .round-column:nth-child(4)    { order: 6; } /* R SF */
-            .bracket > .center-column                { order: 7; }
+        .mobile-bracket .m-champ-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 0.05em;
+        }
 
-            .center-column {
-                width: 100%;
-                grid-template-rows: auto auto;
-                gap: 1rem;
-                padding: 0;
-            }
+        .mobile-bracket .m-champ-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.9rem;
+            line-height: 1;
+            margin-top: 0.2rem;
+            letter-spacing: 0.04em;
+        }
 
-            .champion-card {
-                grid-row: 1;
-                align-self: stretch;
-                justify-self: stretch;
-                max-width: none;
-            }
+        .mobile-bracket .m-champ-name.empty {
+            opacity: 0.5;
+            font-size: 1.1rem;
+            letter-spacing: 0.22em;
+        }
 
-            .final-card {
-                grid-row: 2;
-            }
+        .mobile-bracket .m-champ-meta {
+            margin-top: 0.4rem;
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            opacity: 0.85;
+        }
 
-            .match::after,
-            .right-side .match::after,
-            .final-card::before,
-            .final-card::after {
-                display: none;
-            }
+        .mobile-bracket .m-tabs {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            background: var(--off-white);
+            padding: 0.7rem 0 0.55rem;
+            display: flex;
+            gap: 0.4rem;
+            overflow-x: auto;
+            scrollbar-width: none;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--grey);
+        }
 
-            .matches {
-                gap: 0.6rem;
-            }
+        .mobile-bracket .m-tabs::-webkit-scrollbar { display: none; }
 
-            .round-label {
-                font-size: 1.05rem;
-            }
+        .mobile-bracket .m-tab {
+            flex: 1 0 auto;
+            background: var(--white);
+            color: var(--text);
+            border: 1px solid var(--grey);
+            border-radius: 999px;
+            padding: 0.5rem 0.9rem;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800;
+            font-size: 0.82rem;
+            letter-spacing: 0.04em;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.1rem;
+            min-width: 86px;
+            transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .mobile-bracket .m-tab-sub {
+            font-size: 0.62rem;
+            font-weight: 700;
+            opacity: 0.6;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .mobile-bracket .m-tab.active {
+            background: var(--blue-dark);
+            color: var(--white);
+            border-color: var(--blue-dark);
+        }
+
+        .mobile-bracket .m-tab.active .m-tab-sub { opacity: 0.85; }
+
+        .mobile-bracket .m-pane { display: none; }
+        .mobile-bracket .m-pane.active { display: block; }
+
+        .mobile-bracket .m-round-title {
+            font-family: 'Bebas Neue', sans-serif;
+            color: var(--blue);
+            font-size: 1.35rem;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 0 0.15rem;
+        }
+
+        .mobile-bracket .m-round-title small {
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            opacity: 0.55;
+        }
+
+        .mobile-bracket .m-empty-hint {
+            background: repeating-linear-gradient(135deg, transparent 0 10px, rgba(0, 61, 165, 0.04) 10px 20px);
+            border: 1px dashed var(--line);
+            border-radius: 12px;
+            padding: 0.9rem;
+            text-align: center;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: color-mix(in srgb, var(--text) 55%, transparent);
+            letter-spacing: 0.03em;
+            margin-bottom: 0.75rem;
+        }
+
+        .mobile-bracket .m-card {
+            background: var(--white);
+            border: 1px solid var(--grey);
+            border-radius: 14px;
+            padding: 0.55rem;
+            margin-bottom: 0.65rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .mobile-bracket .m-card-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: color-mix(in srgb, var(--text) 55%, transparent);
+            padding: 0.1rem 0.35rem 0.4rem;
+        }
+
+        .mobile-bracket .m-team {
+            display: grid;
+            grid-template-columns: 28px 1fr auto;
+            gap: 0.6rem;
+            align-items: center;
+            background: var(--off-white);
+            border-radius: 10px;
+            padding: 0.55rem 0.7rem;
+        }
+
+        .mobile-bracket .m-team + .m-team { margin-top: 0.3rem; }
+
+        .mobile-bracket .m-seed {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--white);
+            border: 1px solid var(--grey);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: var(--blue);
+        }
+
+        .mobile-bracket .m-seed.empty { opacity: 0.35; border-style: dashed; }
+
+        .mobile-bracket .m-name {
+            font-weight: 700;
+            font-size: 0.95rem;
+            line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .mobile-bracket .m-name.empty { opacity: 0.5; font-weight: 600; }
+
+        .mobile-bracket .m-score {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+            color: var(--red);
+            min-width: 1.5rem;
+            text-align: right;
+        }
+
+        .mobile-bracket .m-team.winner {
+            background: linear-gradient(135deg, rgba(200, 16, 46, 0.08), rgba(0, 61, 165, 0.03));
+            border: 1.5px solid rgba(200, 16, 46, 0.22);
+        }
+
+        .mobile-bracket .m-team.winner .m-seed {
+            background: var(--red);
+            color: var(--white);
+            border-color: var(--red);
+        }
+
+        .mobile-bracket .m-team.winner .m-name { color: var(--red-dark); }
+
+        .mobile-bracket .m-scoreline {
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: color-mix(in srgb, var(--text) 65%, transparent);
+            padding: 0.55rem 0.4rem 0.15rem;
+        }
+
+        .mobile-bracket .m-final {
+            background: linear-gradient(135deg, var(--blue-dark), var(--blue));
+            color: var(--white);
+            border-radius: 18px;
+            padding: 1.1rem 1rem;
+            box-shadow: var(--shadow);
+        }
+
+        .mobile-bracket .m-final-label {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.4rem;
+            letter-spacing: 0.08em;
+            text-align: center;
+            margin-bottom: 0.7rem;
+            opacity: 0.92;
+        }
+
+        .mobile-bracket .m-final .m-team { background: rgba(255, 255, 255, 0.14); }
+
+        .mobile-bracket .m-final .m-seed {
+            background: rgba(255, 255, 255, 0.16);
+            border-color: rgba(255, 255, 255, 0.3);
+            color: var(--white);
+        }
+
+        .mobile-bracket .m-final .m-name { color: var(--white); }
+
+        .mobile-bracket .m-final .m-team.winner {
+            background: rgba(255, 255, 255, 0.22);
+            border-color: rgba(255, 255, 255, 0.35);
+        }
+
+        .mobile-bracket .m-final .m-team.winner .m-seed {
+            background: var(--white);
+            color: var(--blue-dark);
+            border-color: var(--white);
+        }
+
+        .mobile-bracket .m-final .m-team.winner .m-name { color: var(--white); }
+
+        .mobile-bracket .m-final .m-scoreline,
+        .mobile-bracket .m-final .m-card-head {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        @media (max-width: 1024px) {
+            .bracket-shell { display: none; }
+            .mobile-bracket { display: block; }
         }
     </style>
 </head>
@@ -591,6 +812,7 @@
     <section class="bracket-shell">
         <div class="bracket" id="bracketRoot"></div>
     </section>
+    <section class="mobile-bracket" id="mobileBracketRoot"></section>
 </main>
 
 <footer>Modesto Padel Club &middot; Masters Tournament Bracket</footer>
@@ -600,7 +822,7 @@
         "left": {
                 "rounds": [
                         {
-                                "label": "Osmina finala",
+                                "label": "Left Side - Round of 16",
                                 "matches": [
                                         {
                                                 "date": "",
@@ -677,7 +899,7 @@
                                 ]
                         },
                         {
-                                "label": "Četvrtfinale",
+                                "label": "Quarterfinals",
                                 "stacked": true,
                                 "matches": [
                                         {
@@ -721,7 +943,7 @@
                         }
                 ],
                 "semifinal": {
-                        "label": "Polufinale",
+                        "label": "Semifinal",
                         "matches": [
                                 {
                                         "date": "",
@@ -747,12 +969,12 @@
         },
         "center": {
                 "champion": {
-                        "title": "Pobjednici",
+                        "title": "Champion",
                         "name": "",
                         "meta": ""
                 },
                 "final": {
-                        "label": "Finale",
+                        "label": "Final",
                         "date": "",
                         "scoreline": "",
                         "teams": [
@@ -773,7 +995,7 @@
         },
         "right": {
                 "semifinal": {
-                        "label": "Polufinale",
+                        "label": "Semifinal",
                         "matches": [
                                 {
                                         "date": "",
@@ -798,7 +1020,7 @@
                 },
                 "rounds": [
                         {
-                                "label": "Četvrtfinale",
+                                "label": "Quarterfinals",
                                 "stacked": true,
                                 "matches": [
                                         {
@@ -841,7 +1063,7 @@
                                 ]
                         },
                         {
-                                "label": "Osmina finala",
+                                "label": "Right Side - Round of 16",
                                 "matches": [
                                         {
                                                 "date": "",
@@ -1021,11 +1243,129 @@
             .replace(/'/g, '&#39;');
     }
 
+    function renderMobileBracket() {
+        const root = document.getElementById('mobileBracketRoot');
+        if (!root) return;
+
+        const r16 = BRACKET_DATA.left.rounds[0].matches.concat(BRACKET_DATA.right.rounds[1].matches);
+        const qf  = BRACKET_DATA.left.rounds[1].matches.concat(BRACKET_DATA.right.rounds[0].matches);
+        const sf  = BRACKET_DATA.left.semifinal.matches.concat(BRACKET_DATA.right.semifinal.matches);
+        const finalMatch = BRACKET_DATA.center.final;
+        const champion = BRACKET_DATA.center.champion;
+
+        const tabs = [
+            { id: 'r16',   label: 'Osmina',       sub: '8 parova' },
+            { id: 'qf',    label: 'Četvrtfinale', sub: '4 para' },
+            { id: 'sf',    label: 'Polufinale',   sub: '2 para' },
+            { id: 'final', label: 'Finale',       sub: '1 par' }
+        ];
+
+        root.innerHTML =
+            renderMobileChamp(champion) +
+            '<nav class="m-tabs" role="tablist">' +
+                tabs.map(function (t, i) {
+                    return '<button class="m-tab' + (i === 0 ? ' active' : '') + '" data-target="' + t.id + '" role="tab" type="button">' +
+                        escapeHtml(t.label) +
+                        '<span class="m-tab-sub">' + escapeHtml(t.sub) + '</span>' +
+                        '</button>';
+                }).join('') +
+            '</nav>' +
+            renderMobileRoundPane('r16', 'Osmina finala', r16, '8 parova', true) +
+            renderMobileRoundPane('qf',  'Četvrtfinale',  qf,  '4 para',  false) +
+            renderMobileRoundPane('sf',  'Polufinale',    sf,  '2 para',  false) +
+            renderMobileFinalPane(finalMatch);
+
+        root.querySelectorAll('.m-tab').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                const target = btn.getAttribute('data-target');
+                root.querySelectorAll('.m-tab').forEach(function (b) {
+                    b.classList.toggle('active', b === btn);
+                });
+                root.querySelectorAll('.m-pane').forEach(function (p) {
+                    p.classList.toggle('active', p.getAttribute('data-pane') === target);
+                });
+            });
+        });
+    }
+
+    function renderMobileChamp(champion) {
+        const title = hasText(champion.title) ? escapeHtml(champion.title) : 'Pobjednici';
+        const nameHtml = hasText(champion.name)
+            ? '<div class="m-champ-name">' + escapeHtml(champion.name) + '</div>'
+            : '<div class="m-champ-name empty">TBD</div>';
+        const metaHtml = hasText(champion.meta)
+            ? '<div class="m-champ-meta">' + escapeHtml(champion.meta) + '</div>'
+            : '';
+        return '<div class="m-champ">' +
+                '<div class="m-champ-title">' + title + '</div>' +
+                nameHtml +
+                metaHtml +
+            '</div>';
+    }
+
+    function renderMobileRoundPane(id, title, matches, count, active) {
+        const allEmpty = matches.length > 0 && matches.every(function (m) {
+            return m.teams.every(function (t) { return !hasText(t.name); });
+        });
+        const hint = allEmpty
+            ? '<div class="m-empty-hint">Parovi se određuju nakon prethodnog kola.</div>'
+            : '';
+        return '<section class="m-pane' + (active ? ' active' : '') + '" data-pane="' + id + '" role="tabpanel">' +
+                '<div class="m-round-title">' + escapeHtml(title) + '<small>' + escapeHtml(count) + '</small></div>' +
+                hint +
+                matches.map(function (m, i) { return renderMobileMatch(m, i + 1); }).join('') +
+            '</section>';
+    }
+
+    function renderMobileFinalPane(match) {
+        return '<section class="m-pane" data-pane="final" role="tabpanel">' +
+                '<div class="m-round-title">Finale<small>1 par</small></div>' +
+                '<div class="m-final">' +
+                    '<div class="m-final-label">Finale</div>' +
+                    renderMobileMatchBody(match) +
+                '</div>' +
+            '</section>';
+    }
+
+    function renderMobileMatch(match, index) {
+        const meta = hasText(match.date)
+            ? '<span>' + escapeHtml(match.date) + '</span>'
+            : '<span>TBD</span>';
+        return '<article class="m-card">' +
+                '<div class="m-card-head"><span>Meč ' + index + '</span>' + meta + '</div>' +
+                renderMobileMatchBody(match) +
+            '</article>';
+    }
+
+    function renderMobileMatchBody(match) {
+        const scoreline = hasText(match.scoreline)
+            ? '<div class="m-scoreline">' + escapeHtml(match.scoreline) + '</div>'
+            : '';
+        return match.teams.map(renderMobileTeam).join('') + scoreline;
+    }
+
+    function renderMobileTeam(team) {
+        const seed = hasText(team.seed)
+            ? '<span class="m-seed">' + escapeHtml(String(team.seed)) + '</span>'
+            : '<span class="m-seed empty"></span>';
+        const nameHas = hasText(team.name);
+        const name = nameHas ? escapeHtml(team.name) : '—';
+        const score = hasText(team.score)
+            ? '<span class="m-score">' + escapeHtml(String(team.score)) + '</span>'
+            : '<span class="m-score"></span>';
+        return '<div class="m-team' + (team.winner ? ' winner' : '') + '">' +
+                seed +
+                '<span class="m-name' + (nameHas ? '' : ' empty') + '">' + name + '</span>' +
+                score +
+            '</div>';
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
         const theme = localStorage.getItem('theme') || 'light';
         document.documentElement.setAttribute('data-theme', theme);
         document.getElementById('themeBtn').textContent = theme === 'dark' ? '\u2600' : '\u263D';
         renderBracket();
+        renderMobileBracket();
     });
 </script>
 </body>
