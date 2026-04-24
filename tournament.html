@@ -1060,13 +1060,33 @@
             .replace(/'/g, '&#39;');
     }
 
+    // Parses "Petak 24.4.2026. 19:00" → timestamp for sorting; returns Infinity for TBD
+    function parseMatchDate(str) {
+        if (!str || !str.trim()) return Infinity;
+        var parts = str.trim().split(/\s+/);
+        if (parts.length < 2) return Infinity;
+        var dp = parts[1].replace(/\.$/, '').split('.');
+        var tp = (parts[2] || '0:0').split(':');
+        if (dp.length < 3) return Infinity;
+        var day = parseInt(dp[0], 10), month = parseInt(dp[1], 10) - 1, year = parseInt(dp[2], 10);
+        var hour = parseInt(tp[0] || '0', 10), min = parseInt(tp[1] || '0', 10);
+        if (isNaN(day) || isNaN(month) || isNaN(year)) return Infinity;
+        return new Date(year, month, day, hour, min).getTime();
+    }
+
+    function sortByDate(matches) {
+        return matches.slice().sort(function (a, b) {
+            return parseMatchDate(a.date) - parseMatchDate(b.date);
+        });
+    }
+
     function renderMobileBracket() {
         const root = document.getElementById('mobileBracketRoot');
         if (!root) return;
 
-        const r16 = BRACKET_DATA.left.rounds[0].matches.concat(BRACKET_DATA.right.rounds[1].matches);
-        const qf  = BRACKET_DATA.left.rounds[1].matches.concat(BRACKET_DATA.right.rounds[0].matches);
-        const sf  = BRACKET_DATA.left.semifinal.matches.concat(BRACKET_DATA.right.semifinal.matches);
+        const r16 = sortByDate(BRACKET_DATA.left.rounds[0].matches.concat(BRACKET_DATA.right.rounds[1].matches));
+        const qf  = sortByDate(BRACKET_DATA.left.rounds[1].matches.concat(BRACKET_DATA.right.rounds[0].matches));
+        const sf  = sortByDate(BRACKET_DATA.left.semifinal.matches.concat(BRACKET_DATA.right.semifinal.matches));
         const finalMatch = BRACKET_DATA.center.final;
         const champion = BRACKET_DATA.center.champion;
 
