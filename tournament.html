@@ -224,7 +224,7 @@
         }
 
         .round-label {
-            font-size: 1.2rem;
+            font-size: 0.95rem;
             color: var(--blue);
             margin-bottom: 0.65rem;
             padding-left: 0.25rem;
@@ -246,7 +246,7 @@
         }
 
         .match-meta {
-            font-size: 0.76rem;
+            font-size: 0.65rem;
             font-weight: 800;
             letter-spacing: 0.08em;
             text-transform: uppercase;
@@ -255,7 +255,7 @@
         }
 
         .match-scoreline {
-            font-size: 0.76rem;
+            font-size: 0.65rem;
             font-weight: 800;
             letter-spacing: 0.08em;
             text-transform: uppercase;
@@ -286,7 +286,7 @@
 
         .team {
             display: grid;
-            grid-template-columns: auto 1fr;
+            grid-template-columns: auto minmax(0, 1fr) auto;
             gap: 0.6rem;
             align-items: center;
             background: var(--white);
@@ -313,7 +313,7 @@
         }
 
         .team-name {
-            font-size: 0.95rem;
+            font-size: 0.8rem;
             font-weight: 700;
             line-height: 1.2;
             min-height: 1.15em;
@@ -330,7 +330,7 @@
         .team-score-inline {
             margin-left: 0.35rem;
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.05rem;
+            font-size: 0.9rem;
             letter-spacing: 0.04em;
             color: var(--red);
         }
@@ -1042,11 +1042,12 @@
             : '<span class="seed seed-empty"></span>';
         const name = hasText(team.name) ? escapeHtml(team.name) : '&nbsp;';
         const score = hasText(team.score)
-            ? ' <span class="team-score-inline">' + escapeHtml(String(team.score)) + '</span>'
-            : '';
+            ? '<span class="team-score-inline">' + escapeHtml(String(team.score)) + '</span>'
+            : '<span class="team-score-inline"></span>';
         return '<div class="team' + (team.winner ? ' winner' : '') + '">' +
             seed +
-            '<span class="team-name">' + name + score + '</span>' +
+            '<span class="team-name">' + name + '</span>' +
+            score +
             '</div>';
     }
 
