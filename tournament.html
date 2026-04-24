@@ -742,6 +742,16 @@
             padding: 0.55rem 0.4rem 0.15rem;
         }
 
+        .mobile-bracket .m-card-foot {
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            color: color-mix(in srgb, var(--text) 42%, transparent);
+            text-align: right;
+            padding: 0.35rem 0.35rem 0.05rem;
+        }
+
         .mobile-bracket .m-final {
             background: linear-gradient(135deg, var(--blue-dark), var(--blue));
             color: var(--white);
@@ -1084,17 +1094,32 @@
         const root = document.getElementById('mobileBracketRoot');
         if (!root) return;
 
-        const r16 = sortByDate(BRACKET_DATA.left.rounds[0].matches.concat(BRACKET_DATA.right.rounds[1].matches));
-        const qf  = sortByDate(BRACKET_DATA.left.rounds[1].matches.concat(BRACKET_DATA.right.rounds[0].matches));
-        const sf  = sortByDate(BRACKET_DATA.left.semifinal.matches.concat(BRACKET_DATA.right.semifinal.matches));
+        const lR16 = BRACKET_DATA.left.rounds[0].matches;
+        const rR16 = BRACKET_DATA.right.rounds[1].matches;
+        const lQF  = BRACKET_DATA.left.rounds[1].matches;
+        const rQF  = BRACKET_DATA.right.rounds[0].matches;
+        const lSF  = BRACKET_DATA.left.semifinal.matches;
+        const rSF  = BRACKET_DATA.right.semifinal.matches;
+
+        // Annotate each match with where its winner advances (bracket-position based, stable across date sorting)
+        lR16.forEach(function (m, i) { m._next = 'Četvrtfinale lijevo ' + (Math.floor(i / 2) + 1); });
+        rR16.forEach(function (m, i) { m._next = 'Četvrtfinale desno '  + (Math.floor(i / 2) + 1); });
+        lQF.forEach(function (m, i)  { m._next = 'Polufinale lijevo'; m._label = 'Četvrtfinale lijevo ' + (i + 1); });
+        rQF.forEach(function (m, i)  { m._next = 'Polufinale desno';  m._label = 'Četvrtfinale desno '  + (i + 1); });
+        lSF.forEach(function (m)     { m._next = 'Finale'; m._label = 'Polufinale lijevo'; });
+        rSF.forEach(function (m)     { m._next = 'Finale'; m._label = 'Polufinale desno'; });
+
+        const r16 = sortByDate(lR16.concat(rR16));
+        const qf  = lQF.concat(rQF);
+        const sf  = sortByDate(lSF.concat(rSF));
         const finalMatch = BRACKET_DATA.center.final;
         const champion = BRACKET_DATA.center.champion;
 
         const tabs = [
-            { id: 'r16',   label: 'Osmina',       sub: '8 parova' },
-            { id: 'qf',    label: 'Četvrtfinale', sub: '4 para' },
-            { id: 'sf',    label: 'Polufinale',   sub: '2 para' },
-            { id: 'final', label: 'Finale',       sub: '1 par' }
+            { id: 'r16',   label: 'Osmina',       sub: '16 parova' },
+            { id: 'qf',    label: 'Četvrtfinale', sub: '8 parova' },
+            { id: 'sf',    label: 'Polufinale',   sub: '4 parova' },
+            { id: 'final', label: 'Finale',       sub: '2 para' }
         ];
 
         root.innerHTML =
@@ -1107,9 +1132,9 @@
                         '</button>';
                 }).join('') +
             '</nav>' +
-            renderMobileRoundPane('r16', 'Osmina finala', r16, '8 parova', true) +
-            renderMobileRoundPane('qf',  'Četvrtfinale',  qf,  '4 para',  false) +
-            renderMobileRoundPane('sf',  'Polufinale',    sf,  '2 para',  false) +
+            renderMobileRoundPane('r16', 'Osmina finala', r16, '16 parova', true) +
+            renderMobileRoundPane('qf',  'Četvrtfinale',  qf,  '8 parova',  false) +
+            renderMobileRoundPane('sf',  'Polufinale',    sf,  '4 parova',  false) +
             renderMobileFinalPane(finalMatch);
 
         root.querySelectorAll('.m-tab').forEach(function (btn) {
@@ -1168,9 +1193,13 @@
         const meta = hasText(match.date)
             ? '<span>' + escapeHtml(match.date) + '</span>'
             : '<span>TBD</span>';
+        const foot = match._next
+            ? '<div class="m-card-foot">Pobjednik → ' + escapeHtml(match._next) + '</div>'
+            : '';
         return '<article class="m-card">' +
-                '<div class="m-card-head"><span>Meč ' + index + '</span>' + meta + '</div>' +
+                '<div class="m-card-head"><span>' + escapeHtml(match._label || 'Meč ' + index) + '</span>' + meta + '</div>' +
                 renderMobileMatchBody(match) +
+                foot +
             '</article>';
     }
 
