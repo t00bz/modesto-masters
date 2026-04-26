@@ -192,7 +192,6 @@
             overflow-x: auto;
         }
 
-        .round-label,
         .champion-title {
             font-family: 'Bebas Neue', sans-serif;
             letter-spacing: 0.05em;
@@ -223,11 +222,19 @@
             position: relative;
         }
 
+        /* Round label: uppercase, small, grey — NBA playoff style */
         .round-label {
-            font-size: 0.95rem;
-            color: var(--blue);
-            margin-bottom: 0.65rem;
-            padding-left: 0.25rem;
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: color-mix(in srgb, var(--text) 45%, transparent);
+            margin-bottom: 0.75rem;
+            padding-left: 0.1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--grey);
+            padding-bottom: 0.5rem;
         }
 
         .matches {
@@ -237,32 +244,40 @@
             justify-content: space-around;
         }
 
+        /* Clean white card — no gradient */
         .match {
-            background: linear-gradient(135deg, rgba(0, 61, 165, 0.06), rgba(200, 16, 46, 0.04));
+            background: var(--white);
             border: 1px solid var(--grey);
-            border-radius: 16px;
-            padding: 0.65rem;
+            border-radius: 10px;
+            padding: 0.5rem 0.65rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
             position: relative;
         }
 
-        .match-meta {
-            font-size: 0.65rem;
+        /* Scoreline at top — styled as blue status heading */
+        .match-status {
+            font-size: 0.7rem;
             font-weight: 800;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: color-mix(in srgb, var(--text) 68%, transparent);
-            padding: 0.2rem 0.35rem 0.55rem;
+            color: var(--blue);
+            letter-spacing: 0.03em;
+            padding: 0.1rem 0.15rem 0.4rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .match-scoreline {
-            font-size: 0.65rem;
-            font-weight: 800;
-            letter-spacing: 0.08em;
+        /* Date at bottom — small, muted, right-aligned */
+        .match-footer {
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: color-mix(in srgb, var(--text) 42%, transparent);
+            letter-spacing: 0.06em;
             text-transform: uppercase;
-            color: color-mix(in srgb, var(--text) 68%, transparent);
-            padding: 0.55rem 0.35rem 0.2rem;
+            padding: 0.4rem 0.15rem 0.05rem;
+            text-align: right;
         }
 
+        /* Connector lines */
         .match::after {
             content: '';
             position: absolute;
@@ -284,36 +299,48 @@
             display: none;
         }
 
+        /* Team row sits directly on the card — no inner white background */
         .team {
             display: grid;
             grid-template-columns: auto minmax(0, 1fr) auto;
-            gap: 0.6rem;
+            gap: 0.55rem;
             align-items: center;
-            background: var(--white);
-            border-radius: 12px;
-            padding: 0.7rem 0.8rem;
+            background: transparent;
+            border-radius: 6px;
+            padding: 0.42rem 0.3rem;
         }
 
         .team + .team {
-            margin-top: 0.45rem;
+            border-top: 1px solid var(--grey);
+            margin-top: 0;
+        }
+
+        /* Loser team: dimmed name and seed */
+        .team:not(.winner) .team-name {
+            color: color-mix(in srgb, var(--text) 55%, transparent);
+        }
+
+        .team:not(.winner) .seed {
+            opacity: 0.55;
         }
 
         .seed {
-            width: 28px;
-            height: 28px;
+            width: 26px;
+            height: 26px;
             border-radius: 50%;
             background: var(--off-white);
             border: 1px solid var(--grey);
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             font-weight: 800;
             color: var(--blue);
+            flex-shrink: 0;
         }
 
         .team-name {
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             font-weight: 700;
             line-height: 1.2;
             min-height: 1.15em;
@@ -323,33 +350,36 @@
         }
 
         .seed-empty {
-            opacity: 0.35;
+            opacity: 0.3;
             border-style: dashed;
         }
 
         .team-score-inline {
-            margin-left: 0.35rem;
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             letter-spacing: 0.04em;
             color: var(--red);
         }
 
+        /* Winner: red seed, bold name, no red background */
         .winner {
-            border: 2px solid rgba(200, 16, 46, 0.16);
-            background: linear-gradient(135deg, rgba(200, 16, 46, 0.07), rgba(0, 61, 165, 0.03));
+            background: transparent;
+            border: none;
         }
 
         .winner .seed {
             background: var(--red);
             color: var(--white);
             border-color: var(--red);
+            opacity: 1;
         }
 
         .winner .team-name {
-            color: var(--red-dark);
+            color: var(--text);
+            font-weight: 800;
         }
 
+        /* Center column */
         .center-column {
             width: 280px;
             flex-shrink: 0;
@@ -363,7 +393,7 @@
         .final-card,
         .champion-card {
             width: 100%;
-            border-radius: 22px;
+            border-radius: 14px;
             text-align: center;
             box-shadow: var(--shadow);
         }
@@ -371,7 +401,7 @@
         .final-card {
             background: linear-gradient(135deg, var(--blue-dark), var(--blue));
             color: var(--white);
-            padding: 1rem;
+            padding: 0.9rem;
             position: relative;
             grid-row: 2;
             align-self: center;
@@ -392,6 +422,7 @@
         .final-card::after { right: -1.4rem; }
 
         .final-label {
+            font-family: 'Bebas Neue', sans-serif;
             font-size: 1.15rem;
             letter-spacing: 0.08em;
             text-transform: uppercase;
@@ -400,14 +431,27 @@
         }
 
         .final-card .team {
-            background: rgba(255, 255, 255, 0.14);
+            background: rgba(255, 255, 255, 0.1);
             color: var(--white);
+            border-top-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .final-card .team:first-of-type {
+            border-top: none;
         }
 
         .final-card .team-name,
         .final-card .winner .team-name,
         .final-card .team-score-inline {
             color: var(--white);
+        }
+
+        .final-card .team:not(.winner) .team-name {
+            color: rgba(255, 255, 255, 0.65);
+        }
+
+        .final-card .team:not(.winner) .seed {
+            opacity: 0.55;
         }
 
         .final-card .seed {
@@ -417,25 +461,28 @@
         }
 
         .final-card .winner {
-            border-color: rgba(255, 255, 255, 0.28);
-            background: rgba(255, 255, 255, 0.18);
+            background: rgba(255, 255, 255, 0.14);
         }
 
         .final-card .winner .seed {
             background: var(--white);
             color: var(--blue-dark);
             border-color: var(--white);
+            opacity: 1;
         }
 
-        .final-card .match-meta,
-        .final-card .match-scoreline {
-            color: rgba(255, 255, 255, 0.84);
+        .final-card .match-status {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .final-card .match-footer {
+            color: rgba(255, 255, 255, 0.55);
         }
 
         .champion-card {
             background: linear-gradient(145deg, #fff2c9, #ffd86b);
             color: #5C3900;
-            padding: 1.3rem 1rem;
+            padding: 1.1rem 1rem;
             border: 2px solid rgba(92, 57, 0, 0.08);
             grid-row: 1;
             align-self: end;
@@ -639,6 +686,92 @@
             opacity: 0.55;
         }
 
+        /* Conference group label */
+        .mobile-bracket .m-conf-label {
+            font-size: 0.65rem;
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: color-mix(in srgb, var(--text) 45%, transparent);
+            margin: 1rem 0 0.45rem 0.1rem;
+            padding-bottom: 0.35rem;
+            border-bottom: 1px solid var(--grey);
+        }
+
+        .mobile-bracket .m-conf-label:first-child { margin-top: 0; }
+
+        /* Split layout: current round left, next round peek right */
+        .mobile-bracket .m-split-group {
+            display: flex;
+            gap: 0.4rem;
+            margin-bottom: 0.5rem;
+            align-items: stretch;
+        }
+
+        .mobile-bracket .m-split-group-left {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .mobile-bracket .m-split-group-left .m-card {
+            margin-bottom: 0;
+        }
+
+        .mobile-bracket .m-split-group-right {
+            width: 90px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Next-round peek card */
+        .mobile-bracket .m-next-slot {
+            background: var(--white);
+            border: 1px solid var(--grey);
+            border-radius: 10px;
+            padding: 0.35rem 0.4rem;
+            width: 100%;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+        }
+
+        .mobile-bracket .m-next-team {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.3rem 0.1rem;
+        }
+
+        .mobile-bracket .m-next-team + .m-next-team {
+            border-top: 1px solid var(--grey);
+        }
+
+        .mobile-bracket .m-next-team .m-seed {
+            width: 20px;
+            height: 20px;
+            font-size: 0.65rem;
+            flex-shrink: 0;
+        }
+
+        .mobile-bracket .m-next-team .m-name {
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .mobile-bracket .m-next-team.winner .m-seed {
+            background: var(--red);
+            color: var(--white);
+            border-color: var(--red);
+            opacity: 1;
+        }
+
+        .mobile-bracket .m-next-team.winner .m-name {
+            font-weight: 800;
+            color: var(--text);
+        }
+
         .mobile-bracket .m-empty-hint {
             background: repeating-linear-gradient(135deg, transparent 0 10px, rgba(0, 61, 165, 0.04) 10px 20px);
             border: 1px dashed var(--line);
@@ -652,54 +785,70 @@
             margin-bottom: 0.75rem;
         }
 
+        /* Clean white mobile card — matches desktop style */
         .mobile-bracket .m-card {
             background: var(--white);
             border: 1px solid var(--grey);
-            border-radius: 14px;
-            padding: 0.55rem;
-            margin-bottom: 0.65rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            border-radius: 10px;
+            padding: 0.5rem 0.6rem;
+            margin-bottom: 0.55rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Scoreline at top in mobile card */
+        .mobile-bracket .m-status {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: var(--blue);
+            letter-spacing: 0.03em;
+            padding: 0.05rem 0.15rem 0.35rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .mobile-bracket .m-card-head {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: 800;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            color: color-mix(in srgb, var(--text) 55%, transparent);
-            padding: 0.1rem 0.35rem 0.4rem;
+            color: color-mix(in srgb, var(--text) 50%, transparent);
+            padding: 0.05rem 0.15rem 0.3rem;
         }
 
         .mobile-bracket .m-team {
             display: grid;
-            grid-template-columns: 28px 1fr auto;
-            gap: 0.6rem;
+            grid-template-columns: 26px 1fr auto;
+            gap: 0.55rem;
             align-items: center;
-            background: var(--off-white);
-            border-radius: 10px;
-            padding: 0.55rem 0.7rem;
+            background: transparent;
+            border-radius: 6px;
+            padding: 0.42rem 0.3rem;
         }
 
-        .mobile-bracket .m-team + .m-team { margin-top: 0.3rem; }
+        .mobile-bracket .m-team + .m-team {
+            margin-top: 0;
+            border-top: 1px solid var(--grey);
+        }
 
         .mobile-bracket .m-seed {
-            width: 28px;
-            height: 28px;
+            width: 26px;
+            height: 26px;
             border-radius: 50%;
-            background: var(--white);
+            background: var(--off-white);
             border: 1px solid var(--grey);
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             font-weight: 800;
             color: var(--blue);
         }
 
-        .mobile-bracket .m-seed.empty { opacity: 0.35; border-style: dashed; }
+        .mobile-bracket .m-seed.empty { opacity: 0.3; border-style: dashed; }
 
         .mobile-bracket .m-name {
             font-weight: 700;
@@ -714,48 +863,51 @@
 
         .mobile-bracket .m-score {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             color: var(--red);
             min-width: 1.5rem;
             text-align: right;
         }
 
-        .mobile-bracket .m-team.winner {
-            background: linear-gradient(135deg, rgba(200, 16, 46, 0.08), rgba(0, 61, 165, 0.03));
-            border: 1.5px solid rgba(200, 16, 46, 0.22);
+        /* Loser dimmed in mobile */
+        .mobile-bracket .m-team:not(.winner) .m-name {
+            color: color-mix(in srgb, var(--text) 55%, transparent);
         }
 
+        .mobile-bracket .m-team:not(.winner) .m-seed {
+            opacity: 0.55;
+        }
+
+        /* Winner in mobile */
         .mobile-bracket .m-team.winner .m-seed {
             background: var(--red);
             color: var(--white);
             border-color: var(--red);
+            opacity: 1;
         }
 
-        .mobile-bracket .m-team.winner .m-name { color: var(--red-dark); }
-
-        .mobile-bracket .m-scoreline {
-            font-size: 0.72rem;
+        .mobile-bracket .m-team.winner .m-name {
+            color: var(--text);
             font-weight: 800;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: color-mix(in srgb, var(--text) 65%, transparent);
-            padding: 0.55rem 0.4rem 0.15rem;
         }
+
+        .mobile-bracket .m-scoreline { display: none; }
 
         .mobile-bracket .m-card-foot {
-            font-size: 0.68rem;
+            font-size: 0.72rem;
             font-weight: 800;
-            letter-spacing: 0.07em;
-            text-transform: uppercase;
-            color: color-mix(in srgb, var(--text) 42%, transparent);
-            text-align: right;
-            padding: 0.35rem 0.35rem 0.05rem;
+            letter-spacing: 0.04em;
+            color: var(--blue);
+            text-align: left;
+            padding: 0.4rem 0.15rem 0.05rem;
+            border-top: 1px solid var(--grey);
+            margin-top: 0.25rem;
         }
 
         .mobile-bracket .m-final {
             background: linear-gradient(135deg, var(--blue-dark), var(--blue));
             color: var(--white);
-            border-radius: 18px;
+            border-radius: 14px;
             padding: 1.1rem 1rem;
             box-shadow: var(--shadow);
         }
@@ -769,32 +921,45 @@
             opacity: 0.92;
         }
 
-        .mobile-bracket .m-final .m-team { background: rgba(255, 255, 255, 0.14); }
+        .mobile-bracket .m-final .m-team {
+            background: rgba(255, 255, 255, 0.08);
+            border-top-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .mobile-bracket .m-final .m-team:first-of-type { border-top: none; }
 
         .mobile-bracket .m-final .m-seed {
             background: rgba(255, 255, 255, 0.16);
             border-color: rgba(255, 255, 255, 0.3);
             color: var(--white);
+            opacity: 1;
         }
 
         .mobile-bracket .m-final .m-name { color: var(--white); }
 
+        .mobile-bracket .m-final .m-team:not(.winner) .m-name { color: rgba(255, 255, 255, 0.6); }
+        .mobile-bracket .m-final .m-team:not(.winner) .m-seed { opacity: 0.55; }
+
         .mobile-bracket .m-final .m-team.winner {
-            background: rgba(255, 255, 255, 0.22);
-            border-color: rgba(255, 255, 255, 0.35);
+            background: rgba(255, 255, 255, 0.18);
         }
 
         .mobile-bracket .m-final .m-team.winner .m-seed {
             background: var(--white);
             color: var(--blue-dark);
             border-color: var(--white);
+            opacity: 1;
         }
 
-        .mobile-bracket .m-final .m-team.winner .m-name { color: var(--white); }
+        .mobile-bracket .m-final .m-team.winner .m-name { color: var(--white); font-weight: 800; }
 
-        .mobile-bracket .m-final .m-scoreline,
+        .mobile-bracket .m-final .m-status,
         .mobile-bracket .m-final .m-card-head {
-            color: rgba(255, 255, 255, 0.85);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .mobile-bracket .m-final .m-card-foot {
+            color: rgba(255, 255, 255, 0.5);
         }
 
         @media (max-width: 1024px) {
@@ -810,7 +975,7 @@
         <img src="modesto_logo.png" alt="Modesto logo" class="logo" onerror="this.style.display='none'">
         <h1>Masters - Zimska Liga</h1>
         <span class="season-badge">Sezona 2025/2026</span>
-        <div class="league-switch"><label for="leagueSwitcher">Natjecanje</label><select id="leagueSwitcher" onchange="switchLeague(this)"><option value="tournament.html" selected>Masters</option><option value="zimska_liga_modesto/index.html">Zimska Liga Modesto</option><option value="zenska_liga_zima/index.html">Ženska Liga Zima</option></select></div>
+        <div class="league-switch"><label for="leagueSwitcher">Natjecanje</label><select id="leagueSwitcher" onchange="switchLeague(this)"><option value="tournament.html">Masters</option><option value="zimska_liga_modesto/index.html">Zimska Liga Modesto</option><option value="zenska_liga_zima/index.html">Ženska Liga Zima</option></select></div>
     </div>
 </header>
 
@@ -978,7 +1143,7 @@
         const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
         document.documentElement.setAttribute('data-theme', next);
         localStorage.setItem('theme', next);
-        document.getElementById('themeBtn').textContent = next === 'dark' ? '\u2600' : '\u263D';
+        document.getElementById('themeBtn').textContent = next === 'dark' ? '☀' : '☽';
     }
 
     function renderBracket() {
@@ -1037,13 +1202,13 @@
     }
 
     function renderMatchBody(match) {
-        const meta = hasText(match.date)
-            ? '<div class="match-meta">' + escapeHtml(match.date) + '</div>'
+        const status = hasText(match.scoreline)
+            ? '<div class="match-status">' + escapeHtml(match.scoreline) + '</div>'
             : '';
-        const scoreline = hasText(match.scoreline)
-            ? '<div class="match-scoreline">' + escapeHtml(match.scoreline) + '</div>'
+        const footer = hasText(match.date)
+            ? '<div class="match-footer">' + escapeHtml(match.date) + '</div>'
             : '';
-        return meta + match.teams.map(renderTeam).join('') + scoreline;
+        return status + match.teams.map(renderTeam).join('') + footer;
     }
 
     function renderTeam(team) {
@@ -1101,13 +1266,12 @@
         const lSF  = BRACKET_DATA.left.semifinal.matches;
         const rSF  = BRACKET_DATA.right.semifinal.matches;
 
-        // Annotate each match with where its winner advances (bracket-position based, stable across date sorting)
-        lR16.forEach(function (m, i) { m._next = 'Četvrtfinale lijevo ' + (Math.floor(i / 2) + 1); });
-        rR16.forEach(function (m, i) { m._next = 'Četvrtfinale desno '  + (Math.floor(i / 2) + 1); });
-        lQF.forEach(function (m, i)  { m._next = 'Polufinale lijevo'; m._label = 'Četvrtfinale lijevo ' + (i + 1); });
-        rQF.forEach(function (m, i)  { m._next = 'Polufinale desno';  m._label = 'Četvrtfinale desno '  + (i + 1); });
-        lSF.forEach(function (m)     { m._next = 'Finale'; m._label = 'Polufinale lijevo'; });
-        rSF.forEach(function (m)     { m._next = 'Finale'; m._label = 'Polufinale desno'; });
+        lR16.forEach(function (m, i) { m._next = 'Četvrtfinale lijevo ' + (Math.floor(i / 2) + 1); m._side = 'left'; });
+        rR16.forEach(function (m, i) { m._next = 'Četvrtfinale desno '  + (Math.floor(i / 2) + 1); m._side = 'right'; });
+        lQF.forEach(function (m, i)  { m._next = 'Polufinale lijevo'; m._label = 'Četvrtfinale lijevo ' + (i + 1); m._side = 'left'; });
+        rQF.forEach(function (m, i)  { m._next = 'Polufinale desno';  m._label = 'Četvrtfinale desno '  + (i + 1); m._side = 'right'; });
+        lSF.forEach(function (m)     { m._next = 'Finale'; m._label = 'Polufinale lijevo'; m._side = 'left'; });
+        rSF.forEach(function (m)     { m._next = 'Finale'; m._label = 'Polufinale desno'; m._side = 'right'; });
 
         const r16 = sortByDate(lR16.concat(rR16));
         const qf  = lQF.concat(rQF);
@@ -1122,6 +1286,29 @@
             { id: 'final', label: 'Finale',       sub: '2 para' }
         ];
 
+        // R16 pane: groups of 2 matches → next-round QF slot
+        var r16Pane =
+            '<div class="m-conf-label">Skupina A</div>' +
+            renderMobileSplitGroup([lR16[0], lR16[1]], lQF[0] || null) +
+            renderMobileSplitGroup([lR16[2], lR16[3]], lQF[1] || null) +
+            '<div class="m-conf-label">Skupina B</div>' +
+            renderMobileSplitGroup([rR16[0], rR16[1]], rQF[0] || null) +
+            renderMobileSplitGroup([rR16[2], rR16[3]], rQF[1] || null);
+
+        // QF pane: groups of 2 matches → next-round SF slot
+        var qfPane =
+            '<div class="m-conf-label">Skupina A</div>' +
+            renderMobileSplitGroup([lQF[0], lQF[1]], lSF[0] || null) +
+            '<div class="m-conf-label">Skupina B</div>' +
+            renderMobileSplitGroup([rQF[0], rQF[1]], rSF[0] || null);
+
+        // SF pane: each match → peek at Final
+        var sfPane =
+            '<div class="m-conf-label">Skupina A</div>' +
+            renderMobileSplitGroup([lSF[0]], finalMatch) +
+            '<div class="m-conf-label">Skupina B</div>' +
+            renderMobileSplitGroup([rSF[0]], finalMatch);
+
         root.innerHTML =
             renderMobileChamp(champion) +
             '<nav class="m-tabs" role="tablist">' +
@@ -1132,9 +1319,9 @@
                         '</button>';
                 }).join('') +
             '</nav>' +
-            renderMobileRoundPane('r16', 'Osmina finala', r16, '16 parova', true) +
-            renderMobileRoundPane('qf',  'Četvrtfinale',  qf,  '8 parova',  false) +
-            renderMobileRoundPane('sf',  'Polufinale',    sf,  '4 parova',  false) +
+            '<section class="m-pane active" data-pane="r16" role="tabpanel"><div class="m-round-title">Osmina finala<small>16 parova</small></div>' + r16Pane + '</section>' +
+            '<section class="m-pane" data-pane="qf" role="tabpanel"><div class="m-round-title">Četvrtfinale<small>8 parova</small></div>' + qfPane + '</section>' +
+            '<section class="m-pane" data-pane="sf" role="tabpanel"><div class="m-round-title">Polufinale<small>4 parova</small></div>' + sfPane + '</section>' +
             renderMobileFinalPane(finalMatch);
 
         root.querySelectorAll('.m-tab').forEach(function (btn) {
@@ -1165,20 +1352,6 @@
             '</div>';
     }
 
-    function renderMobileRoundPane(id, title, matches, count, active) {
-        const allEmpty = matches.length > 0 && matches.every(function (m) {
-            return m.teams.every(function (t) { return !hasText(t.name); });
-        });
-        const hint = allEmpty
-            ? '<div class="m-empty-hint">Parovi se određuju nakon prethodnog kola.</div>'
-            : '';
-        return '<section class="m-pane' + (active ? ' active' : '') + '" data-pane="' + id + '" role="tabpanel">' +
-                '<div class="m-round-title">' + escapeHtml(title) + '<small>' + escapeHtml(count) + '</small></div>' +
-                hint +
-                matches.map(function (m, i) { return renderMobileMatch(m, i + 1); }).join('') +
-            '</section>';
-    }
-
     function renderMobileFinalPane(match) {
         return '<section class="m-pane" data-pane="final" role="tabpanel">' +
                 '<div class="m-round-title">Finale<small>1 par</small></div>' +
@@ -1189,25 +1362,53 @@
             '</section>';
     }
 
+    function renderMobileSplitGroup(currentMatches, nextMatch) {
+        var leftHtml = currentMatches
+            .filter(function (m) { return !!m; })
+            .map(function (m, i) { return renderMobileMatch(m, i + 1); })
+            .join('');
+        return '<div class="m-split-group">' +
+            '<div class="m-split-group-left">' + leftHtml + '</div>' +
+            '<div class="m-split-group-right">' + renderMobileNextSlot(nextMatch) + '</div>' +
+            '</div>';
+    }
+
+    function renderMobileNextSlot(match) {
+        var teams = match ? match.teams : [null, null];
+        return '<div class="m-next-slot">' +
+            teams.map(function (t) { return renderMobileNextTeam(t); }).join('') +
+            '</div>';
+    }
+
+    function renderMobileNextTeam(team) {
+        var seed = (team && hasText(team.seed))
+            ? '<span class="m-seed">' + escapeHtml(String(team.seed)) + '</span>'
+            : '<span class="m-seed empty"></span>';
+        var nameHas = team && hasText(team.name);
+        var name = nameHas ? escapeHtml(team.name) : 'TBD';
+        return '<div class="m-next-team' + (team && team.winner ? ' winner' : '') + '">' +
+            seed +
+            '<span class="m-name' + (nameHas ? '' : ' empty') + '">' + name + '</span>' +
+            '</div>';
+    }
+
     function renderMobileMatch(match, index) {
-        const meta = hasText(match.date)
-            ? '<span>' + escapeHtml(match.date) + '</span>'
-            : '<span>TBD</span>';
-        const foot = match._next
-            ? '<div class="m-card-foot">Pobjednik → ' + escapeHtml(match._next) + '</div>'
+        const label = match._label || 'Meč ' + index;
+        const foot = hasText(match.date)
+            ? '<div class="m-card-foot">' + escapeHtml(match.date) + '</div>'
             : '';
         return '<article class="m-card">' +
-                '<div class="m-card-head"><span>' + escapeHtml(match._label || 'Meč ' + index) + '</span>' + meta + '</div>' +
+                '<div class="m-card-head"><span>' + escapeHtml(label) + '</span></div>' +
                 renderMobileMatchBody(match) +
                 foot +
             '</article>';
     }
 
     function renderMobileMatchBody(match) {
-        const scoreline = hasText(match.scoreline)
-            ? '<div class="m-scoreline">' + escapeHtml(match.scoreline) + '</div>'
+        const status = hasText(match.scoreline)
+            ? '<div class="m-status">' + escapeHtml(match.scoreline) + '</div>'
             : '';
-        return match.teams.map(renderMobileTeam).join('') + scoreline;
+        return status + match.teams.map(renderMobileTeam).join('');
     }
 
     function renderMobileTeam(team) {
@@ -1229,7 +1430,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         const theme = localStorage.getItem('theme') || 'light';
         document.documentElement.setAttribute('data-theme', theme);
-        document.getElementById('themeBtn').textContent = theme === 'dark' ? '\u2600' : '\u263D';
+        document.getElementById('themeBtn').textContent = theme === 'dark' ? '☀' : '☽';
         loadAndRender();
     });
 
