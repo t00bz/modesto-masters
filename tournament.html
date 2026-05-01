@@ -1313,7 +1313,7 @@
             renderMobileChamp(champion) +
             '<nav class="m-tabs" role="tablist">' +
                 tabs.map(function (t, i) {
-                    return '<button class="m-tab' + (i === 0 ? ' active' : '') + '" data-target="' + t.id + '" role="tab" type="button">' +
+                    return '<button class="m-tab' + (i === 1 ? ' active' : '') + '" data-target="' + t.id + '" role="tab" type="button">' +
                         escapeHtml(t.label) +
                         '<span class="m-tab-sub">' + escapeHtml(t.sub) + '</span>' +
                         '</button>';
