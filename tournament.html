@@ -1313,15 +1313,15 @@
             renderMobileChamp(champion) +
             '<nav class="m-tabs" role="tablist">' +
                 tabs.map(function (t, i) {
-                    return '<button class="m-tab' + (i === 1 ? ' active' : '') + '" data-target="' + t.id + '" role="tab" type="button">' +
+                    return '<button class="m-tab' + (i === 2 ? ' active' : '') + '" data-target="' + t.id + '" role="tab" type="button">' +
                         escapeHtml(t.label) +
                         '<span class="m-tab-sub">' + escapeHtml(t.sub) + '</span>' +
                         '</button>';
                 }).join('') +
             '</nav>' +
             '<section class="m-pane" data-pane="r16" role="tabpanel"><div class="m-round-title">Osmina finala<small>16 parova</small></div>' + r16Pane + '</section>' +
-            '<section class="m-pane active" data-pane="qf" role="tabpanel"><div class="m-round-title">Četvrtfinale<small>8 parova</small></div>' + qfPane + '</section>' +
-            '<section class="m-pane" data-pane="sf" role="tabpanel"><div class="m-round-title">Polufinale<small>4 parova</small></div>' + sfPane + '</section>' +
+            '<section class="m-pane" data-pane="qf" role="tabpanel"><div class="m-round-title">Četvrtfinale<small>8 parova</small></div>' + qfPane + '</section>' +
+            '<section class="m-pane active" data-pane="sf" role="tabpanel"><div class="m-round-title">Polufinale<small>4 parova</small></div>' + sfPane + '</section>' +
             renderMobileFinalPane(finalMatch);
 
         root.querySelectorAll('.m-tab').forEach(function (btn) {
