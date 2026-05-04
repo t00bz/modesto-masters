@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masters - Ženski</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --red: #C8102E;
+            --blue: #003DA5;
+            --blue-dark: #002880;
+            --white: #FFFFFF;
+            --off-white: #F5F5F7;
+            --grey: #E8E8E8;
+            --text: #1A1A2E;
+            --line: rgba(0, 61, 165, 0.22);
+            --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+        [data-theme="dark"] {
+            --red: #E8234A;
+            --blue: #5B8FE8;
+            --blue-dark: #3D6FCC;
+            --white: #1E1E2E;
+            --off-white: #13131F;
+            --grey: #2E2E48;
+            --text: #E2E2F0;
+            --line: rgba(91, 143, 232, 0.32);
+            --shadow: 0 8px 24px rgba(0, 0, 0, 0.32);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(200, 16, 46, 0.10), transparent 30%),
+                radial-gradient(circle at top right, rgba(0, 61, 165, 0.14), transparent 35%),
+                var(--off-white);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 52%, var(--red) 100%);
+            padding: 1.6rem 1rem 2.4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,255,255,0.03) 20px, rgba(255,255,255,0.03) 40px);
+        }
+
+        .theme-toggle {
+            position: absolute; top: 1rem; right: 1rem; z-index: 10;
+            background: rgba(255, 255, 255, 0.15); border: none; border-radius: 50%;
+            width: 40px; height: 40px; font-size: 1.1rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s ease;
+        }
+        .theme-toggle:hover { background: rgba(255,255,255,0.28); }
+
+        .header-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 0.85rem; }
+        .logo { width: 90px; height: 90px; object-fit: contain; filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.4)); }
+        h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.6rem);
+            color: var(--white); letter-spacing: 0.05em; line-height: 1;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        .season-badge {
+            display: inline-block; background: var(--red); color: var(--white);
+            font-size: 0.78rem; font-weight: 800; letter-spacing: 0.12em;
+            padding: 0.25rem 1rem; border-radius: 2rem; text-transform: uppercase;
+        }
+
+        .league-switch { margin-top: 0.4rem; display: flex; gap: 0.5rem; align-items: center; justify-content: center; }
+        .league-switch label { color: rgba(255,255,255,0.88); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 800; }
+        .league-switch select {
+            min-width: 220px; max-width: 92vw; background: rgba(255,255,255,0.15); color: var(--white);
+            border: 1px solid rgba(255,255,255,0.42); border-radius: 999px; padding: 0.4rem 0.85rem;
+            font-family: 'Nunito', sans-serif; font-size: 0.88rem; font-weight: 800; cursor: pointer;
+        }
+        .league-switch select option { color: #1A1A2E; background: #FFFFFF; }
+
+        .wave { display: block; width: 100%; margin-top: -2px; color: var(--off-white); }
+
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1.5rem 1rem 3rem;
+        }
+
+        /* Symmetric 3-column, 2-row layout: standings on top, matches below */
+        .layout {
+            display: grid;
+            grid-template-columns: 1fr 220px 1fr;
+            grid-template-areas:
+                "topL topC topR"
+                "botL .    botR";
+            gap: 1rem 1rem;
+            align-items: start;
+        }
+
+        .group-card.left  { grid-area: topL; }
+        .group-card.right { grid-area: topR; text-align: right; }
+        .matches-block.left  { grid-area: botL; margin-top: 0.4rem; }
+        .matches-block.right { grid-area: botR; margin-top: 0.4rem; text-align: right; }
+
+        /* === Group standings card === */
+        .group-card {
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 0.75rem 0.85rem;
+        }
+
+        .group-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.15rem;
+            color: var(--blue);
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid var(--grey);
+            padding-bottom: 0.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .standings { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+        .standings th, .standings td { padding: 0.3rem 0.25rem; text-align: center; }
+        .standings thead th {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 0.68rem; letter-spacing: 0.08em;
+            color: var(--blue); border-bottom: 1px solid var(--grey);
+            font-weight: 400;
+        }
+        .standings th.team-col, .standings td.team-col { text-align: left; padding-left: 0.4rem; font-weight: 700; }
+        .group-card.right .standings th.team-col,
+        .group-card.right .standings td.team-col { text-align: right; padding-left: 0; padding-right: 0.4rem; }
+        .standings tbody tr { border-bottom: 1px solid var(--grey); }
+        .standings tbody tr:last-child { border-bottom: none; }
+        .standings tbody tr.leader { background: linear-gradient(90deg, rgba(247,201,72,0.18), transparent); }
+        .group-card.right .standings tbody tr.leader { background: linear-gradient(-90deg, rgba(247,201,72,0.18), transparent); }
+        .standings tbody tr.leader td.team-col::after { content: ' ⭐'; font-size: 0.78rem; }
+        .group-card.right .standings tbody tr.leader td.team-col::after { content: '⭐ '; }
+        .standings td.pos {
+            font-family: 'Bebas Neue', sans-serif;
+            color: var(--blue); font-size: 0.9rem; width: 22px;
+        }
+        .standings td.pts {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 0.9rem; color: var(--red);
+        }
+
+        /* === Plain match list (no cards, no dates) === */
+        .matches-title {
+            font-size: 0.6rem; font-weight: 800; letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: color-mix(in srgb, var(--text) 50%, transparent);
+            margin-bottom: 0.4rem;
+            padding: 0 0.25rem;
+        }
+
+        .match-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            padding: 0 0.25rem;
+        }
+        .match {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 0.5rem;
+            align-items: center;
+            font-size: 0.82rem;
+        }
+        .match-team {
+            font-weight: 700;
+            color: color-mix(in srgb, var(--text) 75%, transparent);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .match-team.right { text-align: right; }
+        .match-score {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 0.85rem; color: var(--red); letter-spacing: 0.04em;
+            min-width: 36px; text-align: center;
+        }
+        .match-score.empty {
+            font-family: 'Nunito', sans-serif; font-size: 0.7rem; font-weight: 700;
+            color: color-mix(in srgb, var(--text) 35%, transparent);
+        }
+
+        /* === Center: small Final card === */
+        .final-card {
+            grid-area: topC;
+            align-self: center;
+            position: relative;
+            background: linear-gradient(135deg, var(--blue-dark), var(--blue));
+            color: var(--white);
+            border-radius: 12px;
+            padding: 0.75rem 0.7rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        .final-card::before,
+        .final-card::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 1rem;
+            height: 2px;
+            background: var(--line);
+            transform: translateY(-50%);
+        }
+        .final-card::before { left: -1rem; }
+        .final-card::after  { right: -1rem; }
+        .final-label {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1rem; letter-spacing: 0.08em;
+            opacity: 0.85; margin-bottom: 0.45rem;
+        }
+        .final-team {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1rem; letter-spacing: 0.04em;
+            background: rgba(255,255,255,0.12);
+            border-radius: 6px;
+            padding: 0.3rem 0.4rem;
+        }
+        .final-team.empty { opacity: 0.55; }
+        .final-vs {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 0.7rem; opacity: 0.7; letter-spacing: 0.1em;
+            margin: 0.25rem 0;
+        }
+
+        footer { text-align: center; padding: 1.25rem; font-size: 0.74rem; color: #999; letter-spacing: 0.05em; }
+
+        @media (max-width: 880px) {
+            .layout {
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                    "topC"
+                    "topL"
+                    "botL"
+                    "topR"
+                    "botR";
+                gap: 0.85rem;
+            }
+            .final-card::before, .final-card::after { display: none; }
+            .matches-block.left, .matches-block.right { margin-top: 0; }
+            .group-card.right { text-align: left; }
+            .matches-block.right { text-align: left; }
+            .group-card.right .standings th.team-col,
+            .group-card.right .standings td.team-col { text-align: left; padding-left: 0.4rem; padding-right: 0; }
+            .group-card.right .standings tbody tr.leader { background: linear-gradient(90deg, rgba(247,201,72,0.18), transparent); }
+            .group-card.right .standings tbody tr.leader td.team-col::after { content: ' ⭐'; }
+            main { padding: 1rem 0.75rem 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle dark mode">&#9789;</button>
+    <div class="header-inner">
+        <img src="modesto_logo.png" alt="Modesto logo" class="logo" onerror="this.style.display='none'">
+        <h1>Masters - Ženski</h1>
+        <span class="season-badge">Sezona 2025/2026</span>
+        <div class="league-switch">
+            <label for="leagueSwitcher">Natjecanje</label>
+            <select id="leagueSwitcher" onchange="switchLeague(this)">
+                <option value="tournament.html">Masters</option>
+                <option value="tournament_w.html" selected>Masters - Ženski</option>
+                <option value="zimska_liga_modesto/index.html">Zimska Liga Modesto</option>
+                <option value="zenska_liga_zima/index.html">Ženska Liga Zima</option>
+            </select>
+        </div>
+    </div>
+</header>
+
+<svg class="wave" viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M0,20 C360,40 1080,0 1440,20 L1440,40 L0,40 Z"></path>
+</svg>
+
+<main>
+    <div class="layout">
+        <article class="group-card left">
+            <div class="group-name">Grupa 1</div>
+            <table class="standings">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th class="team-col">Tim</th>
+                        <th>Pob</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="pos">1</td><td class="team-col">Danijela / Iva</td><td class="pts">—</td></tr>
+                    <tr><td class="pos">2</td><td class="team-col">Maja / Melita</td><td class="pts">—</td></tr>
+                    <tr><td class="pos">3</td><td class="team-col">Tea / Ana</td><td class="pts">—</td></tr>
+                </tbody>
+            </table>
+        </article>
+
+        <article class="final-card">
+            <div class="final-label">Finale</div>
+            <div class="final-team empty">Pobjednik Grupe 1</div>
+            <div class="final-vs">VS</div>
+            <div class="final-team empty">Pobjednik Grupe 2</div>
+        </article>
+
+        <article class="group-card right">
+            <div class="group-name">Grupa 2</div>
+            <table class="standings">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th class="team-col">Tim</th>
+                        <th>Pob</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="pos">1</td><td class="team-col">Klara / Matea</td><td class="pts">—</td></tr>
+                    <tr><td class="pos">2</td><td class="team-col">Sonja / Inja</td><td class="pts">—</td></tr>
+                    <tr><td class="pos">3</td><td class="team-col">Megi / Ivana</td><td class="pts">—</td></tr>
+                </tbody>
+            </table>
+        </article>
+
+        <div class="matches-block left">
+            <div class="matches-title">Mečevi · Grupa 1</div>
+            <div class="match-list">
+                <div class="match">
+                    <span class="match-team">Danijela / Iva</span>
+                    <span class="match-score empty">vs</span>
+                    <span class="match-team right">Maja / Melita</span>
+                </div>
+                <div class="match">
+                    <span class="match-team">Danijela / Iva</span>
+                    <span class="match-score empty">vs</span>
+                    <span class="match-team right">Tea / Ana</span>
+                </div>
+                <div class="match">
+                    <span class="match-team">Maja / Melita</span>
+                    <span class="match-score empty">vs</span>
+                    <span class="match-team right">Tea / Ana</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="matches-block right">
+            <div class="matches-title">Mečevi · Grupa 2</div>
+            <div class="match-list">
+                <div class="match">
+                    <span class="match-team">Klara / Matea</span>
+                    <span class="match-score empty">vs</span>
+                    <span class="match-team right">Sonja / Inja</span>
+                </div>
+                <div class="match">
+                    <span class="match-team">Klara / Matea</span>
+                    <span class="match-score empty">vs</span>
+                    <span class="match-team right">Megi / Ivana</span>
+                </div>
+                <div class="match">
+                    <span class="match-team">Sonja / Inja</span>
+                    <span class="match-score empty">vs</span>
+                    <span class="match-team right">Megi / Ivana</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>Modesto Padel Club &middot; Masters - Ženski 2025/2026</footer>
+
+<script>
+    function switchLeague(selectEl) {
+        if (!selectEl || !selectEl.value) return;
+        window.location.href = selectEl.value;
+    }
+
+    function toggleTheme() {
+        const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        document.getElementById('themeBtn').textContent = next === 'dark' ? '☀' : '☽';
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const theme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+        document.getElementById('themeBtn').textContent = theme === 'dark' ? '☀' : '☽';
+    });
+</script>
+
+</body>
+</html>
