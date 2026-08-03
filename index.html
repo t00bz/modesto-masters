@@ -1,10 +1,430 @@
 <!DOCTYPE html>
 <html lang="hr">
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="refresh" content="0; url=./tournament.html">
-<title>Modesto Padel Club</title>
-<script>location.replace("./tournament.html");</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ljetna liga Modesto 2025 / 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --red:      #C8102E;
+            --red-dark: #9B0B22;
+            --blue:     #003DA5;
+            --blue-dark:#002880;
+            --white:    #FFFFFF;
+            --off-white:#F5F5F7;
+            --grey:     #E8E8E8;
+            --text:     #1A1A2E;
+        }
+        [data-theme="dark"] {
+            --red:      #E8234A;
+            --red-dark: #C8102E;
+            --blue:     #5B8FE8;
+            --blue-dark:#3D6FCC;
+            --white:    #1E1E2E;
+            --off-white:#13131F;
+            --grey:     #2E2E48;
+            --text:     #E2E2F0;
+        }
+        [data-theme="dark"] tbody tr:hover { background: #1D2545 !important; }
+        [data-theme="dark"] tbody tr.top3 { background: linear-gradient(90deg, rgba(232,35,74,0.08), transparent); }
+        [data-theme="dark"] tbody tr.highlighted { background: rgba(91,143,232,0.25) !important; }
+        [data-theme="dark"] .table-wrap,
+        [data-theme="dark"] .calculator { box-shadow: 0 4px 24px rgba(0,0,0,0.5); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Nunito', sans-serif; background: var(--off-white); color: var(--text); min-height: 100vh; }
+
+        header {
+            background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 50%, var(--red) 100%);
+            padding: 2rem 1rem 3rem; text-align: center; position: relative; overflow: hidden;
+        }
+        header::before {
+            content: ''; position: absolute; inset: 0;
+            background: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,255,255,0.03) 20px, rgba(255,255,255,0.03) 40px);
+        }
+        .header-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+        .logo { width: 240px; height: 240px; object-fit: contain; filter: drop-shadow(0 4px 16px rgba(0,0,0,0.4)); animation: floatIn 0.8s ease both; }
+        h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.2rem, 6vw, 4rem); color: var(--white); letter-spacing: 0.05em; line-height: 1; text-shadow: 0 2px 8px rgba(0,0,0,0.3); animation: slideUp 0.6s ease 0.2s both; }
+        .season-badge { display: inline-block; background: var(--red); color: var(--white); font-size: 0.9rem; font-weight: 800; letter-spacing: 0.12em; padding: 0.3rem 1.2rem; border-radius: 2rem; text-transform: uppercase; animation: slideUp 0.6s ease 0.35s both; }
+        .stats-bar { display: flex; gap: 2rem; justify-content: center; margin-top: 0.5rem; animation: slideUp 0.6s ease 0.5s both; }
+        .stat { text-align: center; color: rgba(255,255,255,0.85); }
+        .stat-number { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--white); line-height: 1; }
+        .stat-label { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.8; }
+        .league-switch { margin-top: 0.9rem; display: flex; gap: 0.6rem; align-items: center; justify-content: center; animation: slideUp 0.6s ease 0.62s both; }
+        .league-switch label { color: rgba(255,255,255,0.88); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 800; }
+        .league-switch select {
+            min-width: 240px; max-width: 92vw; background: rgba(255,255,255,0.15); color: var(--white);
+            border: 1px solid rgba(255,255,255,0.42); border-radius: 999px; padding: 0.5rem 0.9rem;
+            font-family: 'Nunito', sans-serif; font-size: 0.95rem; font-weight: 800; cursor: pointer;
+        }
+        .league-switch select option { color: #1A1A2E; background: #FFFFFF; }
+        .wave { display: block; width: 100%; margin-top: -2px; color: var(--off-white); }
+        .theme-toggle {
+            position: absolute; top: 1rem; right: 1rem; z-index: 10;
+            background: rgba(255,255,255,0.15); border: none; border-radius: 50%;
+            width: 42px; height: 42px; font-size: 1.2rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s;
+        }
+        .theme-toggle:hover { background: rgba(255,255,255,0.28); }
+
+        main { max-width: 900px; margin: 0 auto; padding: 2rem 1rem 4rem; display: flex; flex-direction: column; gap: 2rem; }
+
+        .calculator { background: var(--white); border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); padding: 1.5rem 2rem; }
+        .calc-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: var(--blue); letter-spacing: 0.05em; margin-bottom: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: space-between; user-select: none; }
+        .calc-selects { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+        .calc-selects select { flex: 1; min-width: 180px; padding: 0.65rem 1rem; border: 2px solid var(--grey); border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--text); background: var(--off-white); cursor: pointer; transition: border-color 0.2s; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23003DA5' stroke-width='2' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.8rem center; padding-right: 2.2rem; }
+        .calc-selects select:focus { outline: none; border-color: var(--blue); }
+        .plus-sign { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--grey); }
+        .calc-result { margin-top: 1.25rem; display: none; background: linear-gradient(135deg, var(--blue) 0%, var(--red) 100%); border-radius: 12px; padding: 1.25rem 1.5rem; color: var(--white); animation: fadeIn 0.3s ease; }
+        .calc-result.visible { display: block; }
+        .result-names { font-weight: 800; font-size: 1rem; opacity: 0.9; margin-bottom: 0.5rem; }
+        .result-total { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; line-height: 1; letter-spacing: 0.02em; }
+        .result-total span { font-size: 1rem; font-family: 'Nunito', sans-serif; opacity: 0.8; margin-left: 0.5rem; vertical-align: middle; }
+        .result-breakdown { margin-top: 0.75rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+        .breakdown-item { background: rgba(255,255,255,0.15); border-radius: 8px; padding: 0.4rem 0.8rem; font-size: 0.82rem; font-weight: 700; }
+        .breakdown-item .bk-label { opacity: 0.75; font-weight: 600; }
+
+        .table-wrap { background: var(--white); border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); overflow: hidden; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+        thead tr { background: linear-gradient(90deg, var(--blue) 0%, var(--blue-dark) 100%); color: var(--white); }
+        thead th { padding: 1rem 0.75rem; font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.08em; text-align: center; font-weight: 400; }
+        thead th:nth-child(2) { text-align: left; padding-left: 1rem; }
+        tbody tr { border-bottom: 1px solid var(--grey); transition: background 0.15s; }
+        tbody tr:hover { background: #EEF3FF; }
+        tbody tr:last-child { border-bottom: none; }
+        tbody tr.top3 { background: linear-gradient(90deg, rgba(200,16,46,0.05), transparent); }
+        tbody tr.top3:hover { background: rgba(200,16,46,0.08); }
+        tbody tr.highlighted { background: rgba(0,61,165,0.12) !important; outline: 2px solid var(--blue); outline-offset: -2px; }
+        td { padding: 0.75rem; text-align: center; color: var(--text); }
+        td.rang { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; width: 52px; color: var(--blue); }
+        td.name { text-align: left; padding-left: 1rem; font-weight: 700; font-size: 0.95rem; }
+        td.total { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; color: var(--red); }
+        tbody tr:nth-child(even):not(.top3):not(.highlighted) { background: var(--off-white); }
+
+        footer { text-align: center; padding: 1.5rem; font-size: 0.78rem; color: #999; letter-spacing: 0.05em; }
+
+        @keyframes floatIn { from { opacity: 0; transform: translateY(-20px) scale(0.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 600px) {
+            thead th, td { padding: 0.6rem 0.4rem; font-size: 0.8rem; }
+            td.name { font-size: 0.82rem; }
+            .calc-selects { flex-direction: column; }
+            .plus-sign { display: none; }
+        }
+
+        /* ── Searchable dropdown ── */
+        .select-wrap { flex: 1; min-width: 180px; position: relative; }
+        .select-wrap input {
+            width: 100%; padding: 0.65rem 1rem; border: 2px solid var(--grey);
+            border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 0.95rem;
+            font-weight: 700; color: var(--text); background: var(--off-white);
+            cursor: text; transition: border-color 0.2s; outline: none;
+        }
+        .select-wrap input:focus { border-color: var(--blue); }
+        .select-wrap input.selected { color: var(--blue); }
+        .dropdown-list {
+            display: none; position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+            background: var(--white); border: 2px solid var(--blue); border-radius: 8px;
+            max-height: 220px; overflow-y: auto; z-index: 100;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        .dropdown-list.open { display: block; }
+        .dropdown-item {
+            padding: 0.6rem 1rem; cursor: pointer; font-size: 0.92rem;
+            font-weight: 600; transition: background 0.1s;
+        }
+        .dropdown-item:hover { background: var(--off-white); color: var(--blue); }
+        .dropdown-item.active { background: var(--blue); color: var(--white); }
+        .dropdown-item.no-results { color: #999; cursor: default; font-weight: 400; }
+    </style>
 </head>
-<body><p>Redirecting to <a href="./tournament.html">Masters</a>…</p></body>
+<body>
+
+<header>
+    <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle dark mode">🌙</button>
+    <div class="header-inner">
+        <img src="modesto_logo.png" alt="Modesto logo" class="logo" onerror="this.style.display='none'">
+        <h1>Ljetna liga Modesto</h1>
+        <span class="season-badge">Sezona 2025 / 2026</span>
+        <div class="stats-bar">
+            <div class="stat"><div class="stat-number">109</div><div class="stat-label">Igrači</div></div>
+            <div class="stat"><div class="stat-number">2</div><div class="stat-label">Kola</div></div>
+            <div class="stat"><div class="stat-number">600</div><div class="stat-label">Max bodova</div></div>
+        </div>
+        
+    </div>
+</header>
+
+<svg class="wave" viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M0,20 C360,40 1080,0 1440,20 L1440,40 L0,40 Z"/>
+</svg>
+
+<main>
+    <div class="calculator">
+        <div class="calc-title" onclick="toggleCalc()">
+            <span>🎾 Kalkulator parova</span>
+            <span id="calcToggleIcon">▲</span>
+        </div>
+        <div id="calcBody">
+            <div class="calc-selects">
+                <div class="select-wrap">
+                    <input type="text" id="search1" placeholder="Traži igrača 1..." autocomplete="off"
+                           oninput="filterList(1)" onfocus="openList(1)" onblur="closeList(1)">
+                    <div class="dropdown-list" id="list1"></div>
+                </div>
+                <span class="plus-sign">+</span>
+                <div class="select-wrap">
+                    <input type="text" id="search2" placeholder="Traži igrača 2..." autocomplete="off"
+                           oninput="filterList(2)" onfocus="openList(2)" onblur="closeList(2)">
+                    <div class="dropdown-list" id="list2"></div>
+                </div>
+            </div>
+            <div class="calc-result" id="calcResult">
+                <div class="result-names" id="resultNames"></div>
+                <div class="result-total" id="resultTotal"></div>
+                <div class="result-breakdown" id="resultBreakdown"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-wrap">
+        <table>
+            <thead><tr><th>#</th><th>Igrač</th><th>Kolo<br>2026-06-14</th><th>Kolo<br>2026-07-31</th><th>TOTAL</th></tr></thead>
+            <tbody id="tableBody"><tr class="top3" data-name="Mateo Baric"><td class="rang">🥇</td><td class="name">Mateo Baric</td><td>180</td><td>200</td><td class="total">380</td></tr>
+<tr class="top3" data-name="Luka Brkašić"><td class="rang">🥈</td><td class="name">Luka Brkašić</td><td>180</td><td>200</td><td class="total">380</td></tr>
+<tr class="top3" data-name="Valentino Kukić"><td class="rang">🥉</td><td class="name">Valentino Kukić</td><td>160</td><td>180</td><td class="total">340</td></tr>
+<tr class="" data-name="Drazenko Pranjic"><td class="rang">4</td><td class="name">Drazenko Pranjic</td><td>160</td><td>180</td><td class="total">340</td></tr>
+<tr class="" data-name="Nikola Krčelić"><td class="rang">5</td><td class="name">Nikola Krčelić</td><td>140</td><td>160</td><td class="total">300</td></tr>
+<tr class="" data-name="Livio Alić"><td class="rang">6</td><td class="name">Livio Alić</td><td>160</td><td>140</td><td class="total">300</td></tr>
+<tr class="" data-name="Antonio Išek"><td class="rang">7</td><td class="name">Antonio Išek</td><td>160</td><td>140</td><td class="total">300</td></tr>
+<tr class="" data-name="Antonio Jurković"><td class="rang">8</td><td class="name">Antonio Jurković</td><td>140</td><td>160</td><td class="total">300</td></tr>
+<tr class="" data-name="Hrvoje Šmit"><td class="rang">9</td><td class="name">Hrvoje Šmit</td><td>160</td><td>120</td><td class="total">280</td></tr>
+<tr class="" data-name="Boris Šprišić"><td class="rang">10</td><td class="name">Boris Šprišić</td><td>160</td><td>120</td><td class="total">280</td></tr>
+<tr class="" data-name="Miran Ančić"><td class="rang">11</td><td class="name">Miran Ančić</td><td>112</td><td>144</td><td class="total">256</td></tr>
+<tr class="" data-name="Danijel Milunić"><td class="rang">12</td><td class="name">Danijel Milunić</td><td>144</td><td>112</td><td class="total">256</td></tr>
+<tr class="" data-name="Matej Galonja"><td class="rang">13</td><td class="name">Matej Galonja</td><td>144</td><td>112</td><td class="total">256</td></tr>
+<tr class="" data-name="Ivan Heinelt"><td class="rang">14</td><td class="name">Ivan Heinelt</td><td>112</td><td>144</td><td class="total">256</td></tr>
+<tr class="" data-name="Velimir Rođak"><td class="rang">15</td><td class="name">Velimir Rođak</td><td>128</td><td>112</td><td class="total">240</td></tr>
+<tr class="" data-name="Danijel Kukić"><td class="rang">16</td><td class="name">Danijel Kukić</td><td>112</td><td>128</td><td class="total">240</td></tr>
+<tr class="" data-name="Danijel Gnjatić"><td class="rang">17</td><td class="name">Danijel Gnjatić</td><td>144</td><td>96</td><td class="total">240</td></tr>
+<tr class="" data-name="Mibor Tarković"><td class="rang">18</td><td class="name">Mibor Tarković</td><td>96</td><td>144</td><td class="total">240</td></tr>
+<tr class="" data-name="Ivan Marović"><td class="rang">19</td><td class="name">Ivan Marović</td><td>128</td><td>112</td><td class="total">240</td></tr>
+<tr class="" data-name="Jan Kasa"><td class="rang">20</td><td class="name">Jan Kasa</td><td>144</td><td>96</td><td class="total">240</td></tr>
+<tr class="" data-name="Marko Medarić"><td class="rang">21</td><td class="name">Marko Medarić</td><td>112</td><td>128</td><td class="total">240</td></tr>
+<tr class="" data-name="Danko Obradović"><td class="rang">22</td><td class="name">Danko Obradović</td><td>96</td><td>144</td><td class="total">240</td></tr>
+<tr class="" data-name="Marko Pavličević"><td class="rang">23</td><td class="name">Marko Pavličević</td><td>108</td><td>120</td><td class="total">228</td></tr>
+<tr class="" data-name="Tin Martinec"><td class="rang">24</td><td class="name">Tin Martinec</td><td>108</td><td>120</td><td class="total">228</td></tr>
+<tr class="" data-name="Vedran Marčelja"><td class="rang">25</td><td class="name">Vedran Marčelja</td><td>128</td><td>96</td><td class="total">224</td></tr>
+<tr class="" data-name="Hrvoje Brkašić"><td class="rang">26</td><td class="name">Hrvoje Brkašić</td><td>120</td><td>96</td><td class="total">216</td></tr>
+<tr class="" data-name="Dominik Pokas"><td class="rang">27</td><td class="name">Dominik Pokas</td><td>108</td><td>108</td><td class="total">216</td></tr>
+<tr class="" data-name="Ivan Mitić"><td class="rang">28</td><td class="name">Ivan Mitić</td><td>96</td><td>120</td><td class="total">216</td></tr>
+<tr class="" data-name="Robert Miani"><td class="rang">29</td><td class="name">Robert Miani</td><td>96</td><td>120</td><td class="total">216</td></tr>
+<tr class="" data-name="Domagoj Kralj"><td class="rang">30</td><td class="name">Domagoj Kralj</td><td>108</td><td>108</td><td class="total">216</td></tr>
+<tr class="" data-name="Dejan Ćopić"><td class="rang">31</td><td class="name">Dejan Ćopić</td><td>84</td><td>128</td><td class="total">212</td></tr>
+<tr class="" data-name="Borna Vučkić-Herkov"><td class="rang">32</td><td class="name">Borna Vučkić-Herkov</td><td>200</td><td>—</td><td class="total">200</td></tr>
+<tr class="" data-name="Tin Miljan"><td class="rang">33</td><td class="name">Tin Miljan</td><td>200</td><td>—</td><td class="total">200</td></tr>
+<tr class="" data-name="Ivica Sušek"><td class="rang">34</td><td class="name">Ivica Sušek</td><td>84</td><td>108</td><td class="total">192</td></tr>
+<tr class="" data-name="Niko Sušek"><td class="rang">35</td><td class="name">Niko Sušek</td><td>84</td><td>108</td><td class="total">192</td></tr>
+<tr class="" data-name="Borna Lovreković"><td class="rang">36</td><td class="name">Borna Lovreković</td><td>96</td><td>84</td><td class="total">180</td></tr>
+<tr class="" data-name="Denis Mioković"><td class="rang">37</td><td class="name">Denis Mioković</td><td>80</td><td>96</td><td class="total">176</td></tr>
+<tr class="" data-name="Luka Kirin"><td class="rang">38</td><td class="name">Luka Kirin</td><td>80</td><td>96</td><td class="total">176</td></tr>
+<tr class="" data-name="Ante Filipović"><td class="rang">39</td><td class="name">Ante Filipović</td><td>80</td><td>96</td><td class="total">176</td></tr>
+<tr class="" data-name="Dražen Oršulić"><td class="rang">40</td><td class="name">Dražen Oršulić</td><td>80</td><td>96</td><td class="total">176</td></tr>
+<tr class="" data-name="DP D"><td class="rang">41</td><td class="name">DP D</td><td>—</td><td>160</td><td class="total">160</td></tr>
+<tr class="" data-name="Ivan Šipuš"><td class="rang">42</td><td class="name">Ivan Šipuš</td><td>—</td><td>160</td><td class="total">160</td></tr>
+<tr class="" data-name="Toni Klindić"><td class="rang">43</td><td class="name">Toni Klindić</td><td>—</td><td>160</td><td class="total">160</td></tr>
+<tr class="" data-name="Igor Marić"><td class="rang">44</td><td class="name">Igor Marić</td><td>—</td><td>160</td><td class="total">160</td></tr>
+<tr class="" data-name="David Žirković"><td class="rang">45</td><td class="name">David Žirković</td><td>72</td><td>84</td><td class="total">156</td></tr>
+<tr class="" data-name="Eugen Turk"><td class="rang">46</td><td class="name">Eugen Turk</td><td>72</td><td>84</td><td class="total">156</td></tr>
+<tr class="" data-name="Kristijan Vidović"><td class="rang">47</td><td class="name">Kristijan Vidović</td><td>72</td><td>84</td><td class="total">156</td></tr>
+<tr class="" data-name="Paolo Marčelja"><td class="rang">48</td><td class="name">Paolo Marčelja</td><td>72</td><td>80</td><td class="total">152</td></tr>
+<tr class="" data-name="Mergim Zekaj"><td class="rang">49</td><td class="name">Mergim Zekaj</td><td>72</td><td>80</td><td class="total">152</td></tr>
+<tr class="" data-name="Jan Baljak"><td class="rang">50</td><td class="name">Jan Baljak</td><td>64</td><td>80</td><td class="total">144</td></tr>
+<tr class="" data-name="Ivan Križe"><td class="rang">51</td><td class="name">Ivan Križe</td><td>64</td><td>80</td><td class="total">144</td></tr>
+<tr class="" data-name="Sven Stapar"><td class="rang">52</td><td class="name">Sven Stapar</td><td>72</td><td>64</td><td class="total">136</td></tr>
+<tr class="" data-name="Franko Kelava"><td class="rang">53</td><td class="name">Franko Kelava</td><td>72</td><td>64</td><td class="total">136</td></tr>
+<tr class="" data-name="Dominik Paljuši"><td class="rang">54</td><td class="name">Dominik Paljuši</td><td>60</td><td>72</td><td class="total">132</td></tr>
+<tr class="" data-name="Sven Dolovčak"><td class="rang">55</td><td class="name">Sven Dolovčak</td><td>60</td><td>72</td><td class="total">132</td></tr>
+<tr class="" data-name="Edi Kurtovic"><td class="rang">56</td><td class="name">Edi Kurtovic</td><td>56</td><td>72</td><td class="total">128</td></tr>
+<tr class="" data-name="Dario Zarkovic"><td class="rang">57</td><td class="name">Dario Zarkovic</td><td>—</td><td>128</td><td class="total">128</td></tr>
+<tr class="" data-name="Zoran Umicevic"><td class="rang">58</td><td class="name">Zoran Umicevic</td><td>128</td><td>—</td><td class="total">128</td></tr>
+<tr class="" data-name="Jakov Marjanović"><td class="rang">59</td><td class="name">Jakov Marjanović</td><td>56</td><td>72</td><td class="total">128</td></tr>
+<tr class="" data-name="Vladimir Kušanić"><td class="rang">60</td><td class="name">Vladimir Kušanić</td><td>56</td><td>64</td><td class="total">120</td></tr>
+<tr class="" data-name="Almir Halilović"><td class="rang">61</td><td class="name">Almir Halilović</td><td>120</td><td>—</td><td class="total">120</td></tr>
+<tr class="" data-name="Boris Vinčić"><td class="rang">62</td><td class="name">Boris Vinčić</td><td>120</td><td>—</td><td class="total">120</td></tr>
+<tr class="" data-name="Tomislav Dragaš"><td class="rang">63</td><td class="name">Tomislav Dragaš</td><td>56</td><td>64</td><td class="total">120</td></tr>
+<tr class="" data-name="Jasmin Jasko Alihodzic"><td class="rang">64</td><td class="name">Jasmin Jasko Alihodzic</td><td>64</td><td>56</td><td class="total">120</td></tr>
+<tr class="" data-name="Arnel Duraković"><td class="rang">65</td><td class="name">Arnel Duraković</td><td>64</td><td>56</td><td class="total">120</td></tr>
+<tr class="" data-name="Josip Sokolić"><td class="rang">66</td><td class="name">Josip Sokolić</td><td>120</td><td>—</td><td class="total">120</td></tr>
+<tr class="" data-name="Dejan Živoder"><td class="rang">67</td><td class="name">Dejan Živoder</td><td>40</td><td>72</td><td class="total">112</td></tr>
+<tr class="" data-name="Dejan Jurkić"><td class="rang">68</td><td class="name">Dejan Jurkić</td><td>40</td><td>72</td><td class="total">112</td></tr>
+<tr class="" data-name="Vladimir Šakić"><td class="rang">69</td><td class="name">Vladimir Šakić</td><td>—</td><td>100</td><td class="total">100</td></tr>
+<tr class="" data-name="Dejan Rendulić"><td class="rang">70</td><td class="name">Dejan Rendulić</td><td>—</td><td>100</td><td class="total">100</td></tr>
+<tr class="" data-name="Antonio Čerkez"><td class="rang">71</td><td class="name">Antonio Čerkez</td><td>40</td><td>56</td><td class="total">96</td></tr>
+<tr class="" data-name="Antonio Pernar"><td class="rang">72</td><td class="name">Antonio Pernar</td><td>40</td><td>56</td><td class="total">96</td></tr>
+<tr class="" data-name="Tomislav Lulić"><td class="rang">73</td><td class="name">Tomislav Lulić</td><td>96</td><td>—</td><td class="total">96</td></tr>
+<tr class="" data-name="Sonja Ćopić"><td class="rang">74</td><td class="name">Sonja Ćopić</td><td>84</td><td>—</td><td class="total">84</td></tr>
+<tr class="" data-name="Antonio Ivančić"><td class="rang">75</td><td class="name">Antonio Ivančić</td><td>36</td><td>40</td><td class="total">76</td></tr>
+<tr class="" data-name="Ivan Žirković"><td class="rang">76</td><td class="name">Ivan Žirković</td><td>72</td><td>—</td><td class="total">72</td></tr>
+<tr class="" data-name="Antonio Tompić"><td class="rang">77</td><td class="name">Antonio Tompić</td><td>—</td><td>72</td><td class="total">72</td></tr>
+<tr class="" data-name="Marko Malović"><td class="rang">78</td><td class="name">Marko Malović</td><td>—</td><td>72</td><td class="total">72</td></tr>
+<tr class="" data-name="Fran Kostelac"><td class="rang">79</td><td class="name">Fran Kostelac</td><td>28</td><td>36</td><td class="total">64</td></tr>
+<tr class="" data-name="Ivan Pernar"><td class="rang">80</td><td class="name">Ivan Pernar</td><td>32</td><td>32</td><td class="total">64</td></tr>
+<tr class="" data-name="Luka Sukalić"><td class="rang">81</td><td class="name">Luka Sukalić</td><td>32</td><td>32</td><td class="total">64</td></tr>
+<tr class="" data-name="Drazen Matijevic"><td class="rang">82</td><td class="name">Drazen Matijevic</td><td>32</td><td>24</td><td class="total">56</td></tr>
+<tr class="" data-name="Marko Kežman"><td class="rang">83</td><td class="name">Marko Kežman</td><td>36</td><td>20</td><td class="total">56</td></tr>
+<tr class="" data-name="Zeljko Matagic"><td class="rang">84</td><td class="name">Zeljko Matagic</td><td>36</td><td>20</td><td class="total">56</td></tr>
+<tr class="" data-name="Matija Alibašić"><td class="rang">85</td><td class="name">Matija Alibašić</td><td>24</td><td>32</td><td class="total">56</td></tr>
+<tr class="" data-name="Matej Sučević"><td class="rang">86</td><td class="name">Matej Sučević</td><td>32</td><td>24</td><td class="total">56</td></tr>
+<tr class="" data-name="Ivan Ciglar"><td class="rang">87</td><td class="name">Ivan Ciglar</td><td>24</td><td>32</td><td class="total">56</td></tr>
+<tr class="" data-name="David Grgić"><td class="rang">88</td><td class="name">David Grgić</td><td>28</td><td>24</td><td class="total">52</td></tr>
+<tr class="" data-name="Mateo Ivičinec"><td class="rang">89</td><td class="name">Mateo Ivičinec</td><td>28</td><td>24</td><td class="total">52</td></tr>
+<tr class="" data-name="Matija Šarić"><td class="rang">90</td><td class="name">Matija Šarić</td><td>48</td><td>—</td><td class="total">48</td></tr>
+<tr class="" data-name="Luka Begedin"><td class="rang">91</td><td class="name">Luka Begedin</td><td>48</td><td>—</td><td class="total">48</td></tr>
+<tr class="" data-name="Ino Josipovic"><td class="rang">92</td><td class="name">Ino Josipovic</td><td>—</td><td>40</td><td class="total">40</td></tr>
+<tr class="" data-name="Franko Šafradin"><td class="rang">93</td><td class="name">Franko Šafradin</td><td>—</td><td>40</td><td class="total">40</td></tr>
+<tr class="" data-name="Vuka Salerich"><td class="rang">94</td><td class="name">Vuka Salerich</td><td>—</td><td>40</td><td class="total">40</td></tr>
+<tr class="" data-name="Mario Grd"><td class="rang">95</td><td class="name">Mario Grd</td><td>36</td><td>—</td><td class="total">36</td></tr>
+<tr class="" data-name="Mario Komarica"><td class="rang">96</td><td class="name">Mario Komarica</td><td>—</td><td>36</td><td class="total">36</td></tr>
+<tr class="" data-name="Patrik Horvat"><td class="rang">97</td><td class="name">Patrik Horvat</td><td>—</td><td>36</td><td class="total">36</td></tr>
+<tr class="" data-name="Tin Petričić"><td class="rang">98</td><td class="name">Tin Petričić</td><td>—</td><td>36</td><td class="total">36</td></tr>
+<tr class="" data-name="Robert Čuić"><td class="rang">99</td><td class="name">Robert Čuić</td><td>—</td><td>28</td><td class="total">28</td></tr>
+<tr class="" data-name="Borna Kablar"><td class="rang">100</td><td class="name">Borna Kablar</td><td>—</td><td>28</td><td class="total">28</td></tr>
+<tr class="" data-name="Don Saler"><td class="rang">101</td><td class="name">Don Saler</td><td>28</td><td>—</td><td class="total">28</td></tr>
+<tr class="" data-name="ivor bozic"><td class="rang">102</td><td class="name">ivor bozic</td><td>—</td><td>28</td><td class="total">28</td></tr>
+<tr class="" data-name="Marino Biljan"><td class="rang">103</td><td class="name">Marino Biljan</td><td>—</td><td>28</td><td class="total">28</td></tr>
+<tr class="" data-name="Arnel Markovic"><td class="rang">104</td><td class="name">Arnel Markovic</td><td>24</td><td>—</td><td class="total">24</td></tr>
+<tr class="" data-name="Mateo Marković"><td class="rang">105</td><td class="name">Mateo Marković</td><td>24</td><td>—</td><td class="total">24</td></tr>
+<tr class="" data-name="Ivan Bolun"><td class="rang">106</td><td class="name">Ivan Bolun</td><td>—</td><td>20</td><td class="total">20</td></tr>
+<tr class="" data-name="Mario Kunčić"><td class="rang">107</td><td class="name">Mario Kunčić</td><td>—</td><td>20</td><td class="total">20</td></tr>
+<tr class="" data-name="Domagoj Skender"><td class="rang">108</td><td class="name">Domagoj Skender</td><td>—</td><td>16</td><td class="total">16</td></tr>
+<tr class="" data-name="David Muža"><td class="rang">109</td><td class="name">David Muža</td><td>—</td><td>16</td><td class="total">16</td></tr></tbody>
+        </table>
+    </div>
+</main>
+
+<footer>Modesto Padel Club &mdash; Ljetna liga Modesto 2025 / 2026</footer>
+
+<script>
+    // Theme
+    (function () {
+        const t = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', t);
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('themeBtn').textContent = t === 'dark' ? '☀️' : '🌙';
+        });
+    })();
+    function toggleTheme() {
+        const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        document.getElementById('themeBtn').textContent = next === 'dark' ? '☀️' : '🌙';
+    }
+
+    function switchLeague(selectEl) {
+        if (!selectEl || !selectEl.value) return;
+        window.location.href = selectEl.value;
+    }
+
+    const PLAYERS = {"Mateo Baric": {"rang": 1, "total": 380, "kolo": [180, 200]}, "Luka Brkašić": {"rang": 2, "total": 380, "kolo": [180, 200]}, "Valentino Kukić": {"rang": 3, "total": 340, "kolo": [160, 180]}, "Drazenko Pranjic": {"rang": 4, "total": 340, "kolo": [160, 180]}, "Nikola Krčelić": {"rang": 5, "total": 300, "kolo": [140, 160]}, "Livio Alić": {"rang": 6, "total": 300, "kolo": [160, 140]}, "Antonio Išek": {"rang": 7, "total": 300, "kolo": [160, 140]}, "Antonio Jurković": {"rang": 8, "total": 300, "kolo": [140, 160]}, "Hrvoje Šmit": {"rang": 9, "total": 280, "kolo": [160, 120]}, "Boris Šprišić": {"rang": 10, "total": 280, "kolo": [160, 120]}, "Miran Ančić": {"rang": 11, "total": 256, "kolo": [112, 144]}, "Danijel Milunić": {"rang": 12, "total": 256, "kolo": [144, 112]}, "Matej Galonja": {"rang": 13, "total": 256, "kolo": [144, 112]}, "Ivan Heinelt": {"rang": 14, "total": 256, "kolo": [112, 144]}, "Velimir Rođak": {"rang": 15, "total": 240, "kolo": [128, 112]}, "Danijel Kukić": {"rang": 16, "total": 240, "kolo": [112, 128]}, "Danijel Gnjatić": {"rang": 17, "total": 240, "kolo": [144, 96]}, "Mibor Tarković": {"rang": 18, "total": 240, "kolo": [96, 144]}, "Ivan Marović": {"rang": 19, "total": 240, "kolo": [128, 112]}, "Jan Kasa": {"rang": 20, "total": 240, "kolo": [144, 96]}, "Marko Medarić": {"rang": 21, "total": 240, "kolo": [112, 128]}, "Danko Obradović": {"rang": 22, "total": 240, "kolo": [96, 144]}, "Marko Pavličević": {"rang": 23, "total": 228, "kolo": [108, 120]}, "Tin Martinec": {"rang": 24, "total": 228, "kolo": [108, 120]}, "Vedran Marčelja": {"rang": 25, "total": 224, "kolo": [128, 96]}, "Hrvoje Brkašić": {"rang": 26, "total": 216, "kolo": [120, 96]}, "Dominik Pokas": {"rang": 27, "total": 216, "kolo": [108, 108]}, "Ivan Mitić": {"rang": 28, "total": 216, "kolo": [96, 120]}, "Robert Miani": {"rang": 29, "total": 216, "kolo": [96, 120]}, "Domagoj Kralj": {"rang": 30, "total": 216, "kolo": [108, 108]}, "Dejan Ćopić": {"rang": 31, "total": 212, "kolo": [84, 128]}, "Borna Vučkić-Herkov": {"rang": 32, "total": 200, "kolo": [200, 0]}, "Tin Miljan": {"rang": 33, "total": 200, "kolo": [200, 0]}, "Ivica Sušek": {"rang": 34, "total": 192, "kolo": [84, 108]}, "Niko Sušek": {"rang": 35, "total": 192, "kolo": [84, 108]}, "Borna Lovreković": {"rang": 36, "total": 180, "kolo": [96, 84]}, "Denis Mioković": {"rang": 37, "total": 176, "kolo": [80, 96]}, "Luka Kirin": {"rang": 38, "total": 176, "kolo": [80, 96]}, "Ante Filipović": {"rang": 39, "total": 176, "kolo": [80, 96]}, "Dražen Oršulić": {"rang": 40, "total": 176, "kolo": [80, 96]}, "DP D": {"rang": 41, "total": 160, "kolo": [0, 160]}, "Ivan Šipuš": {"rang": 42, "total": 160, "kolo": [0, 160]}, "Toni Klindić": {"rang": 43, "total": 160, "kolo": [0, 160]}, "Igor Marić": {"rang": 44, "total": 160, "kolo": [0, 160]}, "David Žirković": {"rang": 45, "total": 156, "kolo": [72, 84]}, "Eugen Turk": {"rang": 46, "total": 156, "kolo": [72, 84]}, "Kristijan Vidović": {"rang": 47, "total": 156, "kolo": [72, 84]}, "Paolo Marčelja": {"rang": 48, "total": 152, "kolo": [72, 80]}, "Mergim Zekaj": {"rang": 49, "total": 152, "kolo": [72, 80]}, "Jan Baljak": {"rang": 50, "total": 144, "kolo": [64, 80]}, "Ivan Križe": {"rang": 51, "total": 144, "kolo": [64, 80]}, "Sven Stapar": {"rang": 52, "total": 136, "kolo": [72, 64]}, "Franko Kelava": {"rang": 53, "total": 136, "kolo": [72, 64]}, "Dominik Paljuši": {"rang": 54, "total": 132, "kolo": [60, 72]}, "Sven Dolovčak": {"rang": 55, "total": 132, "kolo": [60, 72]}, "Edi Kurtovic": {"rang": 56, "total": 128, "kolo": [56, 72]}, "Dario Zarkovic": {"rang": 57, "total": 128, "kolo": [0, 128]}, "Zoran Umicevic": {"rang": 58, "total": 128, "kolo": [128, 0]}, "Jakov Marjanović": {"rang": 59, "total": 128, "kolo": [56, 72]}, "Vladimir Kušanić": {"rang": 60, "total": 120, "kolo": [56, 64]}, "Almir Halilović": {"rang": 61, "total": 120, "kolo": [120, 0]}, "Boris Vinčić": {"rang": 62, "total": 120, "kolo": [120, 0]}, "Tomislav Dragaš": {"rang": 63, "total": 120, "kolo": [56, 64]}, "Jasmin Jasko Alihodzic": {"rang": 64, "total": 120, "kolo": [64, 56]}, "Arnel Duraković": {"rang": 65, "total": 120, "kolo": [64, 56]}, "Josip Sokolić": {"rang": 66, "total": 120, "kolo": [120, 0]}, "Dejan Živoder": {"rang": 67, "total": 112, "kolo": [40, 72]}, "Dejan Jurkić": {"rang": 68, "total": 112, "kolo": [40, 72]}, "Vladimir Šakić": {"rang": 69, "total": 100, "kolo": [0, 100]}, "Dejan Rendulić": {"rang": 70, "total": 100, "kolo": [0, 100]}, "Antonio Čerkez": {"rang": 71, "total": 96, "kolo": [40, 56]}, "Antonio Pernar": {"rang": 72, "total": 96, "kolo": [40, 56]}, "Tomislav Lulić": {"rang": 73, "total": 96, "kolo": [96, 0]}, "Sonja Ćopić": {"rang": 74, "total": 84, "kolo": [84, 0]}, "Antonio Ivančić": {"rang": 75, "total": 76, "kolo": [36, 40]}, "Ivan Žirković": {"rang": 76, "total": 72, "kolo": [72, 0]}, "Antonio Tompić": {"rang": 77, "total": 72, "kolo": [0, 72]}, "Marko Malović": {"rang": 78, "total": 72, "kolo": [0, 72]}, "Fran Kostelac": {"rang": 79, "total": 64, "kolo": [28, 36]}, "Ivan Pernar": {"rang": 80, "total": 64, "kolo": [32, 32]}, "Luka Sukalić": {"rang": 81, "total": 64, "kolo": [32, 32]}, "Drazen Matijevic": {"rang": 82, "total": 56, "kolo": [32, 24]}, "Marko Kežman": {"rang": 83, "total": 56, "kolo": [36, 20]}, "Zeljko Matagic": {"rang": 84, "total": 56, "kolo": [36, 20]}, "Matija Alibašić": {"rang": 85, "total": 56, "kolo": [24, 32]}, "Matej Sučević": {"rang": 86, "total": 56, "kolo": [32, 24]}, "Ivan Ciglar": {"rang": 87, "total": 56, "kolo": [24, 32]}, "David Grgić": {"rang": 88, "total": 52, "kolo": [28, 24]}, "Mateo Ivičinec": {"rang": 89, "total": 52, "kolo": [28, 24]}, "Matija Šarić": {"rang": 90, "total": 48, "kolo": [48, 0]}, "Luka Begedin": {"rang": 91, "total": 48, "kolo": [48, 0]}, "Ino Josipovic": {"rang": 92, "total": 40, "kolo": [0, 40]}, "Franko Šafradin": {"rang": 93, "total": 40, "kolo": [0, 40]}, "Vuka Salerich": {"rang": 94, "total": 40, "kolo": [0, 40]}, "Mario Grd": {"rang": 95, "total": 36, "kolo": [36, 0]}, "Mario Komarica": {"rang": 96, "total": 36, "kolo": [0, 36]}, "Patrik Horvat": {"rang": 97, "total": 36, "kolo": [0, 36]}, "Tin Petričić": {"rang": 98, "total": 36, "kolo": [0, 36]}, "Robert Čuić": {"rang": 99, "total": 28, "kolo": [0, 28]}, "Borna Kablar": {"rang": 100, "total": 28, "kolo": [0, 28]}, "Don Saler": {"rang": 101, "total": 28, "kolo": [28, 0]}, "ivor bozic": {"rang": 102, "total": 28, "kolo": [0, 28]}, "Marino Biljan": {"rang": 103, "total": 28, "kolo": [0, 28]}, "Arnel Markovic": {"rang": 104, "total": 24, "kolo": [24, 0]}, "Mateo Marković": {"rang": 105, "total": 24, "kolo": [24, 0]}, "Ivan Bolun": {"rang": 106, "total": 20, "kolo": [0, 20]}, "Mario Kunčić": {"rang": 107, "total": 20, "kolo": [0, 20]}, "Domagoj Skender": {"rang": 108, "total": 16, "kolo": [0, 16]}, "David Muža": {"rang": 109, "total": 16, "kolo": [0, 16]}};
+    const KOLO_LABELS = ["Kolo 2026-06-14", "Kolo 2026-07-31"];
+    const ALL_NAMES = Object.keys(PLAYERS).sort();
+
+    // Selected values
+    let selected = { 1: null, 2: null };
+
+    // Build dropdown items
+    function buildList(n, filter) {
+        const list = document.getElementById('list' + n);
+        const q = filter.toLowerCase();
+        const matches = ALL_NAMES.filter(name => name.toLowerCase().includes(q));
+        if (matches.length === 0) {
+            list.innerHTML = '<div class="dropdown-item no-results">Nema rezultata</div>';
+        } else {
+            list.innerHTML = matches.map(name =>
+                '<div class="dropdown-item' + (name === selected[n] ? ' active' : '') + '" data-name="' + name + '">' + name + '</div>'
+            ).join('');
+            list.querySelectorAll('.dropdown-item:not(.no-results)').forEach(item => {
+                item.addEventListener('mousedown', function(e) {
+                    e.preventDefault();
+                    selectPlayer(n, this.dataset.name);
+                });
+            });
+        }
+    }
+
+    function openList(n) {
+        buildList(n, document.getElementById('search' + n).value);
+        document.getElementById('list' + n).classList.add('open');
+    }
+
+    function closeList(n) {
+        setTimeout(() => document.getElementById('list' + n).classList.remove('open'), 150);
+    }
+
+    function filterList(n) {
+        const val = document.getElementById('search' + n).value;
+        if (selected[n] && val !== selected[n]) {
+            selected[n] = null;
+            calculate();
+        }
+        buildList(n, val);
+        document.getElementById('list' + n).classList.add('open');
+    }
+
+    function selectPlayer(n, name) {
+        selected[n] = name;
+        document.getElementById('search' + n).value = name;
+        document.getElementById('search' + n).classList.add('selected');
+        document.getElementById('list' + n).classList.remove('open');
+        calculate();
+    }
+
+    let calcOpen = false;
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('calcBody').style.display = 'none';
+        document.getElementById('calcToggleIcon').textContent = '▼';
+    });
+    function toggleCalc() {
+        calcOpen = !calcOpen;
+        document.getElementById('calcBody').style.display = calcOpen ? 'block' : 'none';
+        document.getElementById('calcToggleIcon').textContent = calcOpen ? '▲' : '▼';
+    }
+
+    function calculate() {
+        const p1 = selected[1];
+        const p2 = selected[2];
+        const result = document.getElementById('calcResult');
+
+        document.querySelectorAll('tr.highlighted').forEach(r => r.classList.remove('highlighted'));
+
+        if (!p1 || !p2) { result.classList.remove('visible'); return; }
+
+        const d1 = PLAYERS[p1];
+        const d2 = PLAYERS[p2];
+        const combined = d1.total + d2.total;
+
+        document.getElementById('resultNames').textContent = p1 + ' + ' + p2;
+        document.getElementById('resultTotal').innerHTML = combined + '<span>bodova ukupno</span>';
+
+        const breakdown = document.getElementById('resultBreakdown');
+        breakdown.innerHTML = KOLO_LABELS.map((label, i) => {
+            const pts = (d1.kolo[i] || 0) + (d2.kolo[i] || 0);
+            return '<div class="breakdown-item"><div class="bk-label">' + label + '</div><div>' + pts + '</div></div>';
+        }).join('');
+
+        result.classList.add('visible');
+
+        document.querySelectorAll('#tableBody tr').forEach(row => {
+            if (row.dataset.name === p1 || row.dataset.name === p2) {
+                row.classList.add('highlighted');
+            }
+        });
+    }
+</script>
+
+</body>
 </html>
