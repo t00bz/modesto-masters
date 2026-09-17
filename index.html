@@ -3,199 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ljetna liga Modesto 2025 / 2026</title>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --red:      #C8102E;
-            --red-dark: #9B0B22;
-            --blue:     #003DA5;
-            --blue-dark:#002880;
-            --white:    #FFFFFF;
-            --off-white:#F5F5F7;
-            --grey:     #E8E8E8;
-            --text:     #1A1A2E;
-        }
-        [data-theme="dark"] {
-            --red:      #E8234A;
-            --red-dark: #C8102E;
-            --blue:     #5B8FE8;
-            --blue-dark:#3D6FCC;
-            --white:    #1E1E2E;
-            --off-white:#13131F;
-            --grey:     #2E2E48;
-            --text:     #E2E2F0;
-        }
-        [data-theme="dark"] tbody tr:hover { background: #1D2545 !important; }
-        [data-theme="dark"] tbody tr.top3 { background: linear-gradient(90deg, rgba(232,35,74,0.08), transparent); }
-        [data-theme="dark"] tbody tr.highlighted { background: rgba(91,143,232,0.25) !important; }
-        [data-theme="dark"] .table-wrap,
-        [data-theme="dark"] .calculator { box-shadow: 0 4px 24px rgba(0,0,0,0.5); }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Nunito', sans-serif; background: var(--off-white); color: var(--text); min-height: 100vh; }
-
-        header {
-            background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 50%, var(--red) 100%);
-            padding: 2rem 1rem 3rem; text-align: center; position: relative; overflow: hidden;
-        }
-        header::before {
-            content: ''; position: absolute; inset: 0;
-            background: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,255,255,0.03) 20px, rgba(255,255,255,0.03) 40px);
-        }
-        .header-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
-        .logo { width: 240px; height: 240px; object-fit: contain; filter: drop-shadow(0 4px 16px rgba(0,0,0,0.4)); animation: floatIn 0.8s ease both; }
-        h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.2rem, 6vw, 4rem); color: var(--white); letter-spacing: 0.05em; line-height: 1; text-shadow: 0 2px 8px rgba(0,0,0,0.3); animation: slideUp 0.6s ease 0.2s both; }
-        .season-badge { display: inline-block; background: var(--red); color: var(--white); font-size: 0.9rem; font-weight: 800; letter-spacing: 0.12em; padding: 0.3rem 1.2rem; border-radius: 2rem; text-transform: uppercase; animation: slideUp 0.6s ease 0.35s both; }
-        .stats-bar { display: flex; gap: 2rem; justify-content: center; margin-top: 0.5rem; animation: slideUp 0.6s ease 0.5s both; }
-        .stat { text-align: center; color: rgba(255,255,255,0.85); }
-        .stat-number { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--white); line-height: 1; }
-        .stat-label { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.8; }
-        .league-switch { margin-top: 0.9rem; display: flex; gap: 0.6rem; align-items: center; justify-content: center; animation: slideUp 0.6s ease 0.62s both; }
-        .league-switch label { color: rgba(255,255,255,0.88); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 800; }
-        .league-switch select {
-            min-width: 240px; max-width: 92vw; background: rgba(255,255,255,0.15); color: var(--white);
-            border: 1px solid rgba(255,255,255,0.42); border-radius: 999px; padding: 0.5rem 0.9rem;
-            font-family: 'Nunito', sans-serif; font-size: 0.95rem; font-weight: 800; cursor: pointer;
-        }
-        .league-switch select option { color: #1A1A2E; background: #FFFFFF; }
-        .wave { display: block; width: 100%; margin-top: -2px; color: var(--off-white); }
-        .theme-toggle {
-            position: absolute; top: 1rem; right: 1rem; z-index: 10;
-            background: rgba(255,255,255,0.15); border: none; border-radius: 50%;
-            width: 42px; height: 42px; font-size: 1.2rem; cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            transition: background 0.2s;
-        }
-        .theme-toggle:hover { background: rgba(255,255,255,0.28); }
-
-        main { max-width: 900px; margin: 0 auto; padding: 2rem 1rem 4rem; display: flex; flex-direction: column; gap: 2rem; }
-
-        .calculator { background: var(--white); border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); padding: 1.5rem 2rem; }
-        .calc-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: var(--blue); letter-spacing: 0.05em; margin-bottom: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: space-between; user-select: none; }
-        .calc-selects { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
-        .calc-selects select { flex: 1; min-width: 180px; padding: 0.65rem 1rem; border: 2px solid var(--grey); border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--text); background: var(--off-white); cursor: pointer; transition: border-color 0.2s; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23003DA5' stroke-width='2' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.8rem center; padding-right: 2.2rem; }
-        .calc-selects select:focus { outline: none; border-color: var(--blue); }
-        .plus-sign { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--grey); }
-        .calc-result { margin-top: 1.25rem; display: none; background: linear-gradient(135deg, var(--blue) 0%, var(--red) 100%); border-radius: 12px; padding: 1.25rem 1.5rem; color: var(--white); animation: fadeIn 0.3s ease; }
-        .calc-result.visible { display: block; }
-        .result-names { font-weight: 800; font-size: 1rem; opacity: 0.9; margin-bottom: 0.5rem; }
-        .result-total { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; line-height: 1; letter-spacing: 0.02em; }
-        .result-total span { font-size: 1rem; font-family: 'Nunito', sans-serif; opacity: 0.8; margin-left: 0.5rem; vertical-align: middle; }
-        .result-breakdown { margin-top: 0.75rem; display: flex; gap: 1rem; flex-wrap: wrap; }
-        .breakdown-item { background: rgba(255,255,255,0.15); border-radius: 8px; padding: 0.4rem 0.8rem; font-size: 0.82rem; font-weight: 700; }
-        .breakdown-item .bk-label { opacity: 0.75; font-weight: 600; }
-
-        .table-wrap { background: var(--white); border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); overflow: hidden; }
-        table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
-        thead tr { background: linear-gradient(90deg, var(--blue) 0%, var(--blue-dark) 100%); color: var(--white); }
-        thead th { padding: 1rem 0.75rem; font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.08em; text-align: center; font-weight: 400; }
-        thead th:nth-child(2) { text-align: left; padding-left: 1rem; }
-        tbody tr { border-bottom: 1px solid var(--grey); transition: background 0.15s; }
-        tbody tr:hover { background: #EEF3FF; }
-        tbody tr:last-child { border-bottom: none; }
-        tbody tr.top3 { background: linear-gradient(90deg, rgba(200,16,46,0.05), transparent); }
-        tbody tr.top3:hover { background: rgba(200,16,46,0.08); }
-        tbody tr.highlighted { background: rgba(0,61,165,0.12) !important; outline: 2px solid var(--blue); outline-offset: -2px; }
-        td { padding: 0.75rem; text-align: center; color: var(--text); }
-        td.rang { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; width: 52px; color: var(--blue); }
-        td.name { text-align: left; padding-left: 1rem; font-weight: 700; font-size: 0.95rem; }
-        td.total { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; color: var(--red); }
-        tbody tr:nth-child(even):not(.top3):not(.highlighted) { background: var(--off-white); }
-
-        footer { text-align: center; padding: 1.5rem; font-size: 0.78rem; color: #999; letter-spacing: 0.05em; }
-
-        @keyframes floatIn { from { opacity: 0; transform: translateY(-20px) scale(0.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-
-        @media (max-width: 600px) {
-            thead th, td { padding: 0.6rem 0.4rem; font-size: 0.8rem; }
-            td.name { font-size: 0.82rem; }
-            .calc-selects { flex-direction: column; }
-            .plus-sign { display: none; }
-        }
-
-        /* ── Searchable dropdown ── */
-        .select-wrap { flex: 1; min-width: 180px; position: relative; }
-        .select-wrap input {
-            width: 100%; padding: 0.65rem 1rem; border: 2px solid var(--grey);
-            border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 0.95rem;
-            font-weight: 700; color: var(--text); background: var(--off-white);
-            cursor: text; transition: border-color 0.2s; outline: none;
-        }
-        .select-wrap input:focus { border-color: var(--blue); }
-        .select-wrap input.selected { color: var(--blue); }
-        .dropdown-list {
-            display: none; position: absolute; top: calc(100% + 4px); left: 0; right: 0;
-            background: var(--white); border: 2px solid var(--blue); border-radius: 8px;
-            max-height: 220px; overflow-y: auto; z-index: 100;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-        }
-        .dropdown-list.open { display: block; }
-        .dropdown-item {
-            padding: 0.6rem 1rem; cursor: pointer; font-size: 0.92rem;
-            font-weight: 600; transition: background 0.1s;
-        }
-        .dropdown-item:hover { background: var(--off-white); color: var(--blue); }
-        .dropdown-item.active { background: var(--blue); color: var(--white); }
-        .dropdown-item.no-results { color: #999; cursor: default; font-weight: 400; }
-    </style>
+    <title>Poredak | Modesto Masters 2025/26</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<header>
-    <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle dark mode">🌙</button>
+<header class="site-header">
     <div class="header-inner">
-        <img src="modesto_logo.png" alt="Modesto logo" class="logo" onerror="this.style.display='none'">
-        <h1>Ljetna liga Modesto</h1>
-        <span class="season-badge">Sezona 2025 / 2026</span>
-        <div class="stats-bar">
-            <div class="stat"><div class="stat-number">109</div><div class="stat-label">Igrači</div></div>
-            <div class="stat"><div class="stat-number">2</div><div class="stat-label">Kola</div></div>
-            <div class="stat"><div class="stat-number">400</div><div class="stat-label">Max bodova</div></div>
+        <div class="brand" aria-label="Modesto Masters 2025/26">
+            <img src="modesto_logo_transparent.png" alt="" class="logo">
+            <div class="brand-copy">
+                <span class="brand-name">Modesto</span>
+                <span class="brand-season">Masters 2026</span>
+            </div>
         </div>
-        
+        <div class="header-actions">
+            <button class="action-button primary" type="button" onclick="toggleCalc()">Kalkulator parova</button>
+            <button class="theme-toggle" id="themeBtn" type="button" onclick="toggleTheme()" aria-label="Uključi tamni način" title="Promijeni temu">☾</button>
+        </div>
     </div>
 </header>
 
-<svg class="wave" viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <path fill="currentColor" d="M0,20 C360,40 1080,0 1440,20 L1440,40 L0,40 Z"/>
-</svg>
-
 <main>
-    <div class="calculator">
-        <div class="calc-title" onclick="toggleCalc()">
-            <span>🎾 Kalkulator parova</span>
-            <span id="calcToggleIcon">▲</span>
-        </div>
-        <div id="calcBody">
-            <div class="calc-selects">
-                <div class="select-wrap">
-                    <input type="text" id="search1" placeholder="Traži igrača 1..." autocomplete="off"
-                           oninput="filterList(1)" onfocus="openList(1)" onblur="closeList(1)">
-                    <div class="dropdown-list" id="list1"></div>
-                </div>
-                <span class="plus-sign">+</span>
-                <div class="select-wrap">
-                    <input type="text" id="search2" placeholder="Traži igrača 2..." autocomplete="off"
-                           oninput="filterList(2)" onfocus="openList(2)" onblur="closeList(2)">
-                    <div class="dropdown-list" id="list2"></div>
-                </div>
-            </div>
-            <div class="calc-result" id="calcResult">
-                <div class="result-names" id="resultNames"></div>
-                <div class="result-total" id="resultTotal"></div>
-                <div class="result-breakdown" id="resultBreakdown"></div>
-            </div>
-        </div>
-    </div>
+    <p class="eyebrow">Ljetna liga</p>
+    <h1>Poredak</h1>
+    <p class="competition-meta"><span id="playerCount">109 igrača</span><span id="roundCount">2 kola</span><span id="lastUpdated">31. srp 2026.</span></p>
 
+    <section class="standings-section" aria-label="Poredak igrača">
+        <div class="standings-toolbar">
+            <div>
+                <p class="standings-label">Poredak igrača</p>
+                <p class="standings-count" id="standingsCount">109 igrača</p>
+            </div>
+            <div class="search-field">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <label for="playerSearch" class="sr-only">Pretraži igrača</label>
+                <input id="playerSearch" type="search" placeholder="Pretraži igrača" autocomplete="off">
+            </div>
+        </div>
     <div class="table-wrap">
-        <table>
-            <thead><tr><th>#</th><th>Igrač</th><th>Kolo<br>2026-06-14</th><th>Kolo<br>2026-07-31</th><th>TOTAL</th></tr></thead>
-            <tbody id="tableBody"><tr class="top3" data-name="Mateo Baric"><td class="rang">🥇</td><td class="name">Mateo Baric</td><td>180</td><td>200</td><td class="total">380</td></tr>
-<tr class="top3" data-name="Luka Brkašić"><td class="rang">🥈</td><td class="name">Luka Brkašić</td><td>180</td><td>200</td><td class="total">380</td></tr>
-<tr class="top3" data-name="Valentino Kukić"><td class="rang">🥉</td><td class="name">Valentino Kukić</td><td>160</td><td>180</td><td class="total">340</td></tr>
+        <table aria-label="Poredak igrača Ljetne lige Modesto">
+            <thead><tr><th scope="col">Mjesto</th><th scope="col">Igrač</th><th scope="col">Kolo 1<small>14. lip 2026.</small></th><th scope="col">Kolo 2<small>31. srp 2026.</small></th><th scope="col">Ukupno</th></tr></thead>
+            <tbody id="tableBody"><tr class="top3" data-name="Mateo Baric"><td class="rang">1</td><td class="name">Mateo Baric</td><td>180</td><td>200</td><td class="total">380</td></tr>
+<tr class="top3" data-name="Luka Brkašić"><td class="rang">2</td><td class="name">Luka Brkašić</td><td>180</td><td>200</td><td class="total">380</td></tr>
+<tr class="top3" data-name="Valentino Kukić"><td class="rang">3</td><td class="name">Valentino Kukić</td><td>160</td><td>180</td><td class="total">340</td></tr>
 <tr class="" data-name="Drazenko Pranjic"><td class="rang">4</td><td class="name">Drazenko Pranjic</td><td>160</td><td>180</td><td class="total">340</td></tr>
 <tr class="" data-name="Nikola Krčelić"><td class="rang">5</td><td class="name">Nikola Krčelić</td><td>140</td><td>160</td><td class="total">300</td></tr>
 <tr class="" data-name="Livio Alić"><td class="rang">6</td><td class="name">Livio Alić</td><td>160</td><td>140</td><td class="total">300</td></tr>
@@ -303,25 +154,80 @@
 <tr class="" data-name="Domagoj Skender"><td class="rang">108</td><td class="name">Domagoj Skender</td><td>—</td><td>16</td><td class="total">16</td></tr>
 <tr class="" data-name="David Muža"><td class="rang">109</td><td class="name">David Muža</td><td>—</td><td>16</td><td class="total">16</td></tr></tbody>
         </table>
+        <p class="empty-state" id="emptyState" hidden>Nema igrača za taj upit.</p>
     </div>
+    </section>
 </main>
 
-<footer>Modesto Padel Club &mdash; Ljetna liga Modesto 2025 / 2026</footer>
+<dialog class="calculator" id="calculatorDialog" aria-labelledby="calculatorTitle">
+    <div class="calc-inner">
+        <div class="calc-header">
+            <div><p class="calc-kicker">Ljetna liga</p><h2 class="calc-title" id="calculatorTitle">Kalkulator parova</h2></div>
+            <button type="button" class="close-button" onclick="closeCalc()" aria-label="Zatvori kalkulator">×</button>
+        </div>
+        <div class="calc-selects">
+            <div class="select-wrap">
+                <label for="search1">Igrač 1</label>
+                <input type="text" id="search1" placeholder="Traži igrača..." autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="list1" aria-expanded="false"
+                       oninput="filterList(1)" onfocus="openList(1)" onblur="closeList(1)">
+                <button class="clear-player" id="clear1" type="button" onclick="clearPlayer(1)" aria-label="Očisti igrača 1" hidden>×</button>
+                <div class="dropdown-list" id="list1" role="listbox"></div>
+            </div>
+            <span class="plus-sign" aria-hidden="true">+</span>
+            <div class="select-wrap">
+                <label for="search2">Igrač 2</label>
+                <input type="text" id="search2" placeholder="Traži igrača..." autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="list2" aria-expanded="false"
+                       oninput="filterList(2)" onfocus="openList(2)" onblur="closeList(2)">
+                <button class="clear-player" id="clear2" type="button" onclick="clearPlayer(2)" aria-label="Očisti igrača 2" hidden>×</button>
+                <div class="dropdown-list" id="list2" role="listbox"></div>
+            </div>
+        </div>
+        <p class="calc-error" id="calcError" role="alert" hidden>Odaberite dva različita igrača.</p>
+        <div class="calc-result" id="calcResult" aria-live="polite">
+            <div class="result-names" id="resultNames"></div>
+            <div class="result-total" id="resultTotal"></div>
+            <div class="result-breakdown" id="resultBreakdown"></div>
+            <div class="pair-forecast">
+                <div class="forecast-header"><span>Okvirni plasman</span><strong id="forecastRank"></strong></div>
+                <div class="forecast-grid">
+                    <div class="forecast-target">
+                        <span>Među prvih 16</span>
+                        <strong id="top16Target"></strong>
+                        <small id="top16Chance"></small>
+                    </div>
+                    <div class="forecast-target">
+                        <span>Među prvih 8</span>
+                        <strong id="top8Target"></strong>
+                        <small id="top8Chance"></small>
+                    </div>
+                </div>
+                <p class="forecast-note">Prikazani bodovi su procijenjeni minimumi iz 1 000 nasumičnih rasporeda preostalih igrača. Stvarni parovi i izjednačenja mogu promijeniti prag.</p>
+            </div>
+        </div>
+    </div>
+</dialog>
+
+<footer><div class="footer-inner">Modesto Padel Club &mdash; Ljetna liga Modesto 2025 / 2026</div></footer>
 
 <script>
-    // Theme
+    // Tema
+    function updateThemeButton(theme) {
+        const button = document.getElementById('themeBtn');
+        button.textContent = theme === 'dark' ? '☀' : '☾';
+        button.setAttribute('aria-label', theme === 'dark' ? 'Uključi svijetli način' : 'Uključi tamni način');
+    }
     (function () {
         const t = localStorage.getItem('theme') || 'light';
         document.documentElement.setAttribute('data-theme', t);
         document.addEventListener('DOMContentLoaded', function () {
-            document.getElementById('themeBtn').textContent = t === 'dark' ? '☀️' : '🌙';
+            updateThemeButton(t);
         });
     })();
     function toggleTheme() {
         const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
         document.documentElement.setAttribute('data-theme', next);
         localStorage.setItem('theme', next);
-        document.getElementById('themeBtn').textContent = next === 'dark' ? '☀️' : '🌙';
+        updateThemeButton(next);
     }
 
     function switchLeague(selectEl) {
@@ -329,14 +235,29 @@
         window.location.href = selectEl.value;
     }
 
-    const PLAYERS = {"Mateo Baric": {"rang": 1, "total": 380, "kolo": [180, 200]}, "Luka Brkašić": {"rang": 2, "total": 380, "kolo": [180, 200]}, "Valentino Kukić": {"rang": 3, "total": 340, "kolo": [160, 180]}, "Drazenko Pranjic": {"rang": 4, "total": 340, "kolo": [160, 180]}, "Nikola Krčelić": {"rang": 5, "total": 300, "kolo": [140, 160]}, "Livio Alić": {"rang": 6, "total": 300, "kolo": [160, 140]}, "Antonio Išek": {"rang": 7, "total": 300, "kolo": [160, 140]}, "Antonio Jurković": {"rang": 8, "total": 300, "kolo": [140, 160]}, "Hrvoje Šmit": {"rang": 9, "total": 280, "kolo": [160, 120]}, "Boris Šprišić": {"rang": 10, "total": 280, "kolo": [160, 120]}, "Miran Ančić": {"rang": 11, "total": 256, "kolo": [112, 144]}, "Danijel Milunić": {"rang": 12, "total": 256, "kolo": [144, 112]}, "Matej Galonja": {"rang": 13, "total": 256, "kolo": [144, 112]}, "Ivan Heinelt": {"rang": 14, "total": 256, "kolo": [112, 144]}, "Velimir Rođak": {"rang": 15, "total": 240, "kolo": [128, 112]}, "Danijel Kukić": {"rang": 16, "total": 240, "kolo": [112, 128]}, "Danijel Gnjatić": {"rang": 17, "total": 240, "kolo": [144, 96]}, "Mibor Tarković": {"rang": 18, "total": 240, "kolo": [96, 144]}, "Ivan Marović": {"rang": 19, "total": 240, "kolo": [128, 112]}, "Jan Kasa": {"rang": 20, "total": 240, "kolo": [144, 96]}, "Marko Medarić": {"rang": 21, "total": 240, "kolo": [112, 128]}, "Danko Obradović": {"rang": 22, "total": 240, "kolo": [96, 144]}, "Marko Pavličević": {"rang": 23, "total": 228, "kolo": [108, 120]}, "Tin Martinec": {"rang": 24, "total": 228, "kolo": [108, 120]}, "Vedran Marčelja": {"rang": 25, "total": 224, "kolo": [128, 96]}, "Hrvoje Brkašić": {"rang": 26, "total": 216, "kolo": [120, 96]}, "Dominik Pokas": {"rang": 27, "total": 216, "kolo": [108, 108]}, "Ivan Mitić": {"rang": 28, "total": 216, "kolo": [96, 120]}, "Robert Miani": {"rang": 29, "total": 216, "kolo": [96, 120]}, "Domagoj Kralj": {"rang": 30, "total": 216, "kolo": [108, 108]}, "Dejan Ćopić": {"rang": 31, "total": 212, "kolo": [84, 128]}, "Borna Vučkić-Herkov": {"rang": 32, "total": 200, "kolo": [200, 0]}, "Tin Miljan": {"rang": 33, "total": 200, "kolo": [200, 0]}, "Ivica Sušek": {"rang": 34, "total": 192, "kolo": [84, 108]}, "Niko Sušek": {"rang": 35, "total": 192, "kolo": [84, 108]}, "Borna Lovreković": {"rang": 36, "total": 180, "kolo": [96, 84]}, "Denis Mioković": {"rang": 37, "total": 176, "kolo": [80, 96]}, "Luka Kirin": {"rang": 38, "total": 176, "kolo": [80, 96]}, "Ante Filipović": {"rang": 39, "total": 176, "kolo": [80, 96]}, "Dražen Oršulić": {"rang": 40, "total": 176, "kolo": [80, 96]}, "DP D": {"rang": 41, "total": 160, "kolo": [0, 160]}, "Ivan Šipuš": {"rang": 42, "total": 160, "kolo": [0, 160]}, "Toni Klindić": {"rang": 43, "total": 160, "kolo": [0, 160]}, "Igor Marić": {"rang": 44, "total": 160, "kolo": [0, 160]}, "David Žirković": {"rang": 45, "total": 156, "kolo": [72, 84]}, "Eugen Turk": {"rang": 46, "total": 156, "kolo": [72, 84]}, "Kristijan Vidović": {"rang": 47, "total": 156, "kolo": [72, 84]}, "Paolo Marčelja": {"rang": 48, "total": 152, "kolo": [72, 80]}, "Mergim Zekaj": {"rang": 49, "total": 152, "kolo": [72, 80]}, "Jan Baljak": {"rang": 50, "total": 144, "kolo": [64, 80]}, "Ivan Križe": {"rang": 51, "total": 144, "kolo": [64, 80]}, "Sven Stapar": {"rang": 52, "total": 136, "kolo": [72, 64]}, "Franko Kelava": {"rang": 53, "total": 136, "kolo": [72, 64]}, "Dominik Paljuši": {"rang": 54, "total": 132, "kolo": [60, 72]}, "Sven Dolovčak": {"rang": 55, "total": 132, "kolo": [60, 72]}, "Edi Kurtovic": {"rang": 56, "total": 128, "kolo": [56, 72]}, "Dario Zarkovic": {"rang": 57, "total": 128, "kolo": [0, 128]}, "Zoran Umicevic": {"rang": 58, "total": 128, "kolo": [128, 0]}, "Jakov Marjanović": {"rang": 59, "total": 128, "kolo": [56, 72]}, "Vladimir Kušanić": {"rang": 60, "total": 120, "kolo": [56, 64]}, "Almir Halilović": {"rang": 61, "total": 120, "kolo": [120, 0]}, "Boris Vinčić": {"rang": 62, "total": 120, "kolo": [120, 0]}, "Tomislav Dragaš": {"rang": 63, "total": 120, "kolo": [56, 64]}, "Jasmin Jasko Alihodzic": {"rang": 64, "total": 120, "kolo": [64, 56]}, "Arnel Duraković": {"rang": 65, "total": 120, "kolo": [64, 56]}, "Josip Sokolić": {"rang": 66, "total": 120, "kolo": [120, 0]}, "Dejan Živoder": {"rang": 67, "total": 112, "kolo": [40, 72]}, "Dejan Jurkić": {"rang": 68, "total": 112, "kolo": [40, 72]}, "Vladimir Šakić": {"rang": 69, "total": 100, "kolo": [0, 100]}, "Dejan Rendulić": {"rang": 70, "total": 100, "kolo": [0, 100]}, "Antonio Čerkez": {"rang": 71, "total": 96, "kolo": [40, 56]}, "Antonio Pernar": {"rang": 72, "total": 96, "kolo": [40, 56]}, "Tomislav Lulić": {"rang": 73, "total": 96, "kolo": [96, 0]}, "Sonja Ćopić": {"rang": 74, "total": 84, "kolo": [84, 0]}, "Antonio Ivančić": {"rang": 75, "total": 76, "kolo": [36, 40]}, "Ivan Žirković": {"rang": 76, "total": 72, "kolo": [72, 0]}, "Antonio Tompić": {"rang": 77, "total": 72, "kolo": [0, 72]}, "Marko Malović": {"rang": 78, "total": 72, "kolo": [0, 72]}, "Fran Kostelac": {"rang": 79, "total": 64, "kolo": [28, 36]}, "Ivan Pernar": {"rang": 80, "total": 64, "kolo": [32, 32]}, "Luka Sukalić": {"rang": 81, "total": 64, "kolo": [32, 32]}, "Drazen Matijevic": {"rang": 82, "total": 56, "kolo": [32, 24]}, "Marko Kežman": {"rang": 83, "total": 56, "kolo": [36, 20]}, "Zeljko Matagic": {"rang": 84, "total": 56, "kolo": [36, 20]}, "Matija Alibašić": {"rang": 85, "total": 56, "kolo": [24, 32]}, "Matej Sučević": {"rang": 86, "total": 56, "kolo": [32, 24]}, "Ivan Ciglar": {"rang": 87, "total": 56, "kolo": [24, 32]}, "David Grgić": {"rang": 88, "total": 52, "kolo": [28, 24]}, "Mateo Ivičinec": {"rang": 89, "total": 52, "kolo": [28, 24]}, "Matija Šarić": {"rang": 90, "total": 48, "kolo": [48, 0]}, "Luka Begedin": {"rang": 91, "total": 48, "kolo": [48, 0]}, "Ino Josipovic": {"rang": 92, "total": 40, "kolo": [0, 40]}, "Franko Šafradin": {"rang": 93, "total": 40, "kolo": [0, 40]}, "Vuka Salerich": {"rang": 94, "total": 40, "kolo": [0, 40]}, "Mario Grd": {"rang": 95, "total": 36, "kolo": [36, 0]}, "Mario Komarica": {"rang": 96, "total": 36, "kolo": [0, 36]}, "Patrik Horvat": {"rang": 97, "total": 36, "kolo": [0, 36]}, "Tin Petričić": {"rang": 98, "total": 36, "kolo": [0, 36]}, "Robert Čuić": {"rang": 99, "total": 28, "kolo": [0, 28]}, "Borna Kablar": {"rang": 100, "total": 28, "kolo": [0, 28]}, "Don Saler": {"rang": 101, "total": 28, "kolo": [28, 0]}, "ivor bozic": {"rang": 102, "total": 28, "kolo": [0, 28]}, "Marino Biljan": {"rang": 103, "total": 28, "kolo": [0, 28]}, "Arnel Markovic": {"rang": 104, "total": 24, "kolo": [24, 0]}, "Mateo Marković": {"rang": 105, "total": 24, "kolo": [24, 0]}, "Ivan Bolun": {"rang": 106, "total": 20, "kolo": [0, 20]}, "Mario Kunčić": {"rang": 107, "total": 20, "kolo": [0, 20]}, "Domagoj Skender": {"rang": 108, "total": 16, "kolo": [0, 16]}, "David Muža": {"rang": 109, "total": 16, "kolo": [0, 16]}};
-    const KOLO_LABELS = ["Kolo 2026-06-14", "Kolo 2026-07-31"];
+    // Tablica je jedini izvor podataka za bodove i kola.
+    const standingsRows = [...document.querySelectorAll('#tableBody tr')];
+    const roundHeaders = [...document.querySelectorAll('thead th')].slice(2, -1);
+    const KOLO_LABELS = roundHeaders.map(header => {
+        const title = header.firstChild?.textContent.trim() || 'Kolo';
+        const date = header.querySelector('small')?.textContent.trim();
+        return date ? `${title} · ${date}` : title;
+    });
+    const readPoints = cell => Number(cell.textContent.trim().replace(/[.\s]/g, '')) || 0;
+    const PLAYERS = Object.fromEntries(standingsRows.map(row => {
+        const cells = [...row.cells];
+        return [row.dataset.name, {
+            rang: Number(cells[0].textContent.trim()),
+            total: readPoints(cells.at(-1)),
+            kolo: cells.slice(2, -1).map(readPoints)
+        }];
+    }));
     const ALL_NAMES = Object.keys(PLAYERS).sort();
 
-    // Selected values
+    // Odabrani igrači
     let selected = { 1: null, 2: null };
 
-    // Build dropdown items
+    // Stavke popisa igrača
     function buildList(n, filter) {
         const list = document.getElementById('list' + n);
         const q = filter.toLowerCase();
@@ -344,8 +265,8 @@
         if (matches.length === 0) {
             list.innerHTML = '<div class="dropdown-item no-results">Nema rezultata</div>';
         } else {
-            list.innerHTML = matches.map(name =>
-                '<div class="dropdown-item' + (name === selected[n] ? ' active' : '') + '" data-name="' + name + '">' + name + '</div>'
+            list.innerHTML = matches.map((name, index) =>
+                '<div class="dropdown-item' + (name === selected[n] ? ' active' : '') + '" id="option-' + n + '-' + index + '" role="option" aria-selected="' + (name === selected[n]) + '" data-name="' + name + '">' + name + '</div>'
             ).join('');
             list.querySelectorAll('.dropdown-item:not(.no-results)').forEach(item => {
                 item.addEventListener('mousedown', function(e) {
@@ -359,20 +280,32 @@
     function openList(n) {
         buildList(n, document.getElementById('search' + n).value);
         document.getElementById('list' + n).classList.add('open');
+        document.getElementById('search' + n).setAttribute('aria-expanded', 'true');
     }
 
     function closeList(n) {
-        setTimeout(() => document.getElementById('list' + n).classList.remove('open'), 150);
+        setTimeout(() => {
+            if (document.activeElement === document.getElementById('search' + n)) return;
+            document.getElementById('list' + n).classList.remove('open');
+            document.getElementById('search' + n).setAttribute('aria-expanded', 'false');
+        }, 150);
+    }
+
+    function updateClearButton(n) {
+        document.getElementById('clear' + n).hidden = !document.getElementById('search' + n).value;
     }
 
     function filterList(n) {
         const val = document.getElementById('search' + n).value;
         if (selected[n] && val !== selected[n]) {
             selected[n] = null;
+            document.getElementById('search' + n).classList.remove('selected');
             calculate();
         }
+        updateClearButton(n);
         buildList(n, val);
         document.getElementById('list' + n).classList.add('open');
+        document.getElementById('search' + n).setAttribute('aria-expanded', 'true');
     }
 
     function selectPlayer(n, name) {
@@ -380,28 +313,155 @@
         document.getElementById('search' + n).value = name;
         document.getElementById('search' + n).classList.add('selected');
         document.getElementById('list' + n).classList.remove('open');
+        document.getElementById('search' + n).setAttribute('aria-expanded', 'false');
+        document.getElementById('search' + n).removeAttribute('aria-activedescendant');
+        updateClearButton(n);
         calculate();
     }
 
-    let calcOpen = false;
-    document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('calcBody').style.display = 'none';
-        document.getElementById('calcToggleIcon').textContent = '▼';
+    function clearPlayer(n) {
+        const input = document.getElementById('search' + n);
+        input.value = '';
+        input.classList.remove('selected');
+        input.removeAttribute('aria-activedescendant');
+        selected[n] = null;
+        updateClearButton(n);
+        calculate();
+        input.focus();
+        openList(n);
+    }
+
+    [1, 2].forEach(n => {
+        document.getElementById('search' + n).addEventListener('keydown', event => {
+            const input = event.currentTarget;
+            const list = document.getElementById('list' + n);
+            if (event.key === 'Escape') {
+                list.classList.remove('open');
+                input.setAttribute('aria-expanded', 'false');
+                input.removeAttribute('aria-activedescendant');
+                return;
+            }
+            if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+                event.preventDefault();
+                if (!list.classList.contains('open')) openList(n);
+                const options = [...list.querySelectorAll('[role="option"]')];
+                if (!options.length) return;
+                const current = options.findIndex(option => option.id === input.getAttribute('aria-activedescendant'));
+                const next = event.key === 'ArrowDown' ? (current + 1) % options.length : (current - 1 + options.length) % options.length;
+                options.forEach(option => option.classList.remove('active'));
+                options[next].classList.add('active');
+                options[next].scrollIntoView({ block: 'nearest' });
+                input.setAttribute('aria-activedescendant', options[next].id);
+            } else if (event.key === 'Enter' && list.classList.contains('open')) {
+                const active = list.querySelector('.dropdown-item.active[role="option"]') || list.querySelector('[role="option"]');
+                if (active) { event.preventDefault(); selectPlayer(n, active.dataset.name); }
+            }
+        });
     });
+
     function toggleCalc() {
-        calcOpen = !calcOpen;
-        document.getElementById('calcBody').style.display = calcOpen ? 'block' : 'none';
-        document.getElementById('calcToggleIcon').textContent = calcOpen ? '▲' : '▼';
+        const dialog = document.getElementById('calculatorDialog');
+        if (dialog.open) return;
+        dialog.showModal();
+        document.getElementById('search1').focus();
+    }
+    function closeCalc() {
+        document.getElementById('calculatorDialog').close();
+    }
+    const calculatorDialog = document.getElementById('calculatorDialog');
+    calculatorDialog.addEventListener('cancel', event => event.preventDefault());
+
+    // Pretraživanje postojeće tablice bez promjene poretka ili bodova.
+    const normalizeName = value => value.toLocaleLowerCase('hr').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    document.getElementById('playerSearch').addEventListener('input', event => {
+        const query = normalizeName(event.target.value.trim());
+        let count = 0;
+        standingsRows.forEach(row => {
+            const match = normalizeName(row.dataset.name).includes(query);
+            row.hidden = !match;
+            if (match) count++;
+        });
+        document.getElementById('standingsCount').textContent = `${count} igrača`;
+        document.getElementById('emptyState').hidden = count !== 0;
+    });
+    document.getElementById('playerCount').textContent = `${standingsRows.length} igrača`;
+    document.getElementById('standingsCount').textContent = `${standingsRows.length} igrača`;
+    document.getElementById('roundCount').textContent = `${roundHeaders.length} ${roundHeaders.length === 1 ? 'kolo' : 'kola'}`;
+    const latestRoundDate = roundHeaders.at(-1)?.querySelector('small')?.textContent.trim();
+    if (latestRoundDate) document.getElementById('lastUpdated').textContent = latestRoundDate;
+    standingsRows.forEach(row => {
+        const cells = row.cells;
+        const scoreCells = [...cells].slice(2, -1);
+        scoreCells.forEach(cell => cell.classList.add('round-score'));
+        const rounds = document.createElement('div');
+        rounds.className = 'mobile-rounds';
+        scoreCells.forEach((cell, index) => {
+            const round = document.createElement('span');
+            round.textContent = `K${index + 1} ${cell.textContent}`;
+            rounds.appendChild(round);
+        });
+        cells[1].appendChild(rounds);
+    });
+
+    // Okvirni pragovi za parove kada konačni parovi još nisu poznati.
+    function estimatePairStanding(p1, p2, total) {
+        const otherScores = Object.entries(PLAYERS)
+            .filter(([name]) => name !== p1 && name !== p2)
+            .map(([, player]) => player.total);
+        const top8 = [];
+        const top16 = [];
+        const positions = [];
+        let inTop8 = 0;
+        let inTop16 = 0;
+        let seed = 20260731;
+        const random = () => {
+            seed = (seed + 0x6D2B79F5) | 0;
+            let value = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+            value = (value + Math.imul(value ^ (value >>> 7), 61 | value)) ^ value;
+            return ((value ^ (value >>> 14)) >>> 0) / 4294967296;
+        };
+        for (let trial = 0; trial < 1000; trial++) {
+            const shuffled = otherScores.slice();
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            const pairs = [];
+            for (let i = 0; i + 1 < shuffled.length; i += 2) {
+                pairs.push(shuffled[i] + shuffled[i + 1]);
+            }
+            pairs.sort((a, b) => b - a);
+            top8.push(pairs[7] + 1);
+            top16.push(pairs[15] + 1);
+            // Kod izjednačenja računamo nepovoljniji plasman.
+            const position = 1 + pairs.filter(score => score >= total).length;
+            positions.push(position);
+            if (position <= 8) inTop8++;
+            if (position <= 16) inTop16++;
+        }
+        const median = values => values.sort((a, b) => a - b)[Math.floor(values.length / 2)];
+        return {
+            rank: median(positions), top8: median(top8), top16: median(top16),
+            top8Chance: Math.round(inTop8 / 10), top16Chance: Math.round(inTop16 / 10),
+            pairCount: 1 + Math.floor(otherScores.length / 2)
+        };
     }
 
     function calculate() {
         const p1 = selected[1];
         const p2 = selected[2];
         const result = document.getElementById('calcResult');
+        const error = document.getElementById('calcError');
 
         document.querySelectorAll('tr.highlighted').forEach(r => r.classList.remove('highlighted'));
 
+        error.hidden = true;
         if (!p1 || !p2) { result.classList.remove('visible'); return; }
+        if (p1 === p2) {
+            result.classList.remove('visible');
+            error.hidden = false;
+            return;
+        }
 
         const d1 = PLAYERS[p1];
         const d2 = PLAYERS[p2];
@@ -415,6 +475,13 @@
             const pts = (d1.kolo[i] || 0) + (d2.kolo[i] || 0);
             return '<div class="breakdown-item"><div class="bk-label">' + label + '</div><div>' + pts + '</div></div>';
         }).join('');
+
+        const estimate = estimatePairStanding(p1, p2, combined);
+        document.getElementById('forecastRank').textContent = `${estimate.rank}. / ${estimate.pairCount}`;
+        document.getElementById('top16Target').textContent = `oko ${estimate.top16} bodova`;
+        document.getElementById('top8Target').textContent = `oko ${estimate.top8} bodova`;
+        document.getElementById('top16Chance').textContent = `Vaš par: u ${estimate.top16Chance} % simulacija`;
+        document.getElementById('top8Chance').textContent = `Vaš par: u ${estimate.top8Chance} % simulacija`;
 
         result.classList.add('visible');
 
