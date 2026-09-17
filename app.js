@@ -209,13 +209,17 @@ function filterList(n) {
 
 function selectPlayer(n, id) {
     selected[n] = id;
-    document.getElementById('search' + n).value = PLAYERS[id].name;
-    document.getElementById('search' + n).classList.add('selected');
+    const input = document.getElementById('search' + n);
+    input.value = PLAYERS[id].name;
+    input.classList.add('selected');
     document.getElementById('list' + n).classList.remove('open');
-    document.getElementById('search' + n).setAttribute('aria-expanded', 'false');
-    document.getElementById('search' + n).removeAttribute('aria-activedescendant');
+    input.setAttribute('aria-expanded', 'false');
+    input.removeAttribute('aria-activedescendant');
     updateClearButton(n);
     calculate();
+    if (selected[1] && selected[2] && window.matchMedia('(pointer: coarse)').matches) {
+        input.blur();
+    }
 }
 
 function clearPlayer(n) {
@@ -262,13 +266,28 @@ function toggleCalc() {
     const dialog = document.getElementById('calculatorDialog');
     if (dialog.open) return;
     dialog.showModal();
-    document.getElementById('search1').focus();
+    syncCalculatorViewport();
+    if (window.matchMedia('(max-width: 700px), (pointer: coarse)').matches) {
+        dialog.querySelector('.close-button').focus({ preventScroll: true });
+    } else {
+        document.getElementById('search1').focus();
+    }
 }
 function closeCalc() {
     document.getElementById('calculatorDialog').close();
 }
 const calculatorDialog = document.getElementById('calculatorDialog');
 calculatorDialog.addEventListener('cancel', event => event.preventDefault());
+function syncCalculatorViewport() {
+    if (!calculatorDialog.open || !window.visualViewport) return;
+    const viewport = window.visualViewport;
+    const bottomInset = Math.max(0, window.innerHeight - viewport.offsetTop - viewport.height);
+    calculatorDialog.style.setProperty('--calc-visible-height', `${viewport.height}px`);
+    calculatorDialog.style.setProperty('--calc-bottom-inset', `${bottomInset}px`);
+}
+window.visualViewport?.addEventListener('resize', syncCalculatorViewport);
+window.visualViewport?.addEventListener('scroll', syncCalculatorViewport);
+window.addEventListener('resize', syncCalculatorViewport);
 
 // Pretraživanje postojeće tablice bez promjene poretka ili bodova.
 const normalizeName = value => value.toLocaleLowerCase('hr').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
