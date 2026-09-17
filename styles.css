@@ -180,6 +180,7 @@ footer { border-top: 1px solid var(--border); color: var(--muted); font-size: 12
   .standings-section { margin-top: 28px; }
   .standings-toolbar { align-items: stretch; flex-direction: column; gap: 12px; }
   .search-field { width: 100%; }
+  .search-field input, .select-wrap input { font-size: 16px; }
   table, tbody { display: block; width: 100%; }
   thead { display: none; }
   tbody tr { display: grid; grid-template-columns: 32px minmax(0, 1fr) auto; align-items: start; column-gap: 10px; min-height: 70px; padding: 12px 2px; }
