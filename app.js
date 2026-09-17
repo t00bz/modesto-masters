@@ -278,6 +278,22 @@ function closeCalc() {
 }
 const calculatorDialog = document.getElementById('calculatorDialog');
 calculatorDialog.addEventListener('cancel', event => event.preventDefault());
+calculatorDialog.addEventListener('close', () => {
+    [1, 2].forEach(n => {
+        const input = document.getElementById('search' + n);
+        const list = document.getElementById('list' + n);
+        input.value = '';
+        input.classList.remove('selected');
+        input.setAttribute('aria-expanded', 'false');
+        input.removeAttribute('aria-activedescendant');
+        list.classList.remove('open');
+        list.replaceChildren();
+        updateClearButton(n);
+        selected[n] = null;
+    });
+    calculate();
+    calculatorDialog.scrollTop = 0;
+});
 function syncCalculatorViewport() {
     if (!calculatorDialog.open || !window.visualViewport) return;
     const viewport = window.visualViewport;
