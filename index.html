@@ -62,17 +62,21 @@
         <div class="calc-selects">
             <div class="select-wrap">
                 <label for="search1">Igrač 1</label>
-                <input type="text" id="search1" placeholder="Traži igrača..." autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="list1" aria-expanded="false"
-                       oninput="filterList(1)" onfocus="openList(1)" onblur="closeList(1)">
-                <button class="clear-player" id="clear1" type="button" onclick="clearPlayer(1)" aria-label="Očisti igrača 1" hidden>×</button>
+                <div class="input-wrap">
+                    <input type="text" id="search1" placeholder="Traži igrača..." autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="list1" aria-expanded="false"
+                           oninput="filterList(1)" onfocus="openList(1)" onblur="closeList(1)">
+                    <button class="clear-player" id="clear1" type="button" onclick="clearPlayer(1)" aria-label="Očisti igrača 1" hidden>×</button>
+                </div>
                 <div class="dropdown-list" id="list1" role="listbox"></div>
             </div>
             <span class="plus-sign" aria-hidden="true">+</span>
             <div class="select-wrap">
                 <label for="search2">Igrač 2</label>
-                <input type="text" id="search2" placeholder="Traži igrača..." autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="list2" aria-expanded="false"
-                       oninput="filterList(2)" onfocus="openList(2)" onblur="closeList(2)">
-                <button class="clear-player" id="clear2" type="button" onclick="clearPlayer(2)" aria-label="Očisti igrača 2" hidden>×</button>
+                <div class="input-wrap">
+                    <input type="text" id="search2" placeholder="Traži igrača..." autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="list2" aria-expanded="false"
+                           oninput="filterList(2)" onfocus="openList(2)" onblur="closeList(2)">
+                    <button class="clear-player" id="clear2" type="button" onclick="clearPlayer(2)" aria-label="Očisti igrača 2" hidden>×</button>
+                </div>
                 <div class="dropdown-list" id="list2" role="listbox"></div>
             </div>
         </div>
