@@ -265,6 +265,7 @@ function clearPlayer(n) {
 function toggleCalc() {
     const dialog = document.getElementById('calculatorDialog');
     if (dialog.open) return;
+    resetCalculator();
     dialog.showModal();
     syncCalculatorViewport();
     if (window.matchMedia('(max-width: 700px), (pointer: coarse)').matches) {
@@ -274,11 +275,13 @@ function toggleCalc() {
     }
 }
 function closeCalc() {
-    document.getElementById('calculatorDialog').close();
+    calculatorDialog.close();
+    resetCalculator();
 }
 const calculatorDialog = document.getElementById('calculatorDialog');
 calculatorDialog.addEventListener('cancel', event => event.preventDefault());
-calculatorDialog.addEventListener('close', () => {
+calculatorDialog.addEventListener('close', resetCalculator);
+function resetCalculator() {
     [1, 2].forEach(n => {
         const input = document.getElementById('search' + n);
         const list = document.getElementById('list' + n);
@@ -293,7 +296,7 @@ calculatorDialog.addEventListener('close', () => {
     });
     calculate();
     calculatorDialog.scrollTop = 0;
-});
+}
 function syncCalculatorViewport() {
     if (!calculatorDialog.open || !window.visualViewport) return;
     const viewport = window.visualViewport;
