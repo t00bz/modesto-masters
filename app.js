@@ -87,7 +87,6 @@ async function loadStandings() {
         document.querySelector('table').setAttribute('aria-label', `Poredak igrača ${data.competition} Modesto`);
         const playerCount = `${standingsRows.length} ${standingsRows.length === 1 ? 'igrač' : 'igrača'}`;
         document.getElementById('playerCount').textContent = playerCount;
-        document.getElementById('standingsCount').textContent = playerCount;
         document.getElementById('roundCount').textContent = `${rounds.length} ${rounds.length === 1 ? 'kolo' : 'kola'}`;
         document.getElementById('lastUpdated').textContent = formatDate(rounds.at(-1).date);
         document.getElementById('loadingState').hidden = true;
@@ -318,7 +317,6 @@ document.getElementById('playerSearch').addEventListener('input', event => {
         row.hidden = !match;
         if (match) count++;
     });
-    document.getElementById('standingsCount').textContent = `${count} igrača`;
     document.getElementById('emptyState').hidden = count !== 0;
 });
 // Okvirni pragovi za parove kada konačni parovi još nisu poznati.
