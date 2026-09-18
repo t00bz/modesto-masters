@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Poredak | Modesto</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=standings-heading-3">
 </head>
 <body>
 
@@ -25,22 +25,18 @@
 </header>
 
 <main>
-    <p class="eyebrow" id="competitionLabel"></p>
-    <h1>Poredak</h1>
-    <p class="competition-meta"><span id="playerCount"></span><span id="roundCount"></span><span id="lastUpdated"></span></p>
+    <div class="standings-heading">
+        <p class="eyebrow" id="competitionLabel"></p>
+        <h1>Poredak</h1>
+        <p class="competition-meta"><span id="playerCount"></span><span id="roundCount"></span><span id="lastUpdated"></span></p>
 
-    <section class="standings-section" aria-label="Poredak igrača">
-        <div class="standings-toolbar">
-            <div>
-                <p class="standings-label">Poredak igrača</p>
-                <p class="standings-count" id="standingsCount"></p>
-            </div>
-            <div class="search-field">
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-                <label for="playerSearch" class="sr-only">Pretraži igrača</label>
-                <input id="playerSearch" type="search" placeholder="Pretraži igrača" autocomplete="off" disabled>
-            </div>
+        <div class="search-field">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <label for="playerSearch" class="sr-only">Pretraži igrača</label>
+            <input id="playerSearch" type="search" placeholder="Pretraži igrača" autocomplete="off" disabled>
         </div>
+    </div>
+    <section class="standings-section" aria-label="Poredak igrača">
     <div class="table-wrap">
         <table aria-label="Poredak igrača" hidden>
             <thead><tr id="tableHead"></tr></thead>
@@ -107,7 +103,7 @@
 
 <footer><div class="footer-inner" id="footerText"></div></footer>
 
-<script src="app.js?v=calculator-reset-2"></script>
+<script src="app.js?v=standings-heading-3"></script>
 
 </body>
 </html>
