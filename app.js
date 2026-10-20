@@ -89,6 +89,13 @@ async function loadStandings() {
         document.getElementById('playerCount').textContent = playerCount;
         document.getElementById('roundCount').textContent = `${rounds.length} ${rounds.length === 1 ? 'kolo' : 'kola'}`;
         document.getElementById('lastUpdated').textContent = formatDate(rounds.at(-1).date);
+        const provisionalIndex = rounds.findLastIndex(round => round.provisional === true);
+        const status = document.getElementById('standingsStatus');
+        status.hidden = provisionalIndex < 0;
+        if (provisionalIndex >= 0) {
+            document.getElementById('standingsStatusTip').textContent =
+                `Kolo ${provisionalIndex + 1} još je u tijeku. Bodovi tog kola i ukupni poredak privremeni su do završetka kola.`;
+        }
         document.getElementById('loadingState').hidden = true;
         document.querySelector('table').hidden = false;
         document.getElementById('playerSearch').disabled = false;
@@ -116,6 +123,10 @@ function renderStandings() {
         const date = document.createElement('small');
         date.textContent = formatDate(round.date);
         cell.appendChild(date);
+        if (round.provisional === true) {
+            cell.title = 'Kolo je još u tijeku. Bodovi su privremeni.';
+            cell.appendChild(makeCell('small', 'provisional-label', 'U tijeku'));
+        }
         head.appendChild(cell);
     });
     head.appendChild(makeCell('th', '', 'Ukupno'));
