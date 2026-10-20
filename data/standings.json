@@ -13,6 +13,14 @@
       "name": "Luka Brkašić"
     },
     {
+      "id": "18461",
+      "name": "Borna Vučkić-Herkov"
+    },
+    {
+      "id": "10598",
+      "name": "Tin Miljan"
+    },
+    {
       "id": "16425",
       "name": "Valentino Kukić"
     },
@@ -23,14 +31,6 @@
     {
       "id": "16263",
       "name": "Nikola Krčelić"
-    },
-    {
-      "id": "16313",
-      "name": "Livio Alić"
-    },
-    {
-      "id": "16987",
-      "name": "Antonio Išek"
     },
     {
       "id": "16393",
@@ -45,36 +45,40 @@
       "name": "Boris Šprišić"
     },
     {
-      "id": "23661",
-      "name": "Miran Ančić"
+      "id": "16319",
+      "name": "Matej Galonja"
     },
     {
       "id": "16444",
       "name": "Danijel Milunić"
     },
     {
-      "id": "16319",
-      "name": "Matej Galonja"
+      "id": "22107",
+      "name": "Zoran Umicevic"
+    },
+    {
+      "id": "16370",
+      "name": "Vedran Marčelja"
+    },
+    {
+      "id": "23661",
+      "name": "Miran Ančić"
     },
     {
       "id": "35079",
       "name": "Ivan Heinelt"
     },
     {
+      "id": "16313",
+      "name": "Livio Alić"
+    },
+    {
+      "id": "16987",
+      "name": "Antonio Išek"
+    },
+    {
       "id": "23798",
       "name": "Velimir Rođak"
-    },
-    {
-      "id": "20514",
-      "name": "Danijel Kukić"
-    },
-    {
-      "id": "16613",
-      "name": "Danijel Gnjatić"
-    },
-    {
-      "id": "26946",
-      "name": "Mibor Tarković"
     },
     {
       "id": "23776",
@@ -85,56 +89,48 @@
       "name": "Jan Kasa"
     },
     {
-      "id": "20607",
-      "name": "Marko Medarić"
+      "id": "16613",
+      "name": "Danijel Gnjatić"
+    },
+    {
+      "id": "26946",
+      "name": "Mibor Tarković"
     },
     {
       "id": "30872",
       "name": "Danko Obradović"
     },
     {
-      "id": "31957",
-      "name": "Marko Pavličević"
+      "id": "20514",
+      "name": "Danijel Kukić"
+    },
+    {
+      "id": "20607",
+      "name": "Marko Medarić"
+    },
+    {
+      "id": "16516",
+      "name": "Boris Vinčić"
+    },
+    {
+      "id": "21676",
+      "name": "Almir Halilović"
     },
     {
       "id": "52227",
       "name": "Tin Martinec"
     },
     {
-      "id": "16370",
-      "name": "Vedran Marčelja"
-    },
-    {
-      "id": "28901",
-      "name": "Hrvoje Brkašić"
-    },
-    {
-      "id": "41403",
-      "name": "Dominik Pokas"
-    },
-    {
-      "id": "34863",
-      "name": "Ivan Mitić"
+      "id": "31957",
+      "name": "Marko Pavličević"
     },
     {
       "id": "32791",
       "name": "Robert Miani"
     },
     {
-      "id": "29599",
-      "name": "Domagoj Kralj"
-    },
-    {
-      "id": "21937",
-      "name": "Dejan Ćopić"
-    },
-    {
-      "id": "18461",
-      "name": "Borna Vučkić-Herkov"
-    },
-    {
-      "id": "10598",
-      "name": "Tin Miljan"
+      "id": "34863",
+      "name": "Ivan Mitić"
     },
     {
       "id": "1551",
@@ -145,52 +141,100 @@
       "name": "Niko Sušek"
     },
     {
-      "id": "27625",
-      "name": "Borna Lovreković"
-    },
-    {
-      "id": "45165",
-      "name": "Denis Mioković"
-    },
-    {
-      "id": "27059",
-      "name": "Luka Kirin"
-    },
-    {
-      "id": "44674",
-      "name": "Ante Filipović"
-    },
-    {
-      "id": "16649",
-      "name": "Dražen Oršulić"
-    },
-    {
-      "id": "18454",
-      "name": "DP D"
-    },
-    {
-      "id": "16445",
-      "name": "Ivan Šipuš"
-    },
-    {
-      "id": "17320",
-      "name": "Toni Klindić"
-    },
-    {
-      "id": "16442",
-      "name": "Igor Marić"
+      "id": "27864",
+      "name": "Ivan Žirković"
     },
     {
       "id": "25789",
       "name": "David Žirković"
     },
     {
-      "id": "27564",
-      "name": "Eugen Turk"
+      "id": "28901",
+      "name": "Hrvoje Brkašić"
+    },
+    {
+      "id": "39384",
+      "name": "Josip Sokolić"
+    },
+    {
+      "id": "29599",
+      "name": "Domagoj Kralj"
+    },
+    {
+      "id": "41403",
+      "name": "Dominik Pokas"
+    },
+    {
+      "id": "38987",
+      "name": "Tomislav Lulić"
+    },
+    {
+      "id": "27625",
+      "name": "Borna Lovreković"
     },
     {
       "id": "28065",
       "name": "Kristijan Vidović"
+    },
+    {
+      "id": "27564",
+      "name": "Eugen Turk"
+    },
+    {
+      "id": "39949",
+      "name": "Sonja Ćopić"
+    },
+    {
+      "id": "21937",
+      "name": "Dejan Ćopić"
+    },
+    {
+      "id": "40925",
+      "name": "Dominik Paljuši"
+    },
+    {
+      "id": "39474",
+      "name": "Sven Dolovčak"
+    },
+    {
+      "id": "27059",
+      "name": "Luka Kirin"
+    },
+    {
+      "id": "16649",
+      "name": "Dražen Oršulić"
+    },
+    {
+      "id": "40634",
+      "name": "Sven Stapar"
+    },
+    {
+      "id": "30541",
+      "name": "Franko Kelava"
+    },
+    {
+      "id": "61278",
+      "name": "Jasmin Jasko Alihodzic"
+    },
+    {
+      "id": "28359",
+      "name": "Arnel Duraković"
+    },
+    {
+      "id": "21684",
+      "name": "Edi Kurtovic"
+    },
+    {
+      "id": "18470",
+      "name": "Jakov Marjanović"
+    },
+    {
+      "id": "44674",
+      "name": "Ante Filipović"
+    },
+    {
+      "id": "45165",
+      "name": "Denis Mioković"
     },
     {
       "id": "18879",
@@ -209,156 +253,12 @@
       "name": "Ivan Križe"
     },
     {
-      "id": "40634",
-      "name": "Sven Stapar"
-    },
-    {
-      "id": "30541",
-      "name": "Franko Kelava"
-    },
-    {
-      "id": "40925",
-      "name": "Dominik Paljuši"
-    },
-    {
-      "id": "39474",
-      "name": "Sven Dolovčak"
-    },
-    {
-      "id": "21684",
-      "name": "Edi Kurtovic"
-    },
-    {
-      "id": "29414",
-      "name": "Dario Zarkovic"
-    },
-    {
-      "id": "22107",
-      "name": "Zoran Umicevic"
-    },
-    {
-      "id": "18470",
-      "name": "Jakov Marjanović"
-    },
-    {
-      "id": "18417",
-      "name": "Vladimir Kušanić"
-    },
-    {
-      "id": "21676",
-      "name": "Almir Halilović"
-    },
-    {
-      "id": "16516",
-      "name": "Boris Vinčić"
-    },
-    {
       "id": "18442",
       "name": "Tomislav Dragaš"
     },
     {
-      "id": "61278",
-      "name": "Jasmin Jasko Alihodzic"
-    },
-    {
-      "id": "28359",
-      "name": "Arnel Duraković"
-    },
-    {
-      "id": "39384",
-      "name": "Josip Sokolić"
-    },
-    {
-      "id": "60502",
-      "name": "Dejan Živoder"
-    },
-    {
-      "id": "55963",
-      "name": "Dejan Jurkić"
-    },
-    {
-      "id": "16322",
-      "name": "Vladimir Šakić"
-    },
-    {
-      "id": "16518",
-      "name": "Dejan Rendulić"
-    },
-    {
-      "id": "21998",
-      "name": "Antonio Čerkez"
-    },
-    {
-      "id": "42912",
-      "name": "Antonio Pernar"
-    },
-    {
-      "id": "38987",
-      "name": "Tomislav Lulić"
-    },
-    {
-      "id": "39949",
-      "name": "Sonja Ćopić"
-    },
-    {
-      "id": "39346",
-      "name": "Antonio Ivančić"
-    },
-    {
-      "id": "27864",
-      "name": "Ivan Žirković"
-    },
-    {
-      "id": "31976",
-      "name": "Antonio Tompić"
-    },
-    {
-      "id": "37631",
-      "name": "Marko Malović"
-    },
-    {
-      "id": "48105",
-      "name": "Fran Kostelac"
-    },
-    {
-      "id": "38920",
-      "name": "Ivan Pernar"
-    },
-    {
-      "id": "55699",
-      "name": "Luka Sukalić"
-    },
-    {
-      "id": "23764",
-      "name": "Drazen Matijevic"
-    },
-    {
-      "id": "38206",
-      "name": "Marko Kežman"
-    },
-    {
-      "id": "33555",
-      "name": "Zeljko Matagic"
-    },
-    {
-      "id": "26497",
-      "name": "Matija Alibašić"
-    },
-    {
-      "id": "41682",
-      "name": "Matej Sučević"
-    },
-    {
-      "id": "46564",
-      "name": "Ivan Ciglar"
-    },
-    {
-      "id": "39072",
-      "name": "David Grgić"
-    },
-    {
-      "id": "61285",
-      "name": "Mateo Ivičinec"
+      "id": "18417",
+      "name": "Vladimir Kušanić"
     },
     {
       "id": "24664",
@@ -369,24 +269,160 @@
       "name": "Luka Begedin"
     },
     {
-      "id": "64851",
-      "name": "Ino Josipovic"
+      "id": "60502",
+      "name": "Dejan Živoder"
     },
     {
-      "id": "64682",
-      "name": "Franko Šafradin"
-    },
-    {
-      "id": "61601",
-      "name": "Vuka Salerich"
+      "id": "55963",
+      "name": "Dejan Jurkić"
     },
     {
       "id": "56469",
       "name": "Mario Grd"
     },
     {
+      "id": "39346",
+      "name": "Antonio Ivančić"
+    },
+    {
+      "id": "41682",
+      "name": "Matej Sučević"
+    },
+    {
+      "id": "23764",
+      "name": "Drazen Matijevic"
+    },
+    {
+      "id": "39072",
+      "name": "David Grgić"
+    },
+    {
+      "id": "61285",
+      "name": "Mateo Ivičinec"
+    },
+    {
+      "id": "42529",
+      "name": "Mateo Marković"
+    },
+    {
+      "id": "40446",
+      "name": "Arnel Markovic"
+    },
+    {
+      "id": "21998",
+      "name": "Antonio Čerkez"
+    },
+    {
+      "id": "42912",
+      "name": "Antonio Pernar"
+    },
+    {
+      "id": "38206",
+      "name": "Marko Kežman"
+    },
+    {
+      "id": "33555",
+      "name": "Zeljko Matagic"
+    },
+    {
+      "id": "38920",
+      "name": "Ivan Pernar"
+    },
+    {
+      "id": "55699",
+      "name": "Luka Sukalić"
+    },
+    {
+      "id": "47667",
+      "name": "Don Saler"
+    },
+    {
+      "id": "48105",
+      "name": "Fran Kostelac"
+    },
+    {
+      "id": "46564",
+      "name": "Ivan Ciglar"
+    },
+    {
+      "id": "26497",
+      "name": "Matija Alibašić"
+    },
+    {
+      "id": "18454",
+      "name": "DP D"
+    },
+    {
+      "id": "16442",
+      "name": "Igor Marić"
+    },
+    {
+      "id": "16518",
+      "name": "Dejan Rendulić"
+    },
+    {
+      "id": "16322",
+      "name": "Vladimir Šakić"
+    },
+    {
+      "id": "16445",
+      "name": "Ivan Šipuš"
+    },
+    {
+      "id": "17320",
+      "name": "Toni Klindić"
+    },
+    {
+      "id": "29414",
+      "name": "Dario Zarkovic"
+    },
+    {
+      "id": "31976",
+      "name": "Antonio Tompić"
+    },
+    {
+      "id": "37631",
+      "name": "Marko Malović"
+    },
+    {
+      "id": "61601",
+      "name": "Vuka Salerich"
+    },
+    {
       "id": "48259",
       "name": "Mario Komarica"
+    },
+    {
+      "id": "17350",
+      "name": "Borna Kablar"
+    },
+    {
+      "id": "64076",
+      "name": "ivor bozic"
+    },
+    {
+      "id": "63860",
+      "name": "Mario Kunčić"
+    },
+    {
+      "id": "56713",
+      "name": "Ivan Bolun"
+    },
+    {
+      "id": "61510",
+      "name": "David Muža"
+    },
+    {
+      "id": "63649",
+      "name": "Domagoj Skender"
+    },
+    {
+      "id": "64682",
+      "name": "Franko Šafradin"
+    },
+    {
+      "id": "64851",
+      "name": "Ino Josipovic"
     },
     {
       "id": "56049",
@@ -397,48 +433,12 @@
       "name": "Tin Petričić"
     },
     {
-      "id": "18028",
-      "name": "Robert Čuić"
-    },
-    {
-      "id": "17350",
-      "name": "Borna Kablar"
-    },
-    {
-      "id": "47667",
-      "name": "Don Saler"
-    },
-    {
-      "id": "64076",
-      "name": "ivor bozic"
-    },
-    {
       "id": "63496",
       "name": "Marino Biljan"
     },
     {
-      "id": "40446",
-      "name": "Arnel Markovic"
-    },
-    {
-      "id": "42529",
-      "name": "Mateo Marković"
-    },
-    {
-      "id": "56713",
-      "name": "Ivan Bolun"
-    },
-    {
-      "id": "63860",
-      "name": "Mario Kunčić"
-    },
-    {
-      "id": "63649",
-      "name": "Domagoj Skender"
-    },
-    {
-      "id": "61510",
-      "name": "David Muža"
+      "id": "18028",
+      "name": "Robert Čuić"
     },
     {
       "id": "44499",
@@ -455,6 +455,30 @@
     {
       "id": "16468",
       "name": "Alen Ibrahimpašić"
+    },
+    {
+      "id": "16335",
+      "name": "Dražen Novaković"
+    },
+    {
+      "id": "73392",
+      "name": "Marian K"
+    },
+    {
+      "id": "19567",
+      "name": "Mateo Mlinarić"
+    },
+    {
+      "id": "34644",
+      "name": "Filip Matkovic"
+    },
+    {
+      "id": "25686",
+      "name": "Tomislav Šebalj"
+    },
+    {
+      "id": "30710",
+      "name": "Boris Lavrnja"
     }
   ],
   "rounds": [
@@ -730,6 +754,88 @@
         "56049": 40,
         "55703": 40
       }
+    },
+    {
+      "date": "2026-10-23",
+      "scores": {
+        "16445": 200,
+        "17320": 200,
+        "18454": 160,
+        "16442": 160,
+        "16518": 140,
+        "16322": 140,
+        "28068": 180,
+        "16263": 180,
+        "16313": 120,
+        "16987": 120,
+        "16370": 160,
+        "16335": 160,
+        "52227": 144,
+        "31957": 144,
+        "12961": 128,
+        "16320": 128,
+        "16873": 112,
+        "16613": 112,
+        "20514": 96,
+        "20607": 96,
+        "73392": 80,
+        "16425": 80,
+        "26946": 160,
+        "39384": 160,
+        "18461": 144,
+        "21937": 144,
+        "30872": 128,
+        "16393": 128,
+        "44674": 112,
+        "45165": 112,
+        "32791": 96,
+        "34863": 96,
+        "23661": 80,
+        "35079": 80,
+        "23798": 120,
+        "23776": 120,
+        "16516": 108,
+        "21676": 108,
+        "38987": 96,
+        "28065": 96,
+        "27059": 84,
+        "16649": 84,
+        "60502": 72,
+        "55963": 72,
+        "27564": 120,
+        "24664": 120,
+        "29599": 108,
+        "41403": 108,
+        "64682": 96,
+        "64851": 96,
+        "40634": 84,
+        "30541": 84,
+        "1551": 72,
+        "16333": 72,
+        "19567": 80,
+        "18470": 80,
+        "46564": 72,
+        "26497": 72,
+        "34644": 64,
+        "25686": 64,
+        "41682": 48,
+        "23764": 48,
+        "18442": 56,
+        "18417": 56,
+        "55699": 40,
+        "27864": 40,
+        "16468": 80,
+        "35695": 80,
+        "63860": 72,
+        "33555": 72,
+        "63496": 64,
+        "18028": 64,
+        "48259": 56,
+        "48105": 56,
+        "38206": 48,
+        "30710": 48
+      },
+      "provisional": true
     }
   ]
 }

@@ -81,6 +81,12 @@ main { padding: 48px 0 72px; }
 h1 { margin: 0; font-size: clamp(38px, 5vw, 58px); line-height: 1.05; font-weight: 800; letter-spacing: -.065em; }
 .competition-meta { margin: 16px 0 0; color: var(--muted); font-size: 14px; }
 .competition-meta span + span::before { content: "·"; padding: 0 10px; color: var(--muted); }
+.standings-status { position: relative; margin-left: 8px; padding: 3px 8px; border: 1px solid var(--border); border-radius: 5px; background: var(--accent-soft); color: var(--accent); font-size: 11px; font-weight: 700; cursor: help; }
+.standings-status:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+.status-tooltip { display: none; position: absolute; top: calc(100% + 8px); right: 0; z-index: 3; width: min(260px, 75vw); padding: 10px 12px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text); box-shadow: 0 4px 16px #0002; text-align: left; font-size: 12px; font-weight: 400; }
+.standings-status:hover .status-tooltip, .standings-status:focus .status-tooltip { display: block; }
+.standings-status .status-tooltip::before { content: none; }
+.provisional-label { color: var(--accent); }
 .standings-section { margin-top: 34px; }
 .standings-heading { display: grid; grid-template-columns: minmax(0, 1fr) 280px; column-gap: 24px; }
 .standings-heading > .eyebrow, .standings-heading > h1, .standings-heading > .competition-meta { grid-column: 1; }
