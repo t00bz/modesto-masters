@@ -176,6 +176,7 @@ footer { border-top: 1px solid var(--border); color: var(--muted); font-size: 12
 .page-tabs a:hover { color: var(--accent); }
 a:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
 .bracket-notice { margin: 14px 0 24px; color: var(--muted); font-size: 14px; }
+.bracket-reserve { margin: -12px 0 20px; color: var(--muted); font-size: 13px; }
 .bracket-jumps { display: flex; gap: 8px; position: sticky; top: 0; z-index: 4; padding: 12px 0; background: var(--background); }
 .bracket-jumps a { flex: 1; min-height: 44px; display: flex; align-items: center; justify-content: center; gap: 12px; padding: 9px 12px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text); font-size: 13px; font-weight: 700; text-decoration: none; }
 .bracket-jumps a:hover { border-color: var(--accent); color: var(--accent); }
@@ -208,15 +209,20 @@ a:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
 .bracket-lines { display: none; }
 
 @media (max-width: 1199px) {
+  .bracket-main .page-tabs { margin-bottom: 24px; }
+  .bracket-main .eyebrow { margin-bottom: 8px; }
+  .tournament-bracket { margin-top: 12px; }
+  .bracket-side { padding-bottom: 16px; }
+  .bracket-side + .bracket-side { margin-top: 12px; padding-top: 24px; }
   .side-scroll { overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain; scrollbar-color: var(--muted) var(--background); scrollbar-width: thin; }
   .side-scroll::before { content: 'Povucite za sljedeće kolo →'; display: block; position: sticky; left: 0; width: fit-content; margin: 12px 0 0; color: var(--muted); font-size: 11px; }
-  .side-rounds { position: relative; display: block; width: 960px; height: 760px; padding-top: 0; margin-top: 20px; }
+  .side-rounds { position: relative; display: block; width: 880px; height: 540px; padding-top: 0; margin-top: 14px; }
   .bracket-round { display: block; position: absolute; top: 0; bottom: 0; width: 25%; left: calc(var(--round) * 25%); }
   .bracket-round h3 { text-align: center; }
-  .bracket-round .bracket-match { position: absolute; z-index: 1; top: calc(var(--match-y) + 40px); left: 6%; width: 88%; transform: translateY(-50%); }
+  .bracket-round .bracket-match { position: absolute; z-index: 1; top: calc(var(--compact-y) + 40px); left: 6%; width: 88%; transform: translateY(-50%); }
   .bracket-round .match-id { position: absolute; top: -21px; left: 0; right: 0; padding: 0; border: 0; text-align: center; }
-  .bracket-round .bracket-entry { height: 80px; min-height: 80px; padding: 8px 10px; }
-  .bracket-lines { display: block; position: absolute; inset: 40px 0 0; width: 100%; height: 720px; overflow: visible; pointer-events: none; }
+  .bracket-round .bracket-entry { height: 72px; min-height: 72px; padding: 6px 8px; gap: 7px; }
+  .bracket-lines-mobile { display: block; position: absolute; inset: 40px 0 0; width: 100%; height: 500px; overflow: visible; pointer-events: none; }
   .bracket-lines path { fill: none; stroke: var(--muted); stroke-opacity: .5; stroke-width: 1.5; vector-effect: non-scaling-stroke; }
 }
 
@@ -240,7 +246,7 @@ a:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
   .bracket-round .entry-name { font-size: 11px; line-height: 1.2; }
   .bracket-round .entry-points { font-size: 9px; margin-top: 2px; }
   .bracket-round .entry-source { font-size: 10px; line-height: 1.2; }
-  .bracket-lines { display: block; position: absolute; inset: 40px 0 0; width: 100%; height: 720px; overflow: visible; pointer-events: none; }
+  .bracket-lines-desktop { display: block; position: absolute; inset: 40px 0 0; width: 100%; height: 720px; overflow: visible; pointer-events: none; }
   .bracket-lines path { fill: none; stroke: var(--border); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
   .side-b .bracket-lines { transform: scaleX(-1); }
   .side-final-link { display: none; }

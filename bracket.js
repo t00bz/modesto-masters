@@ -48,6 +48,7 @@ function renderSide(side, teams) {
         round.games.forEach(game => {
             const match = element('article', 'bracket-match');
             match.style.setProperty('--match-y', `${game.y}px`);
+            match.style.setProperty('--compact-y', `${game.y * 0.7 - 20}px`);
             const gameTitle = element('h4', 'match-id', game.id);
             gameTitle.id = `game-${game.id}`;
             match.setAttribute('aria-labelledby', gameTitle.id);
@@ -79,25 +80,30 @@ function renderSide(side, teams) {
         });
         container.appendChild(column);
     });
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.classList.add('bracket-lines');
-    svg.setAttribute('viewBox', '0 0 1000 720');
-    svg.setAttribute('preserveAspectRatio', 'none');
-    svg.setAttribute('aria-hidden', 'true');
-    side.rounds.forEach((round, i) => round.games.forEach(game => {
-        game.entries.forEach((entry, j) => {
-            if (typeof entry !== 'string') return;
-            const child = positions.get(entry);
-            const startX = child.roundIndex * 250 + 235;
-            const endX = i * 250 + 15;
-            const endY = game.y + (j === 0 ? -40 : 40);
-            const midX = (startX + endX) / 2;
-            const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-            path.setAttribute('d', `M ${startX} ${child.y} H ${midX} V ${endY} H ${endX}`);
-            svg.appendChild(path);
-        });
-    }));
-    container.appendChild(svg);
+    for (const compact of [false, true]) {
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.classList.add('bracket-lines');
+        svg.classList.add(compact ? 'bracket-lines-mobile' : 'bracket-lines-desktop');
+        svg.setAttribute('viewBox', `0 0 1000 ${compact ? 500 : 720}`);
+        svg.setAttribute('preserveAspectRatio', 'none');
+        svg.setAttribute('aria-hidden', 'true');
+        side.rounds.forEach((round, i) => round.games.forEach(game => {
+            game.entries.forEach((entry, j) => {
+                if (typeof entry !== 'string') return;
+                const child = positions.get(entry);
+                const startX = child.roundIndex * 250 + 235;
+                const endX = i * 250 + 15;
+                const centerY = compact ? game.y * 0.7 - 20 : game.y;
+                const startY = compact ? child.y * 0.7 - 20 : child.y;
+                const endY = centerY + (j === 0 ? -1 : 1) * (compact ? 36 : 40);
+                const midX = (startX + endX) / 2;
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                path.setAttribute('d', `M ${startX} ${startY} H ${midX} V ${endY} H ${endX}`);
+                svg.appendChild(path);
+            });
+        }));
+        container.appendChild(svg);
+    }
 }
 
 async function loadBracket() {
