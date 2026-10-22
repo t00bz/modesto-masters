@@ -3,107 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poredak | Modesto</title>
-    <link rel="stylesheet" href="styles.css?v=provisional-4">
+    <title>Ždrijeb | Modesto Masters 2026</title>
+    <link rel="stylesheet" href="styles.css?v=bracket-2">
+    <script src="bracket.js?v=1" defer></script>
 </head>
 <body>
-
 <header class="site-header">
     <div class="header-inner">
-        <div class="brand" aria-label="Modesto">
+        <a class="brand brand-link" href="index.html" aria-label="Modesto Masters 2026 — ždrijeb">
             <img src="modesto_logo_transparent.png" alt="" class="logo">
-            <div class="brand-copy">
-                <span class="brand-name">Modesto</span>
-                <span class="brand-season" id="brandSeason"></span>
-            </div>
-        </div>
-        <div class="header-actions">
-            <button class="action-button primary" type="button" onclick="toggleCalc()" disabled>Kalkulator parova</button>
-            <button class="theme-toggle" id="themeBtn" type="button" onclick="toggleTheme()" aria-label="Uključi tamni način" title="Promijeni temu">☾</button>
-        </div>
+            <div class="brand-copy"><span class="brand-name">Modesto</span><span class="brand-season">Masters 2026</span></div>
+        </a>
+        <button class="theme-toggle" id="themeBtn" type="button" aria-label="Promijeni temu">☾</button>
     </div>
 </header>
-
-<main>
-    <div class="standings-heading">
-        <p class="eyebrow" id="competitionLabel"></p>
-        <h1>Poredak</h1>
-        <p class="competition-meta"><span id="playerCount"></span><span id="roundCount"></span><span id="lastUpdated"></span> <button id="standingsStatus" class="standings-status" type="button" hidden aria-describedby="standingsStatusTip">U tijeku <span id="standingsStatusTip" class="status-tooltip" role="tooltip"></span></button></p>
-
-        <div class="search-field">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-            <label for="playerSearch" class="sr-only">Pretraži igrača</label>
-            <input id="playerSearch" type="search" placeholder="Pretraži igrača" autocomplete="off" disabled>
-        </div>
+<main class="bracket-main">
+    <nav class="page-tabs" aria-label="Natjecanje"><a href="index.html" aria-current="page">Ždrijeb</a><a href="rankings.html">Poredak</a></nav>
+    <p class="eyebrow">Masters 2026</p>
+    <h1>Ždrijeb</h1>
+    <p class="bracket-notice">Privremeno · Ažuriranje 24. 10. ako bude promjena.</p>
+    <nav class="bracket-jumps" aria-label="Skoči na dio ždrijeba">
+        <a href="#side-a">Strana A <span aria-hidden="true">↓</span></a>
+        <a href="#side-b">Strana B <span aria-hidden="true">↓</span></a>
+        <a href="#bracket-final">Finale <span aria-hidden="true">↓</span></a>
+    </nav>
+    <p id="bracketLoading" class="empty-state" role="status">Učitavanje ždrijeba…</p>
+    <p id="bracketError" class="empty-state" role="alert" hidden>Ždrijeb trenutačno nije dostupan.</p>
+    <div class="tournament-bracket" id="tournamentBracket" hidden>
+        <section class="bracket-side side-a" id="side-a" aria-labelledby="sideATitle" tabindex="-1">
+            <header class="bracket-side-heading"><h2 id="sideATitle">Strana A</h2><span>→ Finale</span></header>
+            <div class="side-scroll" role="region" aria-label="Kola strane A — pomaknite vodoravno" tabindex="0"><div class="side-rounds" id="sideARounds"></div></div>
+            <a class="side-final-link" href="#bracket-final">Pobjednik strane A → Finale</a>
+        </section>
+        <section class="bracket-side side-b" id="side-b" aria-labelledby="sideBTitle" tabindex="-1">
+            <header class="bracket-side-heading"><h2 id="sideBTitle">Strana B</h2><span>→ Finale</span></header>
+            <div class="side-scroll" role="region" aria-label="Kola strane B — pomaknite vodoravno" tabindex="0"><div class="side-rounds" id="sideBRounds"></div></div>
+            <a class="side-final-link" href="#bracket-final">Pobjednik strane B → Finale</a>
+        </section>
+        <section class="bracket-final" id="bracket-final" aria-labelledby="finalTitle" tabindex="-1">
+            <p class="eyebrow">Strana A × Strana B</p><h2 id="finalTitle">Finale</h2>
+            <div class="bracket-match final-match" aria-label="Finale: pobjednik strane A protiv pobjednika strane B">
+                <div class="bracket-entry"><span class="entry-name">Pobjednik strane A</span></div>
+                <div class="bracket-entry"><span class="entry-name">Pobjednik strane B</span></div>
+            </div>
+        </section>
     </div>
-    <section class="standings-section" aria-label="Poredak igrača">
-    <div class="table-wrap">
-        <table aria-label="Poredak igrača" hidden>
-            <thead><tr id="tableHead"></tr></thead>
-            <tbody id="tableBody"></tbody>
-        </table>
-        <p class="empty-state" id="loadingState" role="status">Učitavanje poretka...</p>
-        <p class="empty-state" id="loadError" role="alert" hidden>Podaci o poretku nisu dostupni.</p>
-        <p class="empty-state" id="emptyState" hidden>Nema igrača za taj upit.</p>
-    </div>
-    </section>
 </main>
-
-<dialog class="calculator" id="calculatorDialog" aria-labelledby="calculatorTitle">
-    <div class="calc-inner">
-        <div class="calc-header">
-            <div><p class="calc-kicker" id="calculatorCompetition"></p><h2 class="calc-title" id="calculatorTitle">Kalkulator parova</h2></div>
-            <button type="button" class="close-button" onclick="closeCalc()" aria-label="Zatvori kalkulator">×</button>
-        </div>
-        <div class="calc-selects">
-            <div class="select-wrap">
-                <label for="search1">Igrač 1</label>
-                <div class="input-wrap">
-                    <input type="text" id="search1" placeholder="Traži igrača..." autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="list1" aria-expanded="false"
-                           oninput="filterList(1)" onfocus="openList(1)" onblur="closeList(1)">
-                    <button class="clear-player" id="clear1" type="button" onclick="clearPlayer(1)" aria-label="Očisti igrača 1" hidden>×</button>
-                </div>
-                <div class="dropdown-list" id="list1" role="listbox"></div>
-            </div>
-            <span class="plus-sign" aria-hidden="true">+</span>
-            <div class="select-wrap">
-                <label for="search2">Igrač 2</label>
-                <div class="input-wrap">
-                    <input type="text" id="search2" placeholder="Traži igrača..." autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="list2" aria-expanded="false"
-                           oninput="filterList(2)" onfocus="openList(2)" onblur="closeList(2)">
-                    <button class="clear-player" id="clear2" type="button" onclick="clearPlayer(2)" aria-label="Očisti igrača 2" hidden>×</button>
-                </div>
-                <div class="dropdown-list" id="list2" role="listbox"></div>
-            </div>
-        </div>
-        <p class="calc-error" id="calcError" role="alert" hidden>Odaberite dva različita igrača.</p>
-        <div class="calc-result" id="calcResult" aria-live="polite">
-            <div class="result-names" id="resultNames"></div>
-            <div class="result-total" id="resultTotal"></div>
-            <div class="result-breakdown" id="resultBreakdown"></div>
-            <div class="pair-forecast">
-                <div class="forecast-header"><span>Okvirni plasman</span><strong id="forecastRank"></strong></div>
-                <div class="forecast-grid">
-                    <div class="forecast-target">
-                        <span>Među prvih 16</span>
-                        <strong id="top16Target"></strong>
-                        <small id="top16Chance"></small>
-                    </div>
-                    <div class="forecast-target">
-                        <span>Među prvih 8</span>
-                        <strong id="top8Target"></strong>
-                        <small id="top8Chance"></small>
-                    </div>
-                </div>
-                <p class="forecast-note">Prikazani bodovi su procijenjeni minimumi iz 1 000 nasumičnih rasporeda preostalih igrača. Stvarni parovi i izjednačenja mogu promijeniti prag.</p>
-            </div>
-        </div>
-    </div>
-</dialog>
-
-<footer><div class="footer-inner" id="footerText"></div></footer>
-
-<script src="app.js?v=provisional-4"></script>
-
+<footer><div class="footer-inner">Modesto Padel Club · Masters 2026</div></footer>
 </body>
 </html>
