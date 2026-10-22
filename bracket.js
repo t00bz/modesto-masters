@@ -30,11 +30,40 @@ const drawSides = [
     ] }
 ];
 
+const BRACKET_API_URL = 'https://srsbckndbzns.eu.pythonanywhere.com/api/bracket';
+let bracketLoaded = false;
+let bracketRequestPending = false;
+let lastBracketSnapshot = '';
+
 function element(tag, className, text) {
     const node = document.createElement(tag);
     if (className) node.className = className;
     if (text !== undefined) node.textContent = text;
     return node;
+}
+
+function participantRow(seed, source, teams, winnerSeed, scoreText = '') {
+    const row = element('div', 'bracket-entry');
+    if (seed === null) {
+        const link = element('a', 'entry-source', `Pobjednik ${source}`);
+        link.href = `#game-${source}`;
+        row.appendChild(link);
+        return row;
+    }
+    const team = teams.get(seed);
+    row.dataset.seed = seed;
+    row.classList.toggle('is-winner', seed === winnerSeed);
+    row.appendChild(element('span', 'entry-seed', String(seed)));
+    const copy = element('div', 'entry-copy');
+    copy.appendChild(element('span', 'entry-name', team.name));
+    if (scoreText) copy.appendChild(element('small', 'entry-score', scoreText));
+    if (team.tied) {
+        copy.title = 'Izjednačeni bodovi. Raspored je privremen.';
+        copy.appendChild(element('span', 'sr-only', 'Izjednačeni bodovi. Raspored je privremen.'));
+    }
+    if (seed === winnerSeed) copy.appendChild(element('span', 'sr-only', 'Pobjednik utakmice'));
+    row.appendChild(copy);
+    return row;
 }
 
 function renderSide(side, teams) {
@@ -47,34 +76,15 @@ function renderSide(side, teams) {
         column.appendChild(element('h3', '', round.title));
         round.games.forEach(game => {
             const match = element('article', 'bracket-match');
+            match.dataset.match = game.id;
             match.style.setProperty('--match-y', `${game.y}px`);
             match.style.setProperty('--compact-y', `${game.y * 0.7 - 20}px`);
             const gameTitle = element('h4', 'match-id', game.id);
             gameTitle.id = `game-${game.id}`;
             match.setAttribute('aria-labelledby', gameTitle.id);
             match.appendChild(gameTitle);
-            game.entries.forEach(entry => {
-                const row = element('div', 'bracket-entry');
-                if (typeof entry === 'number') {
-                    const team = teams.get(entry);
-                    row.appendChild(element('span', 'entry-seed', String(entry)));
-                    const copy = element('div', 'entry-copy');
-                    copy.appendChild(element('span', 'entry-name', team.name));
-                    const points = element('small', 'entry-points', `${team.players[0].points} + ${team.players[1].points} = ${team.points}`);
-                    points.setAttribute('aria-label', `${team.players[0].name}: ${team.players[0].points} bodova; ${team.players[1].name}: ${team.players[1].points} bodova; ukupno ${team.points}`);
-                    copy.appendChild(points);
-                    if (team.tied) {
-                        copy.title = 'Izjednačeni bodovi. Raspored je privremen.';
-                        copy.appendChild(element('span', 'sr-only', 'Izjednačeni bodovi. Raspored je privremen.'));
-                    }
-                    row.appendChild(copy);
-                } else {
-                    const link = element('a', 'entry-source', `Pobjednik ${entry}`);
-                    link.href = `#game-${entry}`;
-                    row.appendChild(link);
-                }
-                match.appendChild(row);
-            });
+            game.entries.forEach(entry => match.appendChild(participantRow(
+                typeof entry === 'number' ? entry : null, entry, teams, null)));
             column.appendChild(match);
             positions.set(game.id, { roundIndex, y: game.y });
         });
@@ -106,9 +116,67 @@ function renderSide(side, teams) {
     }
 }
 
+function scoreLines(score) {
+    if (!score.trim()) return ['', ''];
+    const sets = score.trim().split(/\s*[,;]\s*|\s+(?=\d+(?:\(\d+\))?\s*[:-])/)
+        .map(set => set.match(/^\s*(\d+(?:\(\d+\))?)\s*[:-]\s*(\d+(?:\(\d+\))?)\s*$/));
+    // Scores follow the editor's Par A : Par B order. Keep free-text results intact.
+    return sets.every(Boolean)
+        ? [sets.map(set => set[1]).join('  ·  '), sets.map(set => set[2]).join('  ·  ')]
+        : [`Rezultat: ${score}`, ''];
+}
+
+function updateMatches(matches, teams) {
+    matches.forEach(game => {
+        const card = document.querySelector(`[data-match="${game.id}"]`);
+        let title = card.querySelector('.match-id');
+        if (!title) {
+            title = element('h3', 'match-id');
+            title.id = `game-${game.id}`;
+            card.prepend(title);
+            card.setAttribute('aria-labelledby', title.id);
+        }
+        title.replaceChildren(document.createTextNode(game.id));
+        if (game.scheduled_at) {
+            const [date, clock] = game.scheduled_at.split('T');
+            const [, month, day] = date.split('-');
+            const time = element('time', 'match-time', `${day}.${month}. ${clock}`);
+            time.dateTime = game.scheduled_at;
+            time.title = `${date} ${clock} · Europe/Zagreb`;
+            title.append(document.createTextNode(' · '), time);
+        }
+        card.querySelectorAll('.bracket-entry, .match-result').forEach(node => node.remove());
+        const scores = scoreLines(game.score);
+        game.participants.forEach((seed, i) => card.appendChild(participantRow(
+            seed, game.sources[i], teams, game.winner_seed, scores[i])));
+    });
+}
+
+function validateMatches(matches, teams) {
+    const expected = new Map(drawSides.flatMap(side => side.rounds.flatMap(round =>
+        round.games.map(game => [game.id, game.entries]))));
+    expected.set('F-1', ['SF-1', 'SF-2']);
+    if (!Array.isArray(matches) || matches.length !== expected.size ||
+        new Set(matches.map(game => game.id)).size !== expected.size) return false;
+    const byId = new Map(matches.map(game => [game.id, game]));
+    return matches.every(game => {
+        const sources = expected.get(game.id);
+        if (!sources || JSON.stringify(sources) !== JSON.stringify(game.sources) ||
+            !Array.isArray(game.participants) || game.participants.length !== 2 ||
+            typeof game.score !== 'string' || typeof game.scheduled_at !== 'string' ||
+            (game.scheduled_at && !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(game.scheduled_at))) return false;
+        if (!game.participants.every((seed, index) =>
+            (seed === null || teams.has(seed)) && seed === (typeof sources[index] === 'number'
+                ? sources[index] : byId.get(sources[index])?.winner_seed))) return false;
+        return game.winner_seed === null || (!game.participants.includes(null) && game.participants.includes(game.winner_seed));
+    });
+}
+
 async function loadBracket() {
+    if (bracketRequestPending) return;
+    bracketRequestPending = true;
     try {
-        const response = await fetch('data/bracket.json', { cache: 'no-store' });
+        const response = await fetch(BRACKET_API_URL, { cache: 'no-store', credentials: 'omit', signal: AbortSignal.timeout(10000) });
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
         if (!Array.isArray(data.teams) || data.teams.length !== 16) throw new Error('Invalid draw');
@@ -119,13 +187,27 @@ async function loadBracket() {
                 team.players.every(player => Number.isFinite(player.points) && player.points >= 0) &&
                 team.points === team.players.reduce((sum, player) => sum + player.points, 0);
         })) throw new Error('Invalid teams');
-        drawSides.forEach(side => renderSide(side, teams));
+        if (!validateMatches(data.matches, teams)) throw new Error('Invalid matches');
+        if (!bracketLoaded) drawSides.forEach(side => renderSide(side, teams));
+        const snapshot = JSON.stringify({ teams: data.teams, matches: data.matches });
+        if (snapshot !== lastBracketSnapshot) {
+            updateMatches(data.matches, teams);
+            lastBracketSnapshot = snapshot;
+        }
+        bracketLoaded = true;
         document.getElementById('tournamentBracket').hidden = false;
+        document.getElementById('bracketError').hidden = true;
     } catch (error) {
+        document.getElementById('bracketError').textContent = bracketLoaded
+            ? 'Osvježavanje nije uspjelo. Prikazani su posljednji dostupni rezultati.'
+            : 'Ždrijeb trenutačno nije dostupan. Pokušajte osvježiti stranicu.';
         document.getElementById('bracketError').hidden = false;
         console.error('Unable to load bracket:', error);
     } finally {
         document.getElementById('bracketLoading').hidden = true;
+        bracketRequestPending = false;
     }
 }
 loadBracket();
+setInterval(() => { if (!document.hidden) loadBracket(); }, 15000);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) loadBracket(); });
