@@ -9,15 +9,15 @@
         {
           "id": "12961",
           "name": "Mateo Baric",
-          "points": 648
+          "points": 680
         },
         {
           "id": "16320",
           "name": "Luka Brkašić",
-          "points": 648
+          "points": 680
         }
       ],
-      "points": 1296,
+      "points": 1360,
       "tied": false
     },
     {
@@ -32,10 +32,10 @@
         {
           "id": "18461",
           "name": "Borna Vučkić-Herkov",
-          "points": 544
+          "points": 528
         }
       ],
-      "points": 1224,
+      "points": 1208,
       "tied": false
     },
     {
@@ -94,24 +94,6 @@
     },
     {
       "seed": 6,
-      "name": "Vedran Marčelja / Ivan Šipuš",
-      "players": [
-        {
-          "id": "16370",
-          "name": "Vedran Marčelja",
-          "points": 492
-        },
-        {
-          "id": "16445",
-          "name": "Ivan Šipuš",
-          "points": 520
-        }
-      ],
-      "points": 1012,
-      "tied": false
-    },
-    {
-      "seed": 7,
       "name": "Danko / Šoljo",
       "players": [
         {
@@ -129,25 +111,25 @@
       "tied": false
     },
     {
-      "seed": 8,
-      "name": "Martinec / Pavličević",
+      "seed": 7,
+      "name": "Vedran Marčelja / Ivan Šipuš",
       "players": [
         {
-          "id": "52227",
-          "name": "Tin Martinec",
-          "points": 484
+          "id": "16370",
+          "name": "Vedran Marčelja",
+          "points": 476
         },
         {
-          "id": "31957",
-          "name": "Marko Pavličević",
-          "points": 484
+          "id": "16445",
+          "name": "Ivan Šipuš",
+          "points": 520
         }
       ],
-      "points": 968,
+      "points": 996,
       "tied": false
     },
     {
-      "seed": 9,
+      "seed": 8,
       "name": "Kasa / Gnjatić",
       "players": [
         {
@@ -162,6 +144,24 @@
         }
       ],
       "points": 944,
+      "tied": false
+    },
+    {
+      "seed": 9,
+      "name": "Martinec / Pavličević",
+      "players": [
+        {
+          "id": "52227",
+          "name": "Tin Martinec",
+          "points": 468
+        },
+        {
+          "id": "31957",
+          "name": "Marko Pavličević",
+          "points": 468
+        }
+      ],
+      "points": 936,
       "tied": false
     },
     {
@@ -184,24 +184,6 @@
     },
     {
       "seed": 11,
-      "name": "Draženko Pranjić / Ćopić",
-      "players": [
-        {
-          "id": "29415",
-          "name": "Drazenko Pranjic",
-          "points": 460
-        },
-        {
-          "id": "21937",
-          "name": "Dejan Ćopić",
-          "points": 452
-        }
-      ],
-      "points": 912,
-      "tied": true
-    },
-    {
-      "seed": 12,
       "name": "Rođak / Ivan Marović",
       "players": [
         {
@@ -216,7 +198,25 @@
         }
       ],
       "points": 912,
-      "tied": true
+      "tied": false
+    },
+    {
+      "seed": 12,
+      "name": "Draženko Pranjić / Ćopić",
+      "players": [
+        {
+          "id": "29415",
+          "name": "Drazenko Pranjic",
+          "points": 460
+        },
+        {
+          "id": "21937",
+          "name": "Dejan Ćopić",
+          "points": 436
+        }
+      ],
+      "points": 896,
+      "tied": false
     },
     {
       "seed": 13,
@@ -243,7 +243,7 @@
         {
           "id": "26946",
           "name": "Mibor Tarković",
-          "points": 512
+          "points": 528
         },
         {
           "id": "16516",
@@ -251,7 +251,7 @@
           "points": 308
         }
       ],
-      "points": 820,
+      "points": 836,
       "tied": false
     },
     {
@@ -290,5 +290,6 @@
       "points": 800,
       "tied": false
     }
-  ]
+  ],
+  "points_as_of": "2026-10-24"
 }

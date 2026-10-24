@@ -14,7 +14,7 @@ themeButton.addEventListener('click', () => {
     updateBracketTheme();
 });
 
-// Explicit paths keep the draw stable when pair totals are tied.
+// Round positions stay fixed; the API supplies the pairs in each draw slot.
 const drawSides = [
     { target: 'sideARounds', rounds: [
         { title: '1. kolo', games: [{ id: 'R1-1', entries: [9, 16], y: 280 }, { id: 'R1-2', entries: [12, 13], y: 600 }] },
@@ -66,7 +66,7 @@ function participantRow(seed, source, teams, winnerSeed, scoreText = '') {
     return row;
 }
 
-function renderSide(side, teams) {
+function renderSide(side, teams, matches) {
     const container = document.getElementById(side.target);
     const positions = new Map();
     side.rounds.forEach((round, roundIndex) => {
@@ -83,7 +83,7 @@ function renderSide(side, teams) {
             gameTitle.id = `game-${game.id}`;
             match.setAttribute('aria-labelledby', gameTitle.id);
             match.appendChild(gameTitle);
-            game.entries.forEach(entry => match.appendChild(participantRow(
+            matches.get(game.id).sources.forEach(entry => match.appendChild(participantRow(
                 typeof entry === 'number' ? entry : null, entry, teams, null)));
             column.appendChild(match);
             positions.set(game.id, { roundIndex, y: game.y });
@@ -159,9 +159,15 @@ function validateMatches(matches, teams) {
     if (!Array.isArray(matches) || matches.length !== expected.size ||
         new Set(matches.map(game => game.id)).size !== expected.size) return false;
     const byId = new Map(matches.map(game => [game.id, game]));
+    const seededEntries = matches.flatMap(game => Array.isArray(game.sources)
+        ? game.sources.filter(source => typeof source === 'number') : []);
+    if (seededEntries.length !== 16 || new Set(seededEntries).size !== 16) return false;
     return matches.every(game => {
-        const sources = expected.get(game.id);
-        if (!sources || JSON.stringify(sources) !== JSON.stringify(game.sources) ||
+        const expectedSources = expected.get(game.id);
+        const sources = game.sources;
+        if (!expectedSources || !Array.isArray(sources) || sources.length !== 2 ||
+            !sources.every((source, index) => typeof expectedSources[index] === 'number'
+                ? Number.isInteger(source) && teams.has(source) : source === expectedSources[index]) ||
             !Array.isArray(game.participants) || game.participants.length !== 2 ||
             typeof game.score !== 'string' || typeof game.scheduled_at !== 'string' ||
             (game.scheduled_at && !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(game.scheduled_at))) return false;
@@ -188,7 +194,10 @@ async function loadBracket() {
                 team.points === team.players.reduce((sum, player) => sum + player.points, 0);
         })) throw new Error('Invalid teams');
         if (!validateMatches(data.matches, teams)) throw new Error('Invalid matches');
-        if (!bracketLoaded) drawSides.forEach(side => renderSide(side, teams));
+        if (!bracketLoaded) {
+            const matches = new Map(data.matches.map(game => [game.id, game]));
+            drawSides.forEach(side => renderSide(side, teams, matches));
+        }
         const snapshot = JSON.stringify({ teams: data.teams, matches: data.matches });
         if (snapshot !== lastBracketSnapshot) {
             updateMatches(data.matches, teams);
