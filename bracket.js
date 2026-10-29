@@ -140,9 +140,10 @@ function updateMatches(matches, teams) {
         if (game.scheduled_at) {
             const [date, clock] = game.scheduled_at.split('T');
             const [, month, day] = date.split('-');
-            const time = element('time', 'match-time', `${day}.${month}. ${clock}`);
+            const court = game.court ? ` · ${game.court}` : '';
+            const time = element('time', 'match-time', `${day}.${month}. ${clock}${court}`);
             time.dateTime = game.scheduled_at;
-            time.title = `${date} ${clock} · Europe/Zagreb`;
+            time.title = `${date} ${clock}${court} · Europe/Zagreb`;
             title.append(document.createTextNode(' · '), time);
         }
         card.querySelectorAll('.bracket-entry, .match-result').forEach(node => node.remove());
