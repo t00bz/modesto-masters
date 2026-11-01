@@ -74,7 +74,7 @@ async function loadStandings() {
         sortedPlayers = playerList.map((player, order) => ({ ...PLAYERS[player.id], order }))
             .sort((a, b) => b.total - a.total || a.order - b.order);
         ALL_PLAYERS = [...playerList].sort((a, b) => a.name.localeCompare(b.name, 'hr'));
-        KOLO_LABELS = rounds.map((round, index) => `Kolo ${index + 1} · ${formatDate(round.date)}`);
+        KOLO_LABELS = rounds.map((round, index) => `${round.label || `Kolo ${index + 1}`} · ${formatDate(round.date)}`);
 
         renderStandings();
         standingsRows = [...document.querySelectorAll('#tableBody tr')];
@@ -119,7 +119,7 @@ function renderStandings() {
     const head = document.getElementById('tableHead');
     head.replaceChildren(makeCell('th', '', 'Mjesto'), makeCell('th', '', 'Igrač'));
     rounds.forEach((round, index) => {
-        const cell = makeCell('th', '', `Kolo ${index + 1}`);
+        const cell = makeCell('th', '', round.label || `Kolo ${index + 1}`);
         const date = document.createElement('small');
         date.textContent = formatDate(round.date);
         cell.appendChild(date);
