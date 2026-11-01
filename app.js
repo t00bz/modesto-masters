@@ -91,11 +91,13 @@ async function loadStandings() {
         document.getElementById('lastUpdated').textContent = formatDate(rounds.at(-1).date);
         const provisionalIndex = rounds.findLastIndex(round => round.provisional === true);
         const status = document.getElementById('standingsStatus');
-        status.hidden = provisionalIndex < 0;
-        if (provisionalIndex >= 0) {
-            document.getElementById('standingsStatusTip').textContent =
-                `Kolo ${provisionalIndex + 1} još je u tijeku. Bodovi tog kola i ukupni poredak privremeni su do završetka kola.`;
-        }
+        status.hidden = false;
+        status.classList.toggle('is-final', provisionalIndex < 0);
+        document.getElementById('standingsStatusLabel').textContent =
+            provisionalIndex < 0 ? 'Finalni poredak' : 'U tijeku';
+        document.getElementById('standingsStatusTip').textContent = provisionalIndex < 0
+            ? 'Finalni poredak uključuje sva ligaška kola i Masters 2026.'
+            : `Kolo ${provisionalIndex + 1} još je u tijeku. Bodovi tog kola i ukupni poredak privremeni su do završetka kola.`;
         document.getElementById('loadingState').hidden = true;
         document.querySelector('table').hidden = false;
         document.getElementById('playerSearch').disabled = false;
