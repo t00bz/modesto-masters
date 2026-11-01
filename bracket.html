@@ -3,9 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="0; url=index.html">
     <title>Ždrijeb | Modesto Masters 2026</title>
-    <script>location.replace('index.html' + location.search + location.hash);</script>
+    <link rel="stylesheet" href="styles.css?v=bracket-live-2">
+    <script src="bracket.js?v=courts-20261029" defer></script>
 </head>
-<body><a href="index.html">Ždrijeb</a></body>
+<body>
+<header class="site-header">
+    <div class="header-inner">
+        <a class="brand brand-link" href="index.html" aria-label="Modesto Masters 2026 — poredak">
+            <img src="modesto_logo_transparent.png" alt="" class="logo">
+            <div class="brand-copy"><span class="brand-name">Modesto</span><span class="brand-season">Masters 2026</span></div>
+        </a>
+        <button class="theme-toggle" id="themeBtn" type="button" aria-label="Promijeni temu">☾</button>
+    </div>
+</header>
+<main class="bracket-main">
+    <nav class="page-tabs" aria-label="Natjecanje"><a href="index.html">Poredak</a><a href="bracket.html" aria-current="page">Ždrijeb</a></nav>
+    <p class="eyebrow">Masters 2026</p>
+    <h1>Ždrijeb</h1>
+    <p class="bracket-notice">Privremeno · Ažuriranje 24. 10. ako bude promjena.</p>
+    <p class="bracket-reserve">Kralj/Pokas ulaze ako neki od prvih 16 parova ne može nastupiti.</p>
+    <nav class="bracket-jumps" aria-label="Skoči na dio ždrijeba">
+        <a href="#side-a">Strana A <span aria-hidden="true">↓</span></a>
+        <a href="#side-b">Strana B <span aria-hidden="true">↓</span></a>
+        <a href="#bracket-final">Finale <span aria-hidden="true">↓</span></a>
+    </nav>
+    <p id="bracketLoading" class="empty-state" role="status">Učitavanje ždrijeba…</p>
+    <p id="bracketError" class="empty-state" role="alert" hidden>Ždrijeb trenutačno nije dostupan.</p>
+    <div class="tournament-bracket" id="tournamentBracket" hidden>
+        <section class="bracket-side side-a" id="side-a" aria-labelledby="sideATitle" tabindex="-1">
+            <header class="bracket-side-heading"><h2 id="sideATitle">Strana A</h2><span>→ Finale</span></header>
+            <div class="side-scroll" role="region" aria-label="Kola strane A — pomaknite vodoravno" tabindex="0"><div class="side-rounds" id="sideARounds"></div></div>
+            <a class="side-final-link" href="#bracket-final">Pobjednik strane A → Finale</a>
+        </section>
+        <section class="bracket-side side-b" id="side-b" aria-labelledby="sideBTitle" tabindex="-1">
+            <header class="bracket-side-heading"><h2 id="sideBTitle">Strana B</h2><span>→ Finale</span></header>
+            <div class="side-scroll" role="region" aria-label="Kola strane B — pomaknite vodoravno" tabindex="0"><div class="side-rounds" id="sideBRounds"></div></div>
+            <a class="side-final-link" href="#bracket-final">Pobjednik strane B → Finale</a>
+        </section>
+        <section class="bracket-final" id="bracket-final" aria-labelledby="finalTitle" tabindex="-1">
+            <p class="eyebrow">Strana A × Strana B</p><h2 id="finalTitle">Finale</h2>
+            <div class="bracket-match final-match" data-match="F-1" aria-label="Finale: pobjednik strane A protiv pobjednika strane B">
+                <div class="bracket-entry"><span class="entry-name">Pobjednik strane A</span></div>
+                <div class="bracket-entry"><span class="entry-name">Pobjednik strane B</span></div>
+            </div>
+        </section>
+    </div>
+</main>
+<footer><div class="footer-inner">Modesto Padel Club · Masters 2026</div></footer>
+</body>
 </html>
